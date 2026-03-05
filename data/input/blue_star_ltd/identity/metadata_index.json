@@ -1,0 +1,83 @@
+{
+  "generated_at": "2026-03-05T12:33:29.341077+00:00",
+  "sources": [
+    {
+      "source": "annual_report_loader",
+      "status": "success",
+      "error_count": 0,
+      "errors": []
+    },
+    {
+      "source": "financial_statement_extractor",
+      "status": "success",
+      "error_count": 0,
+      "errors": []
+    },
+    {
+      "source": "gst_return_loader",
+      "status": "success",
+      "error_count": 0,
+      "errors": []
+    },
+    {
+      "source": "bank_statement_loader",
+      "status": "success",
+      "error_count": 0,
+      "errors": []
+    },
+    {
+      "source": "sanction_letter_loader",
+      "status": "failed",
+      "error_count": 1,
+      "errors": [
+        "No sanction letter uploads found."
+      ]
+    },
+    {
+      "source": "corporate_registry",
+      "status": "success",
+      "error_count": 0,
+      "errors": []
+    },
+    {
+      "source": "legal_cases",
+      "status": "success",
+      "error_count": 0,
+      "errors": []
+    },
+    {
+      "source": "regulatory_orders",
+      "status": "failed",
+      "error_count": 1,
+      "errors": [
+        "No regulatory orders found."
+      ]
+    },
+    {
+      "source": "news_intelligence",
+      "status": "success",
+      "error_count": 0,
+      "errors": []
+    },
+    {
+      "source": "sector_intelligence",
+      "status": "failed",
+      "error_count": 0,
+      "errors": []
+    },
+    {
+      "source": "qualitative_notes",
+      "status": "failed",
+      "error_count": 1,
+      "errors": [
+        "File not found: datasets/blue_star_ltd/analyst_notes.json"
+      ]
+    },
+    {
+      "source": "feature_engineering",
+      "status": "success",
+      "error_count": 0,
+      "errors": []
+    }
+  ]
+}

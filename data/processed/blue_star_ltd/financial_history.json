@@ -1,0 +1,175 @@
+{
+  "years": [
+    "FY21",
+    "FY22",
+    "FY23",
+    "FY24",
+    "FY25"
+  ],
+  "yearly_data": [
+    {
+      "revenue": 4263.59,
+      "net_profit": 1000.0,
+      "debt": 4.0,
+      "total_assets": 150.13,
+      "total_liabilities": 31.0,
+      "cash_flow": 177.0,
+      "ebitda": 5.9,
+      "working_capital": 2.4,
+      "auditor_remarks": [
+        "going concern"
+      ],
+      "unit": "INR Crores",
+      "year": "FY21",
+      "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/input/blue_star_ltd/annual_reports/FY21.pdf"
+    },
+    {
+      "revenue": 2984.513,
+      "net_profit": 0.4,
+      "debt": 189.0,
+      "total_assets": 211.77,
+      "total_liabilities": 31.0,
+      "cash_flow": 296.76,
+      "ebitda": 0.88,
+      "working_capital": 362.95,
+      "auditor_remarks": [
+        "material weakness",
+        "going concern"
+      ],
+      "unit": "INR Crores",
+      "year": "FY22",
+      "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/input/blue_star_ltd/annual_reports/FY22.pdf"
+    },
+    {
+      "revenue": 8008.19,
+      "net_profit": 1000.0,
+      "debt": 0.15,
+      "total_assets": 193.89,
+      "total_liabilities": 31.0,
+      "cash_flow": 241.0,
+      "ebitda": 492.78,
+      "working_capital": 547.57,
+      "auditor_remarks": [
+        "material weakness",
+        "going concern"
+      ],
+      "unit": "INR Crores",
+      "year": "FY23",
+      "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/input/blue_star_ltd/annual_reports/FY23.pdf"
+    },
+    {
+      "revenue": 5605.733,
+      "net_profit": 0.214,
+      "debt": 0.016,
+      "total_assets": 37.352,
+      "total_liabilities": 26.8,
+      "cash_flow": 22.6,
+      "ebitda": 0.4708,
+      "working_capital": 70.2,
+      "auditor_remarks": [
+        "material weakness",
+        "going concern"
+      ],
+      "unit": "INR Crores",
+      "year": "FY24",
+      "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/input/blue_star_ltd/annual_reports/FY24.pdf"
+    },
+    {
+      "revenue": 3924.0131,
+      "net_profit": 4.58,
+      "debt": 23.0,
+      "total_assets": 450.73,
+      "total_liabilities": null,
+      "cash_flow": 221.0,
+      "ebitda": 31.8,
+      "working_capital": 5.0,
+      "auditor_remarks": [
+        "going concern"
+      ],
+      "unit": "INR Crores",
+      "year": "FY25",
+      "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/input/blue_star_ltd/annual_reports/FY25.pdf"
+    }
+  ],
+  "revenue": [
+    4263.59,
+    2984.513,
+    8008.19,
+    5605.733,
+    3924.0131
+  ],
+  "ebitda": [
+    5.9,
+    0.88,
+    492.78,
+    0.4708,
+    31.8
+  ],
+  "net_profit": [
+    1000.0,
+    0.4,
+    1000.0,
+    0.214,
+    4.58
+  ],
+  "total_assets": [
+    150.13,
+    211.77,
+    193.89,
+    37.352,
+    450.73
+  ],
+  "total_liabilities": [
+    31.0,
+    31.0,
+    31.0,
+    26.8,
+    null
+  ],
+  "debt": [
+    4.0,
+    189.0,
+    0.15,
+    0.016,
+    23.0
+  ],
+  "cash_flow": [
+    177.0,
+    296.76,
+    241.0,
+    22.6,
+    221.0
+  ],
+  "working_capital": [
+    2.4,
+    362.95,
+    547.57,
+    70.2,
+    5.0
+  ],
+  "data_quality_issues": [
+    {
+      "year": "FY22",
+      "issues": [
+        "ebitda_gt_revenue",
+        "profit_margin_gt_100",
+        "revenue_drop_gt_80"
+      ]
+    },
+    {
+      "year": "FY24",
+      "issues": [
+        "ebitda_gt_revenue",
+        "profit_margin_gt_100",
+        "revenue_drop_gt_80"
+      ]
+    },
+    {
+      "year": "FY25",
+      "issues": [
+        "profit_margin_gt_100",
+        "revenue_drop_gt_80"
+      ]
+    }
+  ]
+}

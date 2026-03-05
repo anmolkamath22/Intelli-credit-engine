@@ -1,0 +1,130 @@
+CREDIT APPRAISAL MEMO (CAM)
+========================================
+
+EXECUTIVE SUMMARY
+-----------------
+Credit appraisal for Blue Star Ltd: final credit score 6.01/100, recommended loan limit INR
+7.65 crore, and recommended interest rate 15.19% p.a. All financial figures are reported in
+INR Crores unless otherwise stated.
+
+COMPANY OVERVIEW
+----------------
+Blue Star Ltd was evaluated using locally ingested financial and risk documents. Document
+count reviewed: 5. External credit rating (if available): A- (history: A+ -> A -> A-).
+
+5-YEAR FINANCIAL PERFORMANCE
+----------------------------
+Years analyzed: FY21, FY22, FY23, FY24, FY25. Latest year revenue: INR 3,924.01 crore and
+EBITDA: INR 31.80 crore.
+
+FINANCIAL RATIO TABLE
+---------------------
+Financial Performance (INR Crores)
+| Metric | FY21 | FY22 | FY23 | FY24 | FY25 |
+| --- | --- | --- | --- | --- | --- |
+| Revenue | 4,263.59 | 2,984.51 | 8,008.19 | 5,605.73 | 3,924.01 |
+| EBITDA | 5.90 | 0.88 | 492.78 | 0.47 | 31.80 |
+| Net Profit | 1,000.00 | 0.40 | 1,000.00 | 0.21 | 4.58 |
+| Debt | 4.00 | 189.00 | 0.15 | 0.02 | 23.00 |
+| Debt/Equity | 0.03 | 1.05 | 0.00 | 0.00 | 0.05 |
+| EBITDA Margin | 0.14% | 0.03% | 6.15% | 0.01% | 0.81% |
+
+FINANCIAL TREND ANALYSIS
+------------------------
+- Revenue trend (FY21 to FY25): CAGR of -2.05% with revenue moving from INR 4,263.59 crore
+  to INR 3,924.01 crore.
+- Operating profitability: EBITDA CAGR of 52.37% and net profit CAGR of -73.99% over the
+  observed period.
+- Leverage trend: debt changed from INR 4.00 crore to INR 23.00 crore (debt reduction rate
+  -475.00%).
+- Margin behavior: EBITDA margin moved from 0.14% to 0.81%.
+- Overall inference for Blue Star Ltd: financial trajectory should be assessed jointly with
+  legal, sector, and cashflow-risk indicators.
+
+FINANCIAL STRENGTH
+------------------
+Revenue: INR 3,924.01; Net profit: INR 4.58; EBITDA: INR 31.80; Debt: INR 23.00. Total
+assets: INR 450.73; Total liabilities: INR 31.00. Debt-to-equity: 0.05; Profit margin:
+0.12%; Interest coverage: 15.36x.
+
+PROMOTER ANALYSIS
+-----------------
+Promoter risk score: 24.30/100. Management risk score: 40.00/100. Rating rationale:
+Liquidity position, leverage, and execution profile considered.
+
+INDUSTRY CONDITIONS
+-------------------
+Sector risk assessment: LOW. Observed headwinds: No major sector headwinds identified from
+available data..
+
+LITIGATION PROFILE
+------------------
+Litigation count: 12. Litigation risk score: 48.00/100. Case summary: ["{'case_count': 6,
+'case_type': 'Labor', 'case_status': 'Under Appeal', 'litigation_risk_score': 39.0}",
+"{'case_count': 6, 'case_type': 'Labor', 'case_status': 'Under Appeal',
+'litigation_risk_score': 24.0}"]
+
+MANAGEMENT ASSESSMENT
+---------------------
+Cashflow stability: 0.20 (0 to 1 scale, higher is better). GST compliance score: 62.80/100.
+News sentiment score: 83.00/100.
+
+RISK FLAGS
+----------
+- Unstable cash flow pattern
+- Potential circular trading behavior
+- Potential revenue inflation risk
+
+EVIDENCE ATTRIBUTION
+--------------------
+- Conclusion source mapping (dataset-level, no hardcoded absolute paths):
+- Primary sources used: annual_reports
+- annual_reports: available
+- financial_statements: missing/synthetic fallback used
+- balance_sheets: missing/synthetic fallback used
+- gst_returns: missing/synthetic fallback used
+- bank_statements: available
+- legal_documents: missing/synthetic fallback used
+- news_documents: missing/synthetic fallback used
+
+SUPPORTING EVIDENCE (RAG)
+-------------------------
+- Source Type: annual_reports | Reference: annual_reports/FY24.pdf | Evidence: Advisor to
+  the Government of India); Chairperson of the Confederation of Indian Industry’s National
+  Forum on Industry - Academia Partnership, and Member and ...
+- Source Type: annual_reports | Reference: annual_reports/FY24.pdf | Evidence: 74 44 30
+  2022-23 49 2023-24 Capex 51 BLUE STAR LIMITED NEW PRODUCTS LAUNCHED DURING THE YEAR Room
+  Air Conditioners Split ACs Anti-Virus ACs The Company has l...
+- Source Type: annual_reports | Reference: annual_reports/FY21.pdf | Evidence: only in
+  dematerialised form as per SEBI notification. The Company has entered into agreements with
+  NSDL and CDSL whereby Members have the option to demateria...
+- Source Type: annual_reports | Reference: annual_reports/FY21.pdf | Evidence: virus
+  deactivation, to the end consumer. The Company also launched its advertising campaign for
+  Blue Star’s new range of air coolers for this season, in the ...
+- Source Type: annual_reports | Reference: annual_reports/FY24.pdf | Evidence: introduction
+  of latest technologies and breakthrough products in India. During the year, the Company
+  continued to invest in R&D including establishing an R&D...
+
+DECISION LOGIC
+--------------
+Credit score 6.01. Decision weighted by financial strength, legal/news risk, management
+quality, and circular-trading checks. Primary conclusion drivers were sourced from:
+annual_reports. Model penalties were applied for circular-trading flag=1 and revenue-
+inflation flag=1.
+
+FINAL CREDIT SCORE
+------------------
+6.01 / 100
+
+CREDIT RATING (EXTERNAL)
+------------------------
+A- (history: A+ -> A -> A-)
+
+RECOMMENDED LOAN LIMIT
+----------------------
+INR 7.65 crore (model output). Policy caps: 25% of annual revenue=981.00 crore; 4x
+EBITDA=127.20 crore.
+
+INTEREST RATE RECOMMENDATION
+----------------------------
+15.19% per annum (Base 9.50% + Risk premium 5.69%).

@@ -1,0 +1,10 @@
+{
+  "credit_rating": "A-",
+  "rating_history": [
+    "A+",
+    "A",
+    "A-"
+  ],
+  "rating_rationale": "Liquidity position, leverage, and execution profile considered.",
+  "downgrade_flag": true
+}

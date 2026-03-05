@@ -1,0 +1,15 @@
+{
+  "company_id": "cid::L99999MH1943PLC003049",
+  "company_name": "Blue Star Ltd",
+  "revenue": 45.8,
+  "ebitda": 31.8,
+  "net_profit": 1000.0,
+  "total_assets": 450.73,
+  "debt": 23.0,
+  "cash_flow": 221.0,
+  "working_capital": 5.0,
+  "auditor_remarks": [
+    "going concern"
+  ],
+  "source_report_count": 1
+}

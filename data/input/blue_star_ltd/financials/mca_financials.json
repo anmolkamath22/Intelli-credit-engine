@@ -1,0 +1,19 @@
+{
+  "company": "Blue Star Ltd",
+  "cin": "L99999MH1943PLC003049",
+  "revenue": 3160,
+  "revenue_prev_year": 3200,
+  "total_assets": 6614,
+  "debt": 1040,
+  "equity": 5574,
+  "ebitda": 513,
+  "net_profit": 468,
+  "directors": [
+    "Director 1",
+    "Director 2",
+    "Director 3",
+    "Director 4",
+    "Director 5"
+  ],
+  "loan_charges": 0
+}

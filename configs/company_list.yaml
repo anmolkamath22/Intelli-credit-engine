@@ -1,0 +1,16 @@
+companies:
+  - name: Astral Ltd
+    cin: L25200GJ1996PLC029134
+    ticker: ASTRAL
+  - name: Page Industries Ltd
+    cin: L18101KA1994PLC016554
+    ticker: PAGEIND
+  - name: Coforge Ltd
+    cin: L72100DL1992PLC048753
+    ticker: COFORGE
+  - name: Blue Star Ltd
+    cin: L99999MH1943PLC003049
+    ticker: BLUESTARCO
+  - name: KEI Industries Ltd
+    cin: L29199DL1992PLC047864
+    ticker: KEI

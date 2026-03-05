@@ -1,0 +1,18 @@
+{
+  "debt_to_equity": 0.0,
+  "interest_coverage": 15.3623,
+  "profit_margin": 21.8341,
+  "revenue_growth": 0.0,
+  "cash_flow_stability": 0.2047,
+  "gst_compliance_score": 97.6,
+  "litigation_risk_score": 24.0,
+  "news_sentiment": 55.0,
+  "rating_trend": -2.0,
+  "management_risk_score": 0.0,
+  "average_balance_ratio": 0.4141,
+  "cash_flow_volatility": 3.8844,
+  "industry_risk_score": 0.0,
+  "insolvency_flag": 0,
+  "auditor_remarks_count": 1,
+  "feature_count": 15
+}

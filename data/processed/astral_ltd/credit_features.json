@@ -1,0 +1,14 @@
+{
+  "debt_to_equity": 0.001,
+  "profit_margin": 2.8,
+  "revenue_growth": 0.0,
+  "cashflow_stability": 0.25,
+  "litigation_risk_score": 100.0,
+  "news_sentiment_score": 83.0,
+  "management_risk_score": 40.0,
+  "average_balance_ratio": 0.3989,
+  "interest_coverage": 9872.0,
+  "gst_compliance_score": 59.2,
+  "circular_trading_flag": 1,
+  "revenue_inflation_flag": 0
+}

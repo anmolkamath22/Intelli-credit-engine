@@ -1,0 +1,25 @@
+{
+  "company": "Astral Ltd",
+  "slug": "astral_ltd",
+  "dataset_presence": {
+    "annual_reports": 1,
+    "financial_statements": 0,
+    "balance_sheets": 0,
+    "gst_returns": 0,
+    "bank_statements": 1,
+    "legal_documents": 0,
+    "news_documents": 0
+  },
+  "financial_features": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/processed/astral_ltd/financial_features.json",
+  "synthetic_gst_features": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/processed/astral_ltd/synthetic_gst_features.json",
+  "synthetic_bank_features": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/processed/astral_ltd/synthetic_bank_features.json",
+  "research_summary": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/processed/astral_ltd/research_summary.json",
+  "credit_features": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/processed/astral_ltd/credit_features.json",
+  "decision_trace": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/processed/astral_ltd/decision_trace.json",
+  "scoring_output": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/processed/astral_ltd/scoring_output.json",
+  "cam_docx": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/outputs/cam_reports/astral_ltd/CAM_report.txt",
+  "cam_pdf": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/outputs/cam_reports/astral_ltd/CAM_report.pdf",
+  "cam_contract_pdf": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/outputs/cam_reports/astral_ltd/CAM_report.pdf",
+  "legacy_cam_pdf": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/outputs/cam_reports/astral_ltd_cam.pdf",
+  "legacy_cam_txt": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/outputs/cam_reports/astral_ltd_cam.txt"
+}

@@ -1,0 +1,19 @@
+{
+  "debt_to_equity": 0.0548,
+  "profit_margin": 0.0012,
+  "revenue_growth": -0.3,
+  "revenue_cagr_5y": -0.020535,
+  "ebitda_cagr_5y": 0.52368,
+  "net_profit_cagr_5y": -0.739854,
+  "debt_reduction_rate": -4.75,
+  "cashflow_stability": 0.2047,
+  "litigation_risk_score": 48.0,
+  "news_sentiment_score": 83.0,
+  "management_risk_score": 40.0,
+  "sector_risk_score": 25.0,
+  "average_balance_ratio": 0.4141,
+  "interest_coverage": 15.3623,
+  "gst_compliance_score": 62.8,
+  "circular_trading_flag": 1,
+  "revenue_inflation_flag": 1
+}

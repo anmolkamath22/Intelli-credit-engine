@@ -1,0 +1,14 @@
+input_root: data/input
+processed_root: data/processed
+output_root: outputs/cam_reports
+legacy_dataset_root: ../credit-dataset-builder/datasets
+vector:
+  chunk_size_words: 300
+  overlap_words: 50
+  embedding_dim: 64
+retrieval:
+  top_k: 5
+scoring:
+  loan_limit_multiplier: 0.25
+  base_rate: 9.5
+  max_risk_premium: 5.0

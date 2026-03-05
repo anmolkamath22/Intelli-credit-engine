@@ -1,0 +1,17 @@
+{
+  "revenue": 195.0,
+  "net_profit": 546.0,
+  "debt": 0.25,
+  "total_assets": 757.0,
+  "total_liabilities": 505.0,
+  "cash_flow": 2024.0,
+  "ebitda": 9872.0,
+  "working_capital": 3575.0,
+  "auditor_remarks": [
+    "material weakness",
+    "going concern"
+  ],
+  "company_name": "Astral Ltd",
+  "company_slug": "astral_ltd",
+  "document_count": 2
+}

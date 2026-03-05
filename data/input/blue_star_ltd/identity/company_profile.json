@@ -1,0 +1,17 @@
+{
+  "company_id": "cid::L99999MH1943PLC003049",
+  "company_name": "Blue Star Ltd",
+  "slug": "blue_star_ltd",
+  "cin": "L99999MH1943PLC003049",
+  "gstin": null,
+  "isin": null,
+  "ticker": "BLUESTARCO",
+  "sector": "Air-conditioning / Engineering",
+  "identifier_map": {
+    "company_id": "cid::L99999MH1943PLC003049",
+    "company_name": "Blue Star Ltd",
+    "slug": "blue_star_ltd",
+    "cin": "L99999MH1943PLC003049",
+    "ticker": "BLUESTARCO"
+  }
+}

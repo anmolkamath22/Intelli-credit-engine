@@ -1,0 +1,14 @@
+{
+  "company_id": "cid::L99999MH1943PLC003049",
+  "company_name": "Blue Star Ltd",
+  "cin": "L99999MH1943PLC003049",
+  "isin": null,
+  "sector": "Air-conditioning / Engineering",
+  "credit_rating": "A-",
+  "rating_history": [
+    "A+",
+    "A",
+    "A-"
+  ],
+  "rating_rationale": "Liquidity position, leverage, and execution profile considered."
+}

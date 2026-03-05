@@ -1,0 +1,44 @@
+{
+  "revenue": 3924.0131,
+  "net_profit": 4.58,
+  "debt": 23.0,
+  "total_assets": 450.73,
+  "total_liabilities": 31.0,
+  "cash_flow": 221.0,
+  "ebitda": 31.8,
+  "working_capital": 5.0,
+  "auditor_remarks": [
+    "going concern",
+    "material weakness"
+  ],
+  "company_name": "Blue Star Ltd",
+  "company_slug": "blue_star_ltd",
+  "document_count": 5,
+  "normalized_unit": "INR Crores",
+  "revenue_prev": 5605.733,
+  "data_quality_issues": [
+    {
+      "year": "FY22",
+      "issues": [
+        "ebitda_gt_revenue",
+        "profit_margin_gt_100",
+        "revenue_drop_gt_80"
+      ]
+    },
+    {
+      "year": "FY24",
+      "issues": [
+        "ebitda_gt_revenue",
+        "profit_margin_gt_100",
+        "revenue_drop_gt_80"
+      ]
+    },
+    {
+      "year": "FY25",
+      "issues": [
+        "profit_margin_gt_100",
+        "revenue_drop_gt_80"
+      ]
+    }
+  ]
+}
