@@ -159,10 +159,4 @@ CAM reports:
 - Interest Rate Recommendation
 - Supporting Evidence + Source Attribution
 
-## Notes for GitHub Deployment
-- Keep large raw datasets out of Git when possible.
-- Commit code, configs, and sample minimal data only.
-- Main demo command for judges:
-```bash
-python run_pipeline.py --company "<Company Name>"
-```
+
