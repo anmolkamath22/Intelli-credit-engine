@@ -1,9 +1,9 @@
 {
-  "credit_score": 6.01,
-  "loan_limit_cap_revenue_25pct": 981.0,
-  "loan_limit_cap_ebitda_4x": 127.2,
-  "recommended_loan_limit": 7.65,
-  "risk_premium": 5.69,
+  "credit_score": 1.89,
+  "loan_limit_cap_revenue_25pct": 2991.91,
+  "loan_limit_cap_ebitda_4x": 3685.16,
+  "recommended_loan_limit": 56.48,
+  "risk_premium": 5.9,
   "base_rate": 9.5,
-  "recommended_interest_rate": 15.19
+  "recommended_interest_rate": 15.4
 }

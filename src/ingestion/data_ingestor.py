@@ -17,7 +17,7 @@ from src.synthetic.gst_generator import generate_synthetic_gst
 from src.utils.file_loader import list_files, read_csv, read_json
 from src.utils.text_processing import clean_text, slugify
 from src.validation.financial_sanity_check import validate_and_correct_history
-from src.validation.unit_normalizer import detect_unit_from_text, normalize_to_crore
+from src.validation.unit_normalizer import detect_unit_with_context, normalize_to_crore
 
 
 class DataIngestor:
@@ -69,11 +69,12 @@ class DataIngestor:
         doc_texts: list[dict] = []
         extracted_financial_parts: list[dict[str, Any]] = []
         financial_history = {"years": [], "yearly_data": [], "normalized_unit": "INR Crores"}
+        unit_debug: list[dict[str, Any]] = []
 
         # Multi-year annual report extraction with cache.
         cache = FinancialCache(out_dir / "cache" / "financial_cache.json")
         if subdirs["annual_reports"].exists():
-            annual_history, annual_docs = extract_financial_history(subdirs["annual_reports"], cache)
+            annual_history, annual_docs, unit_debug = extract_financial_history(subdirs["annual_reports"], cache)
             financial_history = annual_history
             for d in annual_docs:
                 if d.get("text"):
@@ -92,7 +93,8 @@ class DataIngestor:
                 if text:
                     ctext = clean_text(text)
                     doc_texts.append({"source": str(pdf), "text": ctext})
-                    unit = detect_unit_from_text(text)
+                    unit_info = detect_unit_with_context(text)
+                    unit = str(unit_info.get("unit", "crore"))
                     metrics = extract_financials_from_text(ctext)
                     for mk in [
                         "revenue",
@@ -100,12 +102,27 @@ class DataIngestor:
                         "debt",
                         "total_assets",
                         "total_liabilities",
+                        "finance_cost",
+                        "current_assets",
+                        "current_liabilities",
                         "cash_flow",
                         "ebitda",
                         "working_capital",
                     ]:
-                        metrics[mk] = normalize_to_crore(metrics.get(mk), unit)
+                        metrics[mk] = normalize_to_crore(metrics.get(mk), unit, uncertain=bool(unit_info.get("uncertain", True)))
+                    metrics["unit_uncertain"] = bool(unit_info.get("uncertain", True))
+                    metrics["unit_confidence"] = float(unit_info.get("confidence", 0.5))
                     extracted_financial_parts.append(metrics)
+                    unit_debug.append(
+                        {
+                            "source": str(pdf),
+                            "year": None,
+                            "unit": unit,
+                            "confidence": unit_info.get("confidence", 0.5),
+                            "evidence": unit_info.get("evidence", ""),
+                            "uncertain": unit_info.get("uncertain", True),
+                        }
+                    )
 
             for jf in jsons:
                 payload = read_json(jf)
@@ -115,8 +132,11 @@ class DataIngestor:
                         "revenue": payload.get("revenue") or payload.get("total_income"),
                         "net_profit": payload.get("net_profit") or payload.get("pat"),
                         "debt": payload.get("debt") or payload.get("borrowings"),
+                        "finance_cost": payload.get("finance_cost") or payload.get("interest_expense"),
                         "total_assets": payload.get("total_assets"),
                         "total_liabilities": payload.get("total_liabilities"),
+                        "current_assets": payload.get("current_assets"),
+                        "current_liabilities": payload.get("current_liabilities"),
                         "cash_flow": payload.get("cash_flow") or payload.get("cash_flow_from_operations"),
                         "ebitda": payload.get("ebitda"),
                         "working_capital": payload.get("working_capital"),
@@ -133,8 +153,11 @@ class DataIngestor:
                             "revenue": row.get("revenue") or row.get("total_income"),
                             "net_profit": row.get("net_profit") or row.get("pat"),
                             "debt": row.get("debt"),
+                            "finance_cost": row.get("finance_cost") or row.get("interest_expense"),
                             "total_assets": row.get("total_assets"),
                             "total_liabilities": row.get("total_liabilities"),
+                            "current_assets": row.get("current_assets"),
+                            "current_liabilities": row.get("current_liabilities"),
                             "cash_flow": row.get("cash_flow"),
                             "ebitda": row.get("ebitda"),
                             "working_capital": row.get("working_capital"),
@@ -159,8 +182,11 @@ class DataIngestor:
                 "total_assets",
                 "total_liabilities",
                 "debt",
+                "finance_cost",
                 "cash_flow",
                 "working_capital",
+                "current_assets",
+                "current_liabilities",
             ]:
                 financial_history[metric] = [financial_history["yearly_data"][0].get(metric)]
 
@@ -177,11 +203,14 @@ class DataIngestor:
             "revenue",
             "net_profit",
             "debt",
+            "finance_cost",
             "total_assets",
             "total_liabilities",
             "cash_flow",
             "ebitda",
             "working_capital",
+            "current_assets",
+            "current_liabilities",
         ]:
             if latest.get(k) is not None:
                 financials[k] = latest.get(k)
@@ -248,6 +277,16 @@ class DataIngestor:
         }
         (out_dir / "synthetic_bank_features.json").write_text(json.dumps(bank_payload, indent=2, ensure_ascii=True), encoding="utf-8")
 
+        # Debug outputs for auditability.
+        debug_dir = self.processed_root.parent.parent / "outputs" / "debug"
+        debug_dir.mkdir(parents=True, exist_ok=True)
+        (debug_dir / f"unit_detection_{slug}.json").write_text(
+            json.dumps(unit_debug, indent=2, ensure_ascii=True), encoding="utf-8"
+        )
+        (debug_dir / f"financial_anomalies_{slug}.json").write_text(
+            json.dumps(dq_issues, indent=2, ensure_ascii=True), encoding="utf-8"
+        )
+
         return {
             "financials": financials,
             "gst_signals": gst_payload,
@@ -258,4 +297,6 @@ class DataIngestor:
             "processed_dir": out_dir,
             "dataset_presence": dataset_presence,
             "financial_history": financial_history,
+            "unit_debug": unit_debug,
+            "anomalies": dq_issues,
         }

@@ -1,4 +1,4 @@
-"""Sanity checks and corrective normalization for financial history."""
+"""Sanity checks and controlled corrective normalization for financial history."""
 
 from __future__ import annotations
 
@@ -46,7 +46,7 @@ def _is_unrealistic(record: dict, prev_record: dict | None = None) -> list[str]:
 
 
 def validate_and_correct_history(history: dict) -> tuple[dict, list[dict]]:
-    """Validate financial history and apply simple scaling correction when needed."""
+    """Validate financial history and apply conservative corrections."""
     years = list(history.get("years", []))
     rows = deepcopy(history.get("yearly_data", []))
     anomalies: list[dict] = []
@@ -56,36 +56,60 @@ def validate_and_correct_history(history: dict) -> tuple[dict, list[dict]]:
         prev = corrected[i - 1] if i > 0 else None
         issues = _is_unrealistic(row, prev)
         best = dict(row)
+        unreliable_metrics: list[str] = []
         if issues:
             # Try down-scaling if values are likely in higher unit than detected.
-            for factor in (0.1, 0.01, 0.001):
+            for factor in (0.1, 0.01, 10.0):
                 candidate = _scale_year(row, factor)
                 if not _is_unrealistic(candidate, prev):
                     best = candidate
                     break
-            anomalies.append({"year": row.get("year"), "issues": issues})
+            anomalies.append({"year": row.get("year"), "issues": issues, "action": "scaled_or_flagged"})
 
-        # Ratio-level correction for noisy extraction rows.
+        # Controlled ratio correction with explicit reliability flags.
         rev = float(best.get("revenue") or 0.0)
         if rev > 0:
             if float(best.get("ebitda") or 0.0) > rev:
+                unreliable_metrics.append("ebitda")
                 best["ebitda"] = round(rev * 0.22, 4)
             if float(best.get("net_profit") or 0.0) > rev:
+                unreliable_metrics.append("net_profit")
                 best["net_profit"] = round(rev * 0.10, 4)
         if float(best.get("debt") or 0.0) < 0:
+            unreliable_metrics.append("debt")
             best["debt"] = abs(float(best.get("debt") or 0.0))
+
+        assets = float(best.get("total_assets") or 0.0)
+        liabilities = float(best.get("total_liabilities") or 0.0)
+        if assets > 0 and liabilities > assets * 1.08:
+            unreliable_metrics.append("total_liabilities")
+            best["total_liabilities"] = round(assets * 0.92, 4)
 
         if prev:
             prev_rev = float(prev.get("revenue") or 0.0)
             cur_rev = float(best.get("revenue") or 0.0)
             if prev_rev > 0:
                 if cur_rev < prev_rev * 0.2:
+                    unreliable_metrics.append("revenue")
                     best["revenue"] = round(prev_rev * 0.7, 4)
                 elif cur_rev > prev_rev * 5:
+                    unreliable_metrics.append("revenue")
                     scaled = cur_rev
                     while scaled > prev_rev * 5:
                         scaled *= 0.1
                     best["revenue"] = round(max(scaled, prev_rev * 0.7), 4)
+
+        # Margin sanity bounds for downstream ratios.
+        rev2 = float(best.get("revenue") or 0.0)
+        if rev2 > 0:
+            pm = float(best.get("net_profit") or 0.0) / rev2
+            em = float(best.get("ebitda") or 0.0) / rev2
+            if pm < -1.0 or pm > 1.0:
+                unreliable_metrics.append("profit_margin")
+            if em < -1.0 or em > 1.0:
+                unreliable_metrics.append("ebitda_margin")
+
+        best["unreliable_metrics"] = sorted(set(unreliable_metrics))
 
         corrected.append(best)
 

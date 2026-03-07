@@ -1,0 +1,49 @@
+{
+  "years": [
+    "FY24"
+  ],
+  "yearly_data": [
+    {
+      "revenue": null,
+      "net_profit": null,
+      "debt": null,
+      "finance_cost": null,
+      "total_assets": null,
+      "total_liabilities": null,
+      "current_assets": null,
+      "current_liabilities": null,
+      "cash_flow": null,
+      "ebitda": null,
+      "working_capital": null,
+      "auditor_remarks": [],
+      "year": "FY24",
+      "unit": "INR Crores",
+      "unreliable_metrics": []
+    }
+  ],
+  "revenue": [
+    null
+  ],
+  "ebitda": [
+    null
+  ],
+  "net_profit": [
+    null
+  ],
+  "total_assets": [
+    null
+  ],
+  "total_liabilities": [
+    null
+  ],
+  "debt": [
+    null
+  ],
+  "cash_flow": [
+    null
+  ],
+  "working_capital": [
+    null
+  ],
+  "data_quality_issues": []
+}

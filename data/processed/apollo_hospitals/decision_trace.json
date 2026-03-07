@@ -1,0 +1,47 @@
+{
+  "feature_contribution": {
+    "debt_to_equity": -0.0,
+    "profit_margin": 0.0,
+    "revenue_cagr_5y": 0.0,
+    "cashflow_stability": 8.702,
+    "litigation_risk_score": -0.0,
+    "news_sentiment_score": 10.0,
+    "management_risk_score": -8.0,
+    "sector_risk_score": -3.75,
+    "circular_trading_flag": -10.0,
+    "revenue_inflation_flag": -8.0
+  },
+  "risk_flags": [
+    "Potential circular trading behavior",
+    "Potential revenue inflation risk"
+  ],
+  "supporting_evidence": [
+    {
+      "score": 1.091469156742096,
+      "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/processed/apollo_hospitals/financial_features.json",
+      "chunk": "{ \"revenue\": null, \"net_profit\": null, \"debt\": null, \"finance_cost\": null, \"total_assets\": null, \"total_liabilities\": null, \"current_assets\": null, \"current_liabilities\": null, \"cash_flow\": null, \"ebitda\": null, \"working_capital\": null, \"auditor_remarks\": [], \"company_name\": \"Apollo Hospitals\", \"company_slug\": \"apollo_hospitals\", \"document_count\": 0, \"normalized_unit\": \"INR Crores\", \"revenue_prev\": null, \"data_quality_issues\": [] }",
+      "metadata": {
+        "source_type": "feature_summary",
+        "section_type": "financial",
+        "fiscal_year": null,
+        "metric_type": "summary"
+      }
+    },
+    {
+      "score": 1.0569782733917237,
+      "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/processed/apollo_hospitals/financial_history.json",
+      "chunk": "{ \"years\": [ \"FY24\" ], \"yearly_data\": [ { \"revenue\": null, \"net_profit\": null, \"debt\": null, \"finance_cost\": null, \"total_assets\": null, \"total_liabilities\": null, \"current_assets\": null, \"current_liabilities\": null, \"cash_flow\": null, \"ebitda\": null, \"working_capital\": null, \"auditor_remarks\": [], \"year\": \"FY24\", \"unit\": \"INR Crores\", \"unreliable_metrics\": [] } ], \"revenue\": [ null ], \"ebitda\": [ null ], \"net_profit\": [ null ], \"total_assets\": [ null ], \"total_liabilities\": [ null ], \"debt\": [ null ], \"cash_flow\": [ null ], \"working_capital\": [ null ], \"data_quality_issues\": [] }",
+      "metadata": {
+        "source_type": "feature_summary",
+        "section_type": "financial",
+        "fiscal_year": null,
+        "metric_type": "summary"
+      }
+    }
+  ],
+  "research_context": {
+    "promoter_risk": 0.0,
+    "sector_headwinds": []
+  },
+  "reasoning_summary": "Credit score 43.62. Decision weighted by financial strength, legal/news risk, management quality, and circular-trading checks."
+}

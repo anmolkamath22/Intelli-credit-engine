@@ -8,7 +8,7 @@ from pathlib import Path
 from src.research.company_profile_builder import build_company_overview
 from src.research.litigation_lookup import lookup_litigation
 from src.research.news_crawler import analyze_news
-from src.research.rag_engine import rag_query
+from src.research.rag_engine import rag_query_section
 from src.vector_store.retriever import VectorRetriever
 
 
@@ -61,11 +61,28 @@ def run_research_agent(
 
     promoter_risk = min(100.0, legal["litigation_risk_score"] * 0.4 + (100 - news["news_sentiment_score"]) * 0.3)
 
-    evidence = rag_query(
+    financial_evidence = rag_query_section(
         retriever,
-        "promoter risk litigation legal disputes sector downturn revenue cash flow distress",
-        top_k=top_k,
+        "audited financial statement revenue ebitda net profit debt finance cost operating cash flow",
+        top_k=max(3, top_k // 2),
+        source_types=["annual_reports", "financial_statements", "balance_sheets", "feature_summary"],
+        section_type="financial",
     )
+    legal_evidence = rag_query_section(
+        retriever,
+        "litigation legal dispute insolvency nclt order tribunal case",
+        top_k=max(3, top_k // 2),
+        source_types=["legal_documents", "research_summary"],
+        section_type="litigation",
+    )
+    sector_evidence = rag_query_section(
+        retriever,
+        "sector risk headwind demand slowdown commodity policy",
+        top_k=top_k,
+        source_types=["news_documents", "research_summary", "annual_reports"],
+        section_type="industry",
+    )
+    evidence = (financial_evidence + legal_evidence + sector_evidence)[: max(top_k, 8)]
 
     summary = {
         "company_overview": profile,

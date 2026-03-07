@@ -1,0 +1,74 @@
+{
+  "normalized_unit": "INR Crores",
+  "years": [
+    "FY24"
+  ],
+  "yearly_validated": [
+    {
+      "year": "FY24",
+      "metrics": {
+        "revenue": null,
+        "ebitda": null,
+        "net_profit": null,
+        "debt": null,
+        "finance_cost": null,
+        "total_assets": null,
+        "total_liabilities": null
+      },
+      "ratios": {
+        "profit_margin": {
+          "value": null,
+          "reason": "profit_margin: missing numerator/denominator"
+        },
+        "ebitda_margin": {
+          "value": null,
+          "reason": "ebitda_margin: missing numerator/denominator"
+        },
+        "debt_to_equity": {
+          "value": null,
+          "reason": "debt_to_equity: missing numerator/denominator"
+        },
+        "current_ratio": {
+          "value": null,
+          "reason": "current_ratio: missing numerator/denominator"
+        },
+        "interest_coverage": {
+          "value": null,
+          "reason": "interest_coverage: missing numerator/denominator"
+        },
+        "debt_to_ebitda": {
+          "value": null,
+          "reason": "debt_to_ebitda: missing numerator/denominator"
+        }
+      },
+      "unreliable_metrics": []
+    }
+  ],
+  "latest_year": "FY24",
+  "latest_ratios": {
+    "profit_margin": {
+      "value": null,
+      "reason": "profit_margin: missing numerator/denominator"
+    },
+    "ebitda_margin": {
+      "value": null,
+      "reason": "ebitda_margin: missing numerator/denominator"
+    },
+    "debt_to_equity": {
+      "value": null,
+      "reason": "debt_to_equity: missing numerator/denominator"
+    },
+    "current_ratio": {
+      "value": null,
+      "reason": "current_ratio: missing numerator/denominator"
+    },
+    "interest_coverage": {
+      "value": null,
+      "reason": "interest_coverage: missing numerator/denominator"
+    },
+    "debt_to_ebitda": {
+      "value": null,
+      "reason": "debt_to_ebitda: missing numerator/denominator"
+    }
+  }
+}

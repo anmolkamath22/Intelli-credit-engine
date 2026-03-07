@@ -1,0 +1,280 @@
+{
+  "normalized_unit": "INR Crores",
+  "years": [
+    "FY20",
+    "FY21",
+    "FY22",
+    "FY23",
+    "FY24",
+    "FY25"
+  ],
+  "yearly_validated": [
+    {
+      "year": "FY20",
+      "metrics": {
+        "revenue": 5360.19,
+        "ebitda": 328.2,
+        "net_profit": -19.0,
+        "debt": 65.92,
+        "finance_cost": 2.77,
+        "total_assets": 258.73,
+        "total_liabilities": 106.91
+      },
+      "ratios": {
+        "profit_margin": {
+          "value": -0.003544650469479627,
+          "reason": null
+        },
+        "ebitda_margin": {
+          "value": 0.06122917284648492,
+          "reason": null
+        },
+        "debt_to_equity": {
+          "value": 0.4341983928336187,
+          "reason": null
+        },
+        "current_ratio": {
+          "value": 1.0414504515475176,
+          "reason": null
+        },
+        "interest_coverage": {
+          "value": 118.48375451263537,
+          "reason": null
+        },
+        "debt_to_ebitda": {
+          "value": 0.20085313833028642,
+          "reason": null
+        }
+      },
+      "unreliable_metrics": []
+    },
+    {
+      "year": "FY21",
+      "metrics": {
+        "revenue": 4263.59,
+        "ebitda": 254.91,
+        "net_profit": 2.0,
+        "debt": 298.89,
+        "finance_cost": 2.82,
+        "total_assets": 7.0,
+        "total_liabilities": 6.44
+      },
+      "ratios": {
+        "profit_margin": {
+          "value": 0.0004690882566100399,
+          "reason": null
+        },
+        "ebitda_margin": {
+          "value": 0.05978764374623263,
+          "reason": null
+        },
+        "debt_to_equity": {
+          "value": null,
+          "reason": "suppressed: unreliable source metrics"
+        },
+        "current_ratio": {
+          "value": 1.264476331557187,
+          "reason": null
+        },
+        "interest_coverage": {
+          "value": 90.3936170212766,
+          "reason": null
+        },
+        "debt_to_ebitda": {
+          "value": 1.1725314816994232,
+          "reason": null
+        }
+      },
+      "unreliable_metrics": [
+        "total_liabilities"
+      ]
+    },
+    {
+      "year": "FY22",
+      "metrics": {
+        "revenue": 6045.58,
+        "ebitda": 362.95,
+        "net_profit": 168.0,
+        "debt": 67.14,
+        "finance_cost": 2.49,
+        "total_assets": 4312.64,
+        "total_liabilities": 3292.1
+      },
+      "ratios": {
+        "profit_margin": {
+          "value": 0.02778889701236275,
+          "reason": null
+        },
+        "ebitda_margin": {
+          "value": 0.060035596253792026,
+          "reason": null
+        },
+        "debt_to_equity": {
+          "value": 0.06578870009994706,
+          "reason": null
+        },
+        "current_ratio": {
+          "value": 1.1731880641250167,
+          "reason": null
+        },
+        "interest_coverage": {
+          "value": 145.76305220883532,
+          "reason": null
+        },
+        "debt_to_ebitda": {
+          "value": 0.18498415759746523,
+          "reason": null
+        }
+      },
+      "unreliable_metrics": []
+    },
+    {
+      "year": "FY23",
+      "metrics": {
+        "revenue": 7977.32,
+        "ebitda": 547.57,
+        "net_profit": 400.69,
+        "debt": 8920.0,
+        "finance_cost": 2.86,
+        "total_assets": 5399.06,
+        "total_liabilities": 4065.22
+      },
+      "ratios": {
+        "profit_margin": {
+          "value": 0.050228648217697174,
+          "reason": null
+        },
+        "ebitda_margin": {
+          "value": 0.06864084680067993,
+          "reason": null
+        },
+        "debt_to_equity": {
+          "value": 6.687458765669043,
+          "reason": null
+        },
+        "current_ratio": {
+          "value": 1.1233855302279483,
+          "reason": null
+        },
+        "interest_coverage": {
+          "value": 191.45804195804197,
+          "reason": null
+        },
+        "debt_to_ebitda": {
+          "value": 16.29015468341947,
+          "reason": null
+        }
+      },
+      "unreliable_metrics": []
+    },
+    {
+      "year": "FY24",
+      "metrics": {
+        "revenue": 9685.36,
+        "ebitda": 702.0,
+        "net_profit": 414.31,
+        "debt": 455.93,
+        "finance_cost": 3.63,
+        "total_assets": 7.0,
+        "total_liabilities": 6.44
+      },
+      "ratios": {
+        "profit_margin": {
+          "value": 0.04277693343355332,
+          "reason": null
+        },
+        "ebitda_margin": {
+          "value": 0.07248052731132348,
+          "reason": null
+        },
+        "debt_to_equity": {
+          "value": null,
+          "reason": "suppressed: unreliable source metrics"
+        },
+        "current_ratio": {
+          "value": 1.2991073845051435,
+          "reason": null
+        },
+        "interest_coverage": {
+          "value": 193.38842975206612,
+          "reason": null
+        },
+        "debt_to_ebitda": {
+          "value": 0.6494729344729345,
+          "reason": null
+        }
+      },
+      "unreliable_metrics": [
+        "total_liabilities"
+      ]
+    },
+    {
+      "year": "FY25",
+      "metrics": {
+        "revenue": 11967.65,
+        "ebitda": 921.29,
+        "net_profit": 591.28,
+        "debt": 206.85,
+        "finance_cost": 3.99,
+        "total_assets": 7.0,
+        "total_liabilities": 6.44
+      },
+      "ratios": {
+        "profit_margin": {
+          "value": 0.049406525090556624,
+          "reason": null
+        },
+        "ebitda_margin": {
+          "value": 0.07698169649012128,
+          "reason": null
+        },
+        "debt_to_equity": {
+          "value": null,
+          "reason": "suppressed: unreliable source metrics"
+        },
+        "current_ratio": {
+          "value": 1.2767540586401962,
+          "reason": null
+        },
+        "interest_coverage": {
+          "value": 230.89974937343356,
+          "reason": null
+        },
+        "debt_to_ebitda": {
+          "value": 0.2245221374377232,
+          "reason": null
+        }
+      },
+      "unreliable_metrics": [
+        "total_liabilities"
+      ]
+    }
+  ],
+  "latest_year": "FY25",
+  "latest_ratios": {
+    "profit_margin": {
+      "value": 0.049406525090556624,
+      "reason": null
+    },
+    "ebitda_margin": {
+      "value": 0.07698169649012128,
+      "reason": null
+    },
+    "debt_to_equity": {
+      "value": null,
+      "reason": "suppressed: unreliable source metrics"
+    },
+    "current_ratio": {
+      "value": 1.2767540586401962,
+      "reason": null
+    },
+    "interest_coverage": {
+      "value": 230.89974937343356,
+      "reason": null
+    },
+    "debt_to_ebitda": {
+      "value": 0.2245221374377232,
+      "reason": null
+    }
+  }
+}

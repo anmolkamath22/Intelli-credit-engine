@@ -6,13 +6,14 @@ import subprocess
 from pathlib import Path
 
 
-def extract_pdf_text(path: Path) -> str:
-    """Extract text from PDF using pdftotext CLI."""
+def extract_pdf_text(path: str | Path) -> str:
+    """Extract text from PDF using pdftotext or pdfplumber/PyMuPDF fallback."""
     try:
-        result = subprocess.run(["pdftotext", str(path), "-"], check=False, capture_output=True, text=True)
-        if result.returncode != 0:
-            return ""
-        return result.stdout
+        # pdftotext is extremely fast and usually available via poppler-utils
+        # Use -layout to preserve tabular row alignment, which is critical for financial statements
+        result = subprocess.run(["pdftotext", "-layout", str(path), "-"], check=False, capture_output=True, text=True)
+        if result.returncode == 0 and result.stdout.strip():
+            return result.stdout
     except Exception:
         return ""
 

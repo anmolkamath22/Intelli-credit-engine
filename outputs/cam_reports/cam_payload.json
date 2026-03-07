@@ -1,0 +1,494 @@
+{
+  "title": "Credit Appraisal Memo",
+  "company_name": "Blue Star Ltd",
+  "reporting_note": "All financial values are reported in INR Crores unless otherwise stated.",
+  "executive_summary": "Final credit score is 1.89/100. Recommended loan limit is INR 56.48 Crores at 15.40% per annum. Assessment uses financial trends, legal/news signals, synthetic behavior signals (when required), and decision trace explainability.",
+  "company_overview": "The evaluation covers available company datasets with primary evidence from: annual_reports. Document count processed: 5. External credit rating observed: A- (A+ -> A -> A-).",
+  "financial_performance": {
+    "narrative": "Years analyzed: FY20, FY21, FY22, FY23, FY24, FY25. Latest revenue: INR 11,967.65 Crores; latest EBITDA: INR 921.29 Crores. Revenue trend (FY20 to FY25): with revenue moving from INR 5,360.19 crore to INR 11,967.65 crore. Operating profitability trends: Revenue CAGR of 17.43%; EBITDA CAGR of 22.93%; net profit CAGR not meaningful due to non-positive base/terminal year values. Leverage trend: debt changed from INR 65.92 crore to INR 206.85 crore (increasing, change rate 213.79%). Margin behavior: EBITDA margin moved from 6.12% to 7.70%. Overall inference for Blue Star Ltd: financial trajectory should be assessed jointly with legal, sector, and cashflow-risk indicators.",
+    "table": {
+      "headers": [
+        "Metric",
+        "FY20",
+        "FY21",
+        "FY22",
+        "FY23",
+        "FY24",
+        "FY25"
+      ],
+      "rows": [
+        [
+          "Revenue",
+          "5,360.19",
+          "4,263.59",
+          "6,045.58",
+          "7,977.32",
+          "9,685.36",
+          "11,967.65"
+        ],
+        [
+          "EBITDA",
+          "328.20",
+          "254.91",
+          "362.95",
+          "547.57",
+          "702.00",
+          "921.29"
+        ],
+        [
+          "Net Profit",
+          "-19.00",
+          "2.00",
+          "168.00",
+          "400.69",
+          "414.31",
+          "591.28"
+        ],
+        [
+          "Debt",
+          "65.92",
+          "298.89",
+          "67.14",
+          "8,920.00",
+          "455.93",
+          "206.85"
+        ],
+        [
+          "Debt/Equity",
+          "0.43",
+          "533.73",
+          "0.07",
+          "6.69",
+          "814.16",
+          "369.38"
+        ],
+        [
+          "EBITDA Margin",
+          "6.12%",
+          "5.98%",
+          "6.00%",
+          "6.86%",
+          "7.25%",
+          "7.70%"
+        ]
+      ]
+    }
+  },
+  "promoter_analysis": "Promoter risk score: 24.30/100. Management risk score: 40.00/100. Rating rationale: Liquidity position, leverage, and execution profile considered.",
+  "industry_outlook": "Sector risk assessment is LOW. Headwinds observed: none.",
+  "litigation_profile": "Litigation count: 12. Litigation risk score: 48.00/100.",
+  "risk_flags": [
+    {
+      "flag": "High leverage",
+      "explanation": "Flag raised from model risk logic and supporting evidence."
+    },
+    {
+      "flag": "Unstable cash flow pattern",
+      "explanation": "Flag raised from model risk logic and supporting evidence."
+    },
+    {
+      "flag": "Potential circular trading behavior",
+      "explanation": "Flag raised from model risk logic and supporting evidence."
+    }
+  ],
+  "decision_logic": "Credit score 1.89. Decision weighted by financial strength, legal/news risk, management quality, and circular-trading checks. Notably, circular trading risk flag is triggered, and revenue inflation flag is clear. The primary synthesis relies heavily on annual_reports.",
+  "final_credit_score": "1.89 / 100",
+  "recommended_loan_limit_crore": "56.48",
+  "interest_rate_percent": "15.40",
+  "supporting_evidence": [
+    {
+      "source": "annual_reports",
+      "reference": "annual_reports/FY21.pdf",
+      "excerpt": "FY21 [revenue] Revenue from operations                                       4,263.59             5,360.19             3,842.33            4,786.49",
+      "section_type": "financial"
+    },
+    {
+      "source": "annual_reports",
+      "reference": "annual_reports/FY21.pdf",
+      "excerpt": "FY21 [ebitda] OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES                                                 254.91                 328.20",
+      "section_type": "financial"
+    },
+    {
+      "source": "annual_reports",
+      "reference": "annual_reports/FY21.pdf",
+      "excerpt": "FY21 [net_profit] 2.*Revenue and PAT of 2018-19 have been restated for the impact of IND AS 115",
+      "section_type": "financial"
+    },
+    {
+      "source": "annual_reports",
+      "reference": "annual_reports/FY21.pdf",
+      "excerpt": "FY21 [debt] Proceeds from/(Repayment towards) short term borrowings                                           (298.89)                    65.92",
+      "section_type": "financial"
+    },
+    {
+      "source": "annual_reports",
+      "reference": "annual_reports/FY21.pdf",
+      "excerpt": "FY21 [total_assets] 7    Total assets                                  258.73              146.67              77.98                7.30              23.40",
+      "section_type": "financial"
+    },
+    {
+      "source": "annual_reports",
+      "reference": "annual_reports/FY21.pdf",
+      "excerpt": "FY21 [total_liabilities] 8    Total liabilities                             106.91               98.53              55.50              15.34                0.12",
+      "section_type": "financial"
+    },
+    {
+      "source": "annual_reports",
+      "reference": "annual_reports/FY21.pdf",
+      "excerpt": "FY21 [finance_cost] Interest cost                                                        2.82             2.77             0.03             0.03",
+      "section_type": "financial"
+    },
+    {
+      "source": "annual_reports",
+      "reference": "annual_reports/FY21.pdf",
+      "excerpt": "FY21 [cash_flow] Cash generated from operations                                                                   360.03                 535.35",
+      "section_type": "financial"
+    },
+    {
+      "source": "annual_reports",
+      "reference": "annual_reports/FY21.pdf",
+      "excerpt": "FY21 extracted metrics: revenue=4,263.59, ebitda=254.91, net_profit=2.00, debt=298.89 (INR Crores).",
+      "section_type": "financial"
+    },
+    {
+      "source": "annual_reports",
+      "reference": "annual_reports/FY22.pdf",
+      "excerpt": "FY22 [revenue] Revenue from operations                                  6,045.58               4,263.59            5,376.99               3,842.23",
+      "section_type": "financial"
+    },
+    {
+      "source": "legal_documents",
+      "reference": "case_summary_1",
+      "excerpt": "{'case_count': 6, 'case_type': 'Labor', 'case_status': 'Under Appeal', 'litigation_risk_score': 39.0}",
+      "section_type": "litigation"
+    },
+    {
+      "source": "legal_documents",
+      "reference": "case_summary_2",
+      "excerpt": "{'case_count': 6, 'case_type': 'Labor', 'case_status': 'Under Appeal', 'litigation_risk_score': 24.0}",
+      "section_type": "litigation"
+    },
+    {
+      "source": "annual_reports",
+      "reference": "annual_reports/FY24.pdf",
+      "excerpt": "Commodity Copper 1,188.81 98.55 250.00 17.28 938.81 81.27 Aluminium 685.78 20.89 - - 685.78 20.89 Particulars As at March 31, 2023 Total exposure Hedging Unhedged exposure Quantity Amount Quantity Amount Quantity Amou...",
+      "section_type": "financial"
+    },
+    {
+      "source": "annual_reports",
+      "reference": "annual_reports/FY25.pdf",
+      "excerpt": "crores as compared to H 557.16 crores in the last investments in manufacturing capacity, research and financial year whereas, net profit after exceptional items development, sales and distribution expansion, digital a...",
+      "section_type": "financial"
+    },
+    {
+      "source": "annual_reports",
+      "reference": "annual_reports/FY22.pdf",
+      "excerpt": "with (B) The Company has maintained proper records third parties at the year-end, written confirmations showing full particulars of intangible assets have been obtained and in respect of goods in transit, (including i...",
+      "section_type": "financial"
+    }
+  ],
+  "financial_trend_analysis": "The company\u2019s revenue has shown robust growth over the periods FY20 to FY25, posting a CAGR of 17.43%. Simultaneously, net profitability has shown volatility with a CAGR of 0.00%. Operating efficiency, as measured by EBITDA, recorded a CAGR of 22.93%. The EBITDA margin has moved from 6.12% in FY20 to 7.70% in FY25. Overall, the financial trajectory indicates a business model that is scaling well.",
+  "liquidity_leverage_assessment": "Leverage remains high with a Debt/Equity ratio of Not available (insufficient reliable denominator/source).. The company's reliance on external borrowings is evident, but the sharp increasing in debt by 213.79% warrants monitoring. On the liquidity front, the current ratio stands at 1.28, suggesting adequate short-term payment capacity. The Debt/EBITDA ratio is 0.22, reflecting the company's capability to service its obligations from operating cash flows.",
+  "promoter_management_assessment": "Management quality and corporate governance show a composite risk score of 40.00/100, while promoter background checks indicate a risk layer of 24.30/100. There are no apparent severe governance red flags.",
+  "industry_sector_outlook": "The overarching sector risk profile is evaluated as LOW. The industry environment currently presents several challenges, including no major evident headwinds. Furthermore, broader market signals and news sentiment indicate a score of 83.00/100, implying a stable outlook from external observers.",
+  "litigation_assessment": "The current legal exposure appears moderate but requires tracking. We have identified 12 active or recent litigation events, yielding a composite litigation risk score of 48.00/100. Recurring labour or operational matters should be closely tracked.",
+  "final_recommendation": "Based on the holistic evaluation of Blue Star Ltd's financial stability, operating performance, and external risk factors, the final aggregated credit score is 1.89 out of 100. Consequently, the facility request is recommended to be rejected. We propose a maximum optimal loan limit of INR 56.48 Crores, priced at an interest rate of 15.40% per annum. The decision is structurally weighted by the core financial trajectory, current leverage profile, legal contingencies, and management governance metrics.",
+  "validated_financials": {
+    "normalized_unit": "INR Crores",
+    "years": [
+      "FY20",
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "yearly_validated": [
+      {
+        "year": "FY20",
+        "metrics": {
+          "revenue": 5360.19,
+          "ebitda": 328.2,
+          "net_profit": -19.0,
+          "debt": 65.92,
+          "finance_cost": 2.77,
+          "total_assets": 258.73,
+          "total_liabilities": 106.91
+        },
+        "ratios": {
+          "profit_margin": {
+            "value": -0.003544650469479627,
+            "reason": null
+          },
+          "ebitda_margin": {
+            "value": 0.06122917284648492,
+            "reason": null
+          },
+          "debt_to_equity": {
+            "value": 0.4341983928336187,
+            "reason": null
+          },
+          "current_ratio": {
+            "value": 1.0414504515475176,
+            "reason": null
+          },
+          "interest_coverage": {
+            "value": 118.48375451263537,
+            "reason": null
+          },
+          "debt_to_ebitda": {
+            "value": 0.20085313833028642,
+            "reason": null
+          }
+        },
+        "unreliable_metrics": []
+      },
+      {
+        "year": "FY21",
+        "metrics": {
+          "revenue": 4263.59,
+          "ebitda": 254.91,
+          "net_profit": 2.0,
+          "debt": 298.89,
+          "finance_cost": 2.82,
+          "total_assets": 7.0,
+          "total_liabilities": 6.44
+        },
+        "ratios": {
+          "profit_margin": {
+            "value": 0.0004690882566100399,
+            "reason": null
+          },
+          "ebitda_margin": {
+            "value": 0.05978764374623263,
+            "reason": null
+          },
+          "debt_to_equity": {
+            "value": null,
+            "reason": "suppressed: unreliable source metrics"
+          },
+          "current_ratio": {
+            "value": 1.264476331557187,
+            "reason": null
+          },
+          "interest_coverage": {
+            "value": 90.3936170212766,
+            "reason": null
+          },
+          "debt_to_ebitda": {
+            "value": 1.1725314816994232,
+            "reason": null
+          }
+        },
+        "unreliable_metrics": [
+          "total_liabilities"
+        ]
+      },
+      {
+        "year": "FY22",
+        "metrics": {
+          "revenue": 6045.58,
+          "ebitda": 362.95,
+          "net_profit": 168.0,
+          "debt": 67.14,
+          "finance_cost": 2.49,
+          "total_assets": 4312.64,
+          "total_liabilities": 3292.1
+        },
+        "ratios": {
+          "profit_margin": {
+            "value": 0.02778889701236275,
+            "reason": null
+          },
+          "ebitda_margin": {
+            "value": 0.060035596253792026,
+            "reason": null
+          },
+          "debt_to_equity": {
+            "value": 0.06578870009994706,
+            "reason": null
+          },
+          "current_ratio": {
+            "value": 1.1731880641250167,
+            "reason": null
+          },
+          "interest_coverage": {
+            "value": 145.76305220883532,
+            "reason": null
+          },
+          "debt_to_ebitda": {
+            "value": 0.18498415759746523,
+            "reason": null
+          }
+        },
+        "unreliable_metrics": []
+      },
+      {
+        "year": "FY23",
+        "metrics": {
+          "revenue": 7977.32,
+          "ebitda": 547.57,
+          "net_profit": 400.69,
+          "debt": 8920.0,
+          "finance_cost": 2.86,
+          "total_assets": 5399.06,
+          "total_liabilities": 4065.22
+        },
+        "ratios": {
+          "profit_margin": {
+            "value": 0.050228648217697174,
+            "reason": null
+          },
+          "ebitda_margin": {
+            "value": 0.06864084680067993,
+            "reason": null
+          },
+          "debt_to_equity": {
+            "value": 6.687458765669043,
+            "reason": null
+          },
+          "current_ratio": {
+            "value": 1.1233855302279483,
+            "reason": null
+          },
+          "interest_coverage": {
+            "value": 191.45804195804197,
+            "reason": null
+          },
+          "debt_to_ebitda": {
+            "value": 16.29015468341947,
+            "reason": null
+          }
+        },
+        "unreliable_metrics": []
+      },
+      {
+        "year": "FY24",
+        "metrics": {
+          "revenue": 9685.36,
+          "ebitda": 702.0,
+          "net_profit": 414.31,
+          "debt": 455.93,
+          "finance_cost": 3.63,
+          "total_assets": 7.0,
+          "total_liabilities": 6.44
+        },
+        "ratios": {
+          "profit_margin": {
+            "value": 0.04277693343355332,
+            "reason": null
+          },
+          "ebitda_margin": {
+            "value": 0.07248052731132348,
+            "reason": null
+          },
+          "debt_to_equity": {
+            "value": null,
+            "reason": "suppressed: unreliable source metrics"
+          },
+          "current_ratio": {
+            "value": 1.2991073845051435,
+            "reason": null
+          },
+          "interest_coverage": {
+            "value": 193.38842975206612,
+            "reason": null
+          },
+          "debt_to_ebitda": {
+            "value": 0.6494729344729345,
+            "reason": null
+          }
+        },
+        "unreliable_metrics": [
+          "total_liabilities"
+        ]
+      },
+      {
+        "year": "FY25",
+        "metrics": {
+          "revenue": 11967.65,
+          "ebitda": 921.29,
+          "net_profit": 591.28,
+          "debt": 206.85,
+          "finance_cost": 3.99,
+          "total_assets": 7.0,
+          "total_liabilities": 6.44
+        },
+        "ratios": {
+          "profit_margin": {
+            "value": 0.049406525090556624,
+            "reason": null
+          },
+          "ebitda_margin": {
+            "value": 0.07698169649012128,
+            "reason": null
+          },
+          "debt_to_equity": {
+            "value": null,
+            "reason": "suppressed: unreliable source metrics"
+          },
+          "current_ratio": {
+            "value": 1.2767540586401962,
+            "reason": null
+          },
+          "interest_coverage": {
+            "value": 230.89974937343356,
+            "reason": null
+          },
+          "debt_to_ebitda": {
+            "value": 0.2245221374377232,
+            "reason": null
+          }
+        },
+        "unreliable_metrics": [
+          "total_liabilities"
+        ]
+      }
+    ],
+    "latest_year": "FY25",
+    "latest_ratios": {
+      "profit_margin": {
+        "value": 0.049406525090556624,
+        "reason": null
+      },
+      "ebitda_margin": {
+        "value": 0.07698169649012128,
+        "reason": null
+      },
+      "debt_to_equity": {
+        "value": null,
+        "reason": "suppressed: unreliable source metrics"
+      },
+      "current_ratio": {
+        "value": 1.2767540586401962,
+        "reason": null
+      },
+      "interest_coverage": {
+        "value": 230.89974937343356,
+        "reason": null
+      },
+      "debt_to_ebitda": {
+        "value": 0.2245221374377232,
+        "reason": null
+      }
+    }
+  },
+  "metadata": {
+    "source_types_used": [
+      "annual_reports"
+    ],
+    "dataset_presence": {
+      "annual_reports": 1,
+      "financial_statements": 0,
+      "balance_sheets": 0,
+      "gst_returns": 0,
+      "bank_statements": 1,
+      "legal_documents": 0,
+      "news_documents": 0
+    },
+    "loan_policy_caps": {
+      "cap_25pct_revenue_crore": 2991.91,
+      "cap_4x_ebitda_crore": 3685.16
+    }
+  }
+}

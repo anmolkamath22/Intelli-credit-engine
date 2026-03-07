@@ -1,0 +1,20 @@
+{
+  "revenue": null,
+  "net_profit": null,
+  "debt": null,
+  "finance_cost": null,
+  "total_assets": null,
+  "total_liabilities": null,
+  "current_assets": null,
+  "current_liabilities": null,
+  "cash_flow": null,
+  "ebitda": null,
+  "working_capital": null,
+  "auditor_remarks": [],
+  "company_name": "Apollo Hospitals",
+  "company_slug": "apollo_hospitals",
+  "document_count": 0,
+  "normalized_unit": "INR Crores",
+  "revenue_prev": null,
+  "data_quality_issues": []
+}

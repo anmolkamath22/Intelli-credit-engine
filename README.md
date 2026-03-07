@@ -50,7 +50,7 @@ If users provide only a subset of these files, the pipeline still runs end-to-en
 - Decision trace captures risk flags and feature contributions.
 
 5. CAM generation
-- Produces narrative CAM (PDF + TXT/DOCX fallback).
+- Produces CAM using a deterministic path: **JSON -> LaTeX -> local compilation -> PDF**.
 - Includes source attribution by dataset type (not hardcoded absolute machine paths).
 
 ## Tech Stack
@@ -106,16 +106,22 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-System dependency for PDF extraction:
+System dependencies for PDF extraction and LaTeX CAM compilation:
 ```bash
 sudo apt-get update
-sudo apt-get install -y poppler-utils
+sudo apt-get install -y poppler-utils texlive-latex-base texlive-latex-recommended texlive-fonts-recommended
 ```
+Preferred compiler detection order: `tectonic` -> `xelatex` -> `pdflatex`.
 
 ## Run Commands
 Run full pipeline:
 ```bash
 python run_pipeline.py --company "Blue Star Ltd"
+```
+
+Run with financial audit/debug artifacts:
+```bash
+python run_pipeline.py --company "Blue Star Ltd" --debug-financials
 ```
 
 Ask CAM explainer questions:
@@ -142,7 +148,21 @@ Per company in `data/processed/<company_slug>/`:
 
 CAM reports:
 - `outputs/cam_reports/<company_slug>/CAM_report.pdf`
-- `outputs/cam_reports/<company_slug>/CAM_report.txt` (or `.docx` when available)
+- `outputs/cam_reports/<company_slug>/CAM_report.tex`
+- `outputs/cam_reports/<company_slug>/cam_payload.json`
+- `outputs/cam_reports/<company_slug>/compile.log`
+
+Run-level aliases (latest run):
+- `outputs/cam_reports/CAM_report.pdf`
+- `outputs/cam_reports/CAM_report.tex`
+- `outputs/cam_reports/cam_payload.json`
+- `outputs/cam_reports/compile.log`
+
+Debug outputs:
+- `outputs/debug/financial_audit_report.json`
+- `outputs/debug/unit_detection_<company_slug>.json`
+- `outputs/debug/financial_anomalies_<company_slug>.json`
+- `outputs/debug/financial_debug_<company_slug>.json`
 
 ## CAM Contents
 - Executive Summary

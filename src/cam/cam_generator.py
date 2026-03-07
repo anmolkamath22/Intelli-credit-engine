@@ -1,8 +1,11 @@
-"""CAM generator combining scoring and trace outputs."""
+"""Structured CAM payload generator (JSON-first, renderer-agnostic)."""
 
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
+
+from src.analysis.credit_memo_narrative import build_credit_memo_narrative
 
 
 def _to_float(x: object, default: float = 0.0) -> float:
@@ -10,72 +13,6 @@ def _to_float(x: object, default: float = 0.0) -> float:
         return float(x)
     except Exception:
         return default
-
-
-def _fmt_inr(x: object) -> str:
-    v = _to_float(x, 0.0)
-    return f"INR {v:,.2f}"
-
-
-def _fmt_pct(x: object, scale: float = 1.0) -> str:
-    v = _to_float(x, 0.0) * scale
-    return f"{v:.2f}%"
-
-
-def _fmt_num(x: object, digits: int = 2) -> str:
-    v = _to_float(x, 0.0)
-    return f"{v:,.{digits}f}"
-
-
-def _build_financial_table(history: dict) -> list[str]:
-    years = history.get("years", [])
-    rows = history.get("yearly_data", [])
-    if not years or not rows:
-        return ["Financial history table unavailable due to missing multi-year annual report extraction."]
-
-    idx = {str(r.get("year")): r for r in rows}
-    hdr = "| Metric | " + " | ".join(years) + " |"
-    sep = "| --- | " + " | ".join(["---"] * len(years)) + " |"
-
-    def metric_row(label: str, key: str, pct: bool = False) -> str:
-        vals = []
-        for y in years:
-            r = idx.get(y, {})
-            v = _to_float(r.get(key), 0.0)
-            vals.append(f"{(v * 100):.2f}%" if pct else f"{v:,.2f}")
-        return "| " + label + " | " + " | ".join(vals) + " |"
-
-    def debt_equity_row() -> str:
-        vals = []
-        for y in years:
-            r = idx.get(y, {})
-            assets = _to_float(r.get("total_assets"), 0.0)
-            liab = _to_float(r.get("total_liabilities"), 0.0)
-            equity = max(assets - liab, 1e-6)
-            debt = _to_float(r.get("debt"), 0.0)
-            vals.append(f"{(debt / equity):.2f}")
-        return "| Debt/Equity | " + " | ".join(vals) + " |"
-
-    def ebitda_margin_row() -> str:
-        vals = []
-        for y in years:
-            r = idx.get(y, {})
-            rev = _to_float(r.get("revenue"), 0.0)
-            ebt = _to_float(r.get("ebitda"), 0.0)
-            vals.append(f"{(ebt / rev * 100 if rev else 0.0):.2f}%")
-        return "| EBITDA Margin | " + " | ".join(vals) + " |"
-
-    return [
-        "Financial Performance (INR Crores)",
-        hdr,
-        sep,
-        metric_row("Revenue", "revenue"),
-        metric_row("EBITDA", "ebitda"),
-        metric_row("Net Profit", "net_profit"),
-        metric_row("Debt", "debt"),
-        debt_equity_row(),
-        ebitda_margin_row(),
-    ]
 
 
 def _source_type(src: str) -> str:
@@ -96,8 +33,8 @@ def _source_type(src: str) -> str:
         return "balance_sheets"
     if "research_summary" in s:
         return "research_summary"
-    if "credit_features" in s:
-        return "credit_features"
+    if "credit_features" in s or "financial_features" in s:
+        return "feature_summary"
     return "other_documents"
 
 
@@ -115,140 +52,269 @@ def _reference_hint(src: str) -> str:
     ]:
         if folder in parts:
             idx = parts.index(folder)
-            tail = "/".join(parts[idx: idx + 2]) if idx + 1 < len(parts) else folder
-            return tail
+            return "/".join(parts[idx: idx + 2]) if idx + 1 < len(parts) else folder
     return p.name
 
 
-def build_cam_sections(
+def _financial_table(history: dict) -> dict:
+    years = [str(y) for y in history.get("years", [])]
+    rows = history.get("yearly_data", [])
+    if not years or not rows:
+        return {
+            "headers": ["Metric", "FY24"],
+            "rows": [
+                ["Revenue", "NA"],
+                ["EBITDA", "NA"],
+                ["Net Profit", "NA"],
+                ["Debt", "NA"],
+                ["Debt/Equity", "NA"],
+                ["EBITDA Margin", "NA"],
+            ],
+        }
+    idx = {str(r.get("year")): r for r in rows}
+
+    def _metric_row(name: str, key: str) -> list[str]:
+        vals: list[str] = []
+        for y in years:
+            v = _to_float(idx.get(y, {}).get(key), 0.0)
+            vals.append(f"{v:,.2f}")
+        return [name] + vals
+
+    debt_equity = ["Debt/Equity"]
+    ebitda_margin = ["EBITDA Margin"]
+    for y in years:
+        r = idx.get(y, {})
+        assets = _to_float(r.get("total_assets"), 0.0)
+        liabilities = _to_float(r.get("total_liabilities"), 0.0)
+        equity = max(assets - liabilities, 1e-6)
+        debt = _to_float(r.get("debt"), 0.0)
+        rev = _to_float(r.get("revenue"), 0.0)
+        ebitda = _to_float(r.get("ebitda"), 0.0)
+        debt_equity.append(f"{(debt / equity):.2f}")
+        ebitda_margin.append(f"{(ebitda / rev * 100.0 if rev else 0.0):.2f}%")
+
+    return {
+        "headers": ["Metric"] + years,
+        "rows": [
+            _metric_row("Revenue", "revenue"),
+            _metric_row("EBITDA", "ebitda"),
+            _metric_row("Net Profit", "net_profit"),
+            _metric_row("Debt", "debt"),
+            debt_equity,
+            ebitda_margin,
+        ],
+    }
+
+
+def build_cam_payload(
     company: str,
-    financials: dict,
-    research: dict,
-    features: dict,
-    scoring: dict,
-    trace: dict,
-    financial_history: dict | None = None,
-    financial_trends: dict | None = None,
+    financials: dict[str, Any],
+    research: dict[str, Any],
+    features: dict[str, Any],
+    scoring: dict[str, Any],
+    trace: dict[str, Any],
+    financial_history: dict[str, Any] | None = None,
+    financial_trends: dict[str, Any] | None = None,
     trend_narrative: list[str] | None = None,
-    dataset_presence: dict | None = None,
-) -> dict:
-    """Build CAM sections in narrative format for readable report rendering."""
-    credit_score = _to_float(scoring.get("credit_score"), 0.0)
-    risk_premium = _to_float(scoring.get("risk_premium"), 0.0)
-    interest_rate = 9.5 + risk_premium
-    loan_limit = _to_float(scoring.get("recommended_loan_limit"), 0.0)
-    financial_history = financial_history or {"years": [], "yearly_data": []}
+    dataset_presence: dict[str, Any] | None = None,
+    validated_financials: dict[str, Any] | None = None,
+    cam_evidence: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    """Build structured CAM payload for deterministic rendering."""
+    financial_history = financial_history or {}
     financial_trends = financial_trends or {}
     trend_narrative = trend_narrative or []
     dataset_presence = dataset_presence or {}
+    validated_financials = validated_financials or {}
+    cam_evidence = cam_evidence or []
 
-    risk_flags = trace.get("risk_flags", []) or ["No major risk flags identified from current inputs."]
-    headwinds = research.get("sector_headwinds", []) or ["No major sector headwinds identified from available data."]
-    rating_hist = research.get("rating_history", [])
-    evidence_rows = research.get("supporting_evidence", [])[:5]
-    evidence_lines = []
+    credit_score = _to_float(scoring.get("credit_score"), 0.0)
+    loan_limit = _to_float(scoring.get("recommended_loan_limit"), 0.0)
+    rate = _to_float(scoring.get("recommended_interest_rate"), _to_float(scoring.get("base_rate"), 9.5))
+
+    years = financial_history.get("years", [])
+    trends_text = " ".join(trend_narrative).strip()
+    if not trends_text:
+        rev_cagr = _to_float(financial_trends.get("revenue_cagr_5y"), 0.0) * 100
+        pat_cagr = _to_float(financial_trends.get("net_profit_cagr_5y"), 0.0) * 100
+        debt_chg = _to_float(financial_trends.get("debt_change_rate"), 0.0) * 100
+        debt_trend = str(financial_trends.get("debt_trend", "stable"))
+        trends_text = (
+            f"Revenue CAGR ({years[0]}-{years[-1]}) is {rev_cagr:.2f}% and net profit CAGR is {pat_cagr:.2f}%. "
+            f"Debt is {debt_trend} with a total change of {debt_chg:.2f}% over the same period."
+            if years
+            else "Insufficient multi-year trends available."
+        )
+
     source_types: list[str] = []
-    for e in evidence_rows:
+    evidence = []
+
+    # 1) Direct mapped evidence from extracted financial table rows (highest priority).
+    fin_row_evidence = []
+    for row in (financial_history.get("yearly_data", []) or [])[-5:]:
+        fy = str(row.get("year", ""))
+        src = str(row.get("source", ""))
+        stype = _source_type(src)
+        if stype not in source_types:
+            source_types.append(stype)
+        mapped = row.get("source_rows", {}) or {}
+        for metric in ["revenue", "ebitda", "net_profit", "debt", "total_assets", "total_liabilities", "finance_cost", "cash_flow"]:
+            line = str(mapped.get(metric, "")).strip()
+            if line:
+                if len(line) > 220:
+                    line = line[:217] + "..."
+                fin_row_evidence.append(
+                    {
+                        "source": stype,
+                        "reference": _reference_hint(src),
+                        "excerpt": f"{fy} [{metric}] {line}",
+                        "section_type": "financial",
+                    }
+                )
+        # Fallback to metric snapshot evidence when exact row label text is unavailable.
+        snapshot = (
+            f"{fy} extracted metrics: revenue={_to_float(row.get('revenue'), 0.0):,.2f}, "
+            f"ebitda={_to_float(row.get('ebitda'), 0.0):,.2f}, "
+            f"net_profit={_to_float(row.get('net_profit'), 0.0):,.2f}, "
+            f"debt={_to_float(row.get('debt'), 0.0):,.2f} (INR Crores)."
+        )
+        fin_row_evidence.append(
+            {
+                "source": stype,
+                "reference": _reference_hint(src),
+                "excerpt": snapshot,
+                "section_type": "financial",
+            }
+        )
+
+    # 2) Litigation summary evidence.
+    for idx, cs in enumerate((research.get("case_summary", []) or [])[:4], start=1):
+        line = str(cs).strip().replace("\n", " ")
+        if len(line) > 220:
+            line = line[:217] + "..."
+        evidence.append(
+            {
+                "source": "legal_documents",
+                "reference": f"case_summary_{idx}",
+                "excerpt": line,
+                "section_type": "litigation",
+            }
+        )
+    source_evidence = cam_evidence if cam_evidence else (research.get("supporting_evidence", []) or [])
+    for e in source_evidence[:15]:
         src = str(e.get("source", "unknown"))
         stype = _source_type(src)
         if stype not in source_types:
             source_types.append(stype)
-        ref = _reference_hint(src)
-        snippet = str(e.get("chunk", "")).strip().replace("\n", " ")
-        if len(snippet) > 160:
-            snippet = snippet[:157] + "..."
-        evidence_lines.append(f"Source Type: {stype} | Reference: {ref} | Evidence: {snippet}")
-    if not evidence_lines:
-        evidence_lines = ["No RAG evidence snippets available from current retrieved corpus."]
+        excerpt = str(e.get("chunk", "")).strip().replace("\n", " ")
+        if len(excerpt) > 220:
+            excerpt = excerpt[:217] + "..."
+        evidence.append(
+            {
+                "source": stype,
+                "reference": _reference_hint(src),
+                "excerpt": excerpt,
+                "section_type": str((e.get("metadata") or {}).get("section_type", "general")),
+            }
+        )
+
+    # Merge prioritized mapped evidence first.
+    evidence = fin_row_evidence[:10] + evidence
+
+    # De-duplicate by excerpt text.
+    seen = set()
+    deduped = []
+    for ev in evidence:
+        key = (ev.get("source"), ev.get("reference"), ev.get("excerpt"))
+        if key in seen:
+            continue
+        seen.add(key)
+        deduped.append(ev)
+    evidence = deduped[:20]
+
     if not source_types:
         for k, v in dataset_presence.items():
-            if v:
-                source_types.append(k)
+            if int(v):
+                source_types.append(str(k))
 
-    attribution_lines = [
-        "Conclusion source mapping (dataset-level, no hardcoded absolute paths):",
-        f"Primary sources used: {', '.join(source_types) if source_types else 'Not available'}",
-    ]
-    for k in [
-        "annual_reports",
-        "financial_statements",
-        "balance_sheets",
-        "gst_returns",
-        "bank_statements",
-        "legal_documents",
-        "news_documents",
-    ]:
-        status = "available" if int(dataset_presence.get(k, 0)) else "missing/synthetic fallback used"
-        attribution_lines.append(f"{k}: {status}")
-    rating_text = research.get("external_credit_rating") or "Not available"
+    rating = research.get("external_credit_rating") or "Not Available"
+    rating_hist = research.get("rating_history") or []
     if rating_hist:
-        rating_text = f"{rating_text} (history: {' -> '.join([str(x) for x in rating_hist[:5]])})"
+        rating = f"{rating} ({' -> '.join([str(x) for x in rating_hist[:5]])})"
+
+    risk_flags_raw = trace.get("risk_flags", []) or ["No major risk flags identified."]
+    risk_flags = [{"flag": str(f), "explanation": "Flag raised from model risk logic and supporting evidence."} for f in risk_flags_raw]
+    narrative = build_credit_memo_narrative(
+        company=company,
+        financials=financials,
+        trends=financial_trends,
+        validated_financials=validated_financials,
+        research=research,
+        features=features,
+        scoring=scoring,
+    )
 
     return {
-        "Executive Summary": (
-            f"Credit appraisal for {company}: final credit score {credit_score:.2f}/100, "
-            f"recommended loan limit INR {loan_limit:,.2f} crore, and recommended interest rate "
-            f"{_to_float(scoring.get('recommended_interest_rate'), interest_rate):.2f}% p.a. "
-            "All financial figures are reported in INR Crores unless otherwise stated."
+        "title": "Credit Appraisal Memo",
+        "company_name": company,
+        "reporting_note": "All financial values are reported in INR Crores unless otherwise stated.",
+        "executive_summary": (
+            f"Final credit score is {credit_score:.2f}/100. "
+            f"Recommended loan limit is INR {loan_limit:,.2f} Crores at {rate:.2f}% per annum. "
+            f"Assessment uses financial trends, legal/news signals, synthetic behavior signals (when required), and decision trace explainability."
         ),
-        "Company Overview": (
-            f"{company} was evaluated using locally ingested financial and risk documents. "
-            f"Document count reviewed: {_fmt_num(financials.get('document_count'), 0)}. "
-            f"External credit rating (if available): {rating_text}."
+        "company_overview": (
+            f"The evaluation covers available company datasets with primary evidence from: "
+            f"{', '.join(source_types) if source_types else 'available uploaded datasets'}. "
+            f"Document count processed: {int(_to_float(financials.get('document_count'), 0))}. "
+            f"External credit rating observed: {rating}."
         ),
-        "5-Year Financial Performance": (
-            f"Years analyzed: {', '.join(financial_history.get('years', [])) or 'Not available'}. "
-            f"Latest year revenue: {_fmt_inr(financials.get('revenue'))} crore and EBITDA: {_fmt_inr(financials.get('ebitda'))} crore."
+        "financial_performance": {
+            "narrative": (
+                f"Years analyzed: {', '.join(years) if years else 'Not available'}. "
+                f"Latest revenue: INR {_to_float(financials.get('revenue'), 0.0):,.2f} Crores; "
+                f"latest EBITDA: INR {_to_float(financials.get('ebitda'), 0.0):,.2f} Crores. "
+                f"{trends_text}"
+            ),
+            "table": _financial_table(financial_history),
+        },
+        "promoter_analysis": (
+            f"Promoter risk score: {_to_float(research.get('promoter_risk'), 0.0):.2f}/100. "
+            f"Management risk score: {_to_float(features.get('management_risk_score'), 0.0):.2f}/100. "
+            f"Rating rationale: {research.get('rating_rationale') or 'Not available in uploaded data.'}"
         ),
-        "Financial Ratio Table": _build_financial_table(financial_history),
-        "Financial Trend Analysis": trend_narrative or [
-            "Insufficient data for detailed 5-year trend interpretation."
-        ],
-        "Financial Strength": (
-            f"Revenue: {_fmt_inr(financials.get('revenue'))}; Net profit: {_fmt_inr(financials.get('net_profit'))}; "
-            f"EBITDA: {_fmt_inr(financials.get('ebitda'))}; Debt: {_fmt_inr(financials.get('debt'))}. "
-            f"Total assets: {_fmt_inr(financials.get('total_assets'))}; Total liabilities: {_fmt_inr(financials.get('total_liabilities'))}. "
-            f"Debt-to-equity: {_fmt_num(features.get('debt_to_equity'))}; Profit margin: {_fmt_pct(features.get('profit_margin'), 100)}; "
-            f"Interest coverage: {_fmt_num(features.get('interest_coverage'))}x."
+        "industry_outlook": (
+            f"Sector risk assessment is {str(research.get('sector_risk', 'moderate')).upper()}. "
+            f"Headwinds observed: {', '.join(research.get('sector_headwinds', []) or ['none'])}."
         ),
-        "Promoter Analysis": (
-            f"Promoter risk score: {_fmt_num(research.get('promoter_risk'))}/100. "
-            f"Management risk score: {_fmt_num(features.get('management_risk_score'))}/100. "
-            f"Rating rationale: {research.get('rating_rationale') or 'Not available from current dataset.'}"
+        "litigation_profile": (
+            f"Litigation count: {int(_to_float(research.get('litigation_count'), 0))}. "
+            f"Litigation risk score: {_to_float(research.get('litigation_risk_score'), 0.0):.2f}/100."
         ),
-        "Industry Conditions": (
-            f"Sector risk assessment: {str(research.get('sector_risk', 'moderate')).upper()}. "
-            f"Observed headwinds: {'; '.join([str(x) for x in headwinds])}."
+        "risk_flags": risk_flags,
+        "decision_logic": (
+            f"{trace.get('reasoning_summary') or 'The credit decision is weighted primarily by the company’s core financial trajectory, risk indicators, and cashflow consistency.'} "
+            f"Notably, circular trading risk flag is {'triggered' if int(_to_float(features.get('circular_trading_flag'), 0)) else 'clear'}, "
+            f"and revenue inflation flag is {'triggered' if int(_to_float(features.get('revenue_inflation_flag'), 0)) else 'clear'}. "
+            f"The primary synthesis relies heavily on {', '.join(source_types) if source_types else 'the available verified documents'}."
         ),
-        "Litigation Profile": (
-            f"Litigation count: {_fmt_num(research.get('litigation_count'), 0)}. "
-            f"Litigation risk score: {_fmt_num(research.get('litigation_risk_score'))}/100. "
-            f"Case summary: {research.get('case_summary') or 'No detailed case summary in provided files.'}"
-        ),
-        "Management Assessment": (
-            f"Cashflow stability: {_fmt_num(features.get('cashflow_stability'))} (0 to 1 scale, higher is better). "
-            f"GST compliance score: {_fmt_num(features.get('gst_compliance_score'))}/100. "
-            f"News sentiment score: {_fmt_num(features.get('news_sentiment_score'))}/100."
-        ),
-        "Risk Flags": [str(x) for x in risk_flags],
-        "Evidence Attribution": attribution_lines,
-        "Supporting Evidence (RAG)": evidence_lines,
-        "Decision Logic": (
-            f"{trace.get('reasoning_summary') or 'Decision logic derived from weighted financial, legal, sentiment, and management factors.'} "
-            f"Primary conclusion drivers were sourced from: {', '.join(source_types) if source_types else 'available ingested datasets'}. "
-            f"Model penalties were applied for circular-trading flag="
-            f"{int(_to_float(features.get('circular_trading_flag'), 0))} and revenue-inflation flag="
-            f"{int(_to_float(features.get('revenue_inflation_flag'), 0))}."
-        ),
-        "Final Credit Score": f"{credit_score:.2f} / 100",
-        "Credit Rating (External)": rating_text,
-        "Recommended Loan Limit": (
-            f"INR {loan_limit:,.2f} crore (model output). "
-            f"Policy caps: 25% of annual revenue={_to_float(scoring.get('loan_limit_cap_revenue_25pct'), 0.0):,.2f} crore; "
-            f"4x EBITDA={_to_float(scoring.get('loan_limit_cap_ebitda_4x'), 0.0):,.2f} crore."
-        ),
-        "Interest Rate Recommendation": (
-            f"{_to_float(scoring.get('recommended_interest_rate'), interest_rate):.2f}% per annum "
-            f"(Base {_to_float(scoring.get('base_rate'), 9.5):.2f}% + Risk premium {risk_premium:.2f}%)."
-        ),
+        "final_credit_score": f"{credit_score:.2f} / 100",
+        "recommended_loan_limit_crore": f"{loan_limit:.2f}",
+        "interest_rate_percent": f"{rate:.2f}",
+        "supporting_evidence": evidence,
+        "financial_trend_analysis": narrative.get("financial_trend_analysis", ""),
+        "liquidity_leverage_assessment": narrative.get("liquidity_leverage_assessment", ""),
+        "promoter_management_assessment": narrative.get("promoter_management_assessment", ""),
+        "industry_sector_outlook": narrative.get("industry_sector_outlook", ""),
+        "litigation_assessment": narrative.get("litigation_assessment", ""),
+        "final_recommendation": narrative.get("final_recommendation", ""),
+        "validated_financials": validated_financials,
+        "metadata": {
+            "source_types_used": source_types,
+            "dataset_presence": dataset_presence,
+            "loan_policy_caps": {
+                "cap_25pct_revenue_crore": round(_to_float(scoring.get("loan_limit_cap_revenue_25pct"), 0.0), 2),
+                "cap_4x_ebitda_crore": round(_to_float(scoring.get("loan_limit_cap_ebitda_4x"), 0.0), 2),
+            },
+        },
     }

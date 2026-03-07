@@ -1,12 +1,15 @@
 {
-  "revenue": 3924.0131,
-  "net_profit": 4.58,
-  "debt": 23.0,
-  "total_assets": 450.73,
-  "total_liabilities": 31.0,
-  "cash_flow": 221.0,
-  "ebitda": 31.8,
-  "working_capital": 5.0,
+  "revenue": 11967.65,
+  "net_profit": 591.28,
+  "debt": 206.85,
+  "finance_cost": 3.99,
+  "total_assets": 7.0,
+  "total_liabilities": 6.44,
+  "current_assets": 6312.77,
+  "current_liabilities": 4944.39,
+  "cash_flow": 869.65,
+  "ebitda": 921.29,
+  "working_capital": 921.29,
   "auditor_remarks": [
     "going concern",
     "material weakness"
@@ -15,30 +18,6 @@
   "company_slug": "blue_star_ltd",
   "document_count": 5,
   "normalized_unit": "INR Crores",
-  "revenue_prev": 5605.733,
-  "data_quality_issues": [
-    {
-      "year": "FY22",
-      "issues": [
-        "ebitda_gt_revenue",
-        "profit_margin_gt_100",
-        "revenue_drop_gt_80"
-      ]
-    },
-    {
-      "year": "FY24",
-      "issues": [
-        "ebitda_gt_revenue",
-        "profit_margin_gt_100",
-        "revenue_drop_gt_80"
-      ]
-    },
-    {
-      "year": "FY25",
-      "issues": [
-        "profit_margin_gt_100",
-        "revenue_drop_gt_80"
-      ]
-    }
-  ]
+  "revenue_prev": 9685.36,
+  "data_quality_issues": []
 }

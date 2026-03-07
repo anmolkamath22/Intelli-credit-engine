@@ -1,0 +1,45 @@
+{
+  "company": "Blue Star Ltd",
+  "root_causes": [
+    "prose-first extraction may capture non-statement numbers",
+    "unit ambiguity in annual-report pages",
+    "limited section-aware retrieval causing generic evidence snippets"
+  ],
+  "years_affected": [
+    "FY20",
+    "FY21",
+    "FY22",
+    "FY23",
+    "FY24",
+    "FY25"
+  ],
+  "suspicious_mappings": [],
+  "anomalies": [],
+  "trend_snapshot": {
+    "revenue_cagr_5y": 0.174264,
+    "revenue_cagr_valid": true,
+    "revenue_cagr_reason": null,
+    "ebitda_cagr_5y": 0.229282,
+    "ebitda_cagr_valid": true,
+    "ebitda_cagr_reason": null,
+    "net_profit_cagr_5y": 0.0,
+    "net_profit_cagr_valid": false,
+    "net_profit_cagr_reason": "non_positive_base_or_terminal",
+    "debt_change_rate": 2.137894,
+    "debt_trend": "increasing",
+    "debt_start": 65.92,
+    "debt_end": 206.85,
+    "ebitda_margin_first": 0.061229,
+    "ebitda_margin_last": 0.076982,
+    "ebitda_margin_trend": "improving",
+    "interest_coverage_first": 55.319579,
+    "interest_coverage_last": 49.48782,
+    "interest_coverage_trend": "weakening"
+  },
+  "fix_recommendations": [
+    "prioritize table row labels and year columns over prose matches",
+    "track unit confidence and avoid hard normalization when uncertain",
+    "suppress unreliable metrics from ratios and narrative",
+    "use section-aware RAG filters by source_type and section_type"
+  ]
+}

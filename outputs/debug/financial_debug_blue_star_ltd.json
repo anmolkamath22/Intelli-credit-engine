@@ -1,0 +1,870 @@
+{
+  "company": "Blue Star Ltd",
+  "raw_mapped_rows": [
+    {
+      "year": "FY20",
+      "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/input/blue_star_ltd/annual_reports/FY21.pdf",
+      "source_rows": {
+        "revenue": "Revenue from operations                                       4,263.59             5,360.19             3,842.33            4,786.49",
+        "ebitda": "OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES                                                 254.91                 328.20",
+        "net_profit": "2.*Revenue and PAT of 2018-19 have been restated for the impact of IND AS 115",
+        "total_assets": "7    Total assets                                  258.73              146.67              77.98                7.30              23.40",
+        "total_liabilities": "8    Total liabilities                             106.91               98.53              55.50              15.34                0.12",
+        "debt": "Proceeds from/(Repayment towards) short term borrowings                                           (298.89)                    65.92",
+        "finance_cost": "Interest cost                                                        2.82             2.77             0.03             0.03",
+        "cash_flow": "Cash generated from operations                                                                   360.03                 535.35",
+        "working_capital": "OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES                                                 254.91                 328.20",
+        "current_assets": "Total Current Assets                                                                             2,859.55             2,651.21",
+        "current_liabilities": "Total Current Liabilities                                                                    2,261.45             2,545.69"
+      },
+      "mapping_confidence": {
+        "revenue": 0.82,
+        "ebitda": 0.5066666666666667,
+        "net_profit": 0.5533333333333333,
+        "total_assets": 0.7466666666666667,
+        "total_liabilities": 0.78,
+        "debt": 0.54,
+        "finance_cost": 0.7533333333333333,
+        "cash_flow": 0.6,
+        "working_capital": 0.5,
+        "current_assets": 0.5333333333333333,
+        "current_liabilities": 0.5666666666666667
+      },
+      "unit_confidence": 0.95,
+      "unit_uncertain": false
+    },
+    {
+      "year": "FY21",
+      "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/input/blue_star_ltd/annual_reports/FY21.pdf",
+      "source_rows": {
+        "revenue": "Revenue from operations                                       4,263.59             5,360.19             3,842.33            4,786.49",
+        "ebitda": "OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES                                                 254.91                 328.20",
+        "net_profit": "2.*Revenue and PAT of 2018-19 have been restated for the impact of IND AS 115",
+        "total_assets": "7    Total assets                                  258.73              146.67              77.98                7.30              23.40",
+        "total_liabilities": "8    Total liabilities                             106.91               98.53              55.50              15.34                0.12",
+        "debt": "Proceeds from/(Repayment towards) short term borrowings                                           (298.89)                    65.92",
+        "finance_cost": "Interest cost                                                        2.82             2.77             0.03             0.03",
+        "cash_flow": "Cash generated from operations                                                                   360.03                 535.35",
+        "working_capital": "OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES                                                 254.91                 328.20",
+        "current_assets": "Total Current Assets                                                                             2,859.55             2,651.21",
+        "current_liabilities": "Total Current Liabilities                                                                    2,261.45             2,545.69"
+      },
+      "mapping_confidence": {
+        "revenue": 0.82,
+        "ebitda": 0.5066666666666667,
+        "net_profit": 0.5533333333333333,
+        "total_assets": 0.7466666666666667,
+        "total_liabilities": 0.78,
+        "debt": 0.54,
+        "finance_cost": 0.7533333333333333,
+        "cash_flow": 0.6,
+        "working_capital": 0.5,
+        "current_assets": 0.5333333333333333,
+        "current_liabilities": 0.5666666666666667
+      },
+      "unit_confidence": 0.95,
+      "unit_uncertain": false
+    },
+    {
+      "year": "FY22",
+      "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/input/blue_star_ltd/annual_reports/FY22.pdf",
+      "source_rows": {
+        "revenue": "Revenue from operations                                  6,045.58               4,263.59            5,376.99               3,842.23",
+        "ebitda": "OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES                                                362.95                 254.91",
+        "net_profit": "Profit after tax                                           168.00                100.66               127.74                  65.93",
+        "total_assets": "Total Assets                                                                                         4,312.64              3,549.45",
+        "total_liabilities": "TOTAL LIABILITIES                                                                     3,292.10              2,661.59",
+        "debt": "Borrowings (Net) / (Net cash balance for 2021)                 \u201d                67.14          (151.45)            166.44            246.63             294.72",
+        "finance_cost": "Interest cost                                                       2.49             2.64             0.03             0.03",
+        "cash_flow": "Net cash flow from operating activities (A)                                                        57.33                 308.35",
+        "working_capital": "OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES                                                362.95                 254.91",
+        "current_assets": "Total current assets                                                                             3,483.43              2,859.55",
+        "current_liabilities": "Total current liabilities                                                                        2,969.20              2,261.45"
+      },
+      "mapping_confidence": {
+        "revenue": 0.82,
+        "ebitda": 0.5066666666666667,
+        "net_profit": 0.7733333333333333,
+        "total_assets": 0.48,
+        "total_liabilities": 0.5133333333333333,
+        "debt": 0.4666666666666667,
+        "finance_cost": 0.7533333333333333,
+        "cash_flow": 0.66,
+        "working_capital": 0.5,
+        "current_assets": 0.5333333333333333,
+        "current_liabilities": 0.5666666666666667
+      },
+      "unit_confidence": 0.95,
+      "unit_uncertain": false
+    },
+    {
+      "year": "FY23",
+      "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/input/blue_star_ltd/annual_reports/FY23.pdf",
+      "source_rows": {
+        "revenue": "Revenue from operations                                  7,977.32              6,064.08            7,353.13               5,395.49",
+        "ebitda": "OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES\t\t                                                     547.57               362.95",
+        "net_profit": "Profit after tax                                          400.69                168.00               366.58                127.74",
+        "total_assets": "\u0007\u0007\u0007\u0007         Total Assets                                                                                 5,399.06            4,312.64",
+        "total_liabilities": "TOTAL LIABILITIES                                                                                   4,065.22              3,292.10",
+        "debt": "CIN: L28920MH1949PLC006870 (\u201chereinafter called the                             of Debt Securities) Regulations, 2008.",
+        "finance_cost": "Interest cost                                                      2.86           2.49                         0.03             0.03",
+        "cash_flow": "Cash generated from operations                                                                         340.04               126.39",
+        "working_capital": "OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES\t\t                                                     547.57               362.95",
+        "current_assets": "Total current assets                                                                         4,250.61            3,483.43",
+        "current_liabilities": "Total current liabilities                                                                    3,783.75            2,969.20"
+      },
+      "mapping_confidence": {
+        "revenue": 0.82,
+        "ebitda": 0.5066666666666667,
+        "net_profit": 0.7733333333333333,
+        "total_assets": 0.48,
+        "total_liabilities": 0.5133333333333333,
+        "debt": 0.7666666666666667,
+        "finance_cost": 0.7533333333333333,
+        "cash_flow": 0.6,
+        "working_capital": 0.5,
+        "current_assets": 0.5333333333333333,
+        "current_liabilities": 0.5666666666666667
+      },
+      "unit_confidence": 0.95,
+      "unit_uncertain": false
+    },
+    {
+      "year": "FY24",
+      "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/input/blue_star_ltd/annual_reports/FY24.pdf",
+      "source_rows": {
+        "revenue": "Revenue from operations 9,685.36 7,977.32 8,998.88 7,353.13               Your Company and its subsidiaries (Group) operate in three",
+        "ebitda": "OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES                                              702.00                548.26",
+        "net_profit": "Profit after tax           414.31 400.69       367.5 366.58",
+        "total_assets": "7 Total assets                                             26.03                     4.43                    8.78                         -",
+        "total_liabilities": "8 Total liabilities                                        22.15                     5.57                    1.70                         -",
+        "debt": "Net Borrowings / (Net cash balance)                          \"           (455.93)      208.41        71.41      (149.30)      166.44",
+        "finance_cost": "Interest cost                                                       3.63             3.07         0.04               0.03",
+        "cash_flow": "Cash generated from operations                                                               425.53                335.89",
+        "working_capital": "Loan to Blue Star Climatech Limited                For working capital                35.00              25.00          50.00           35.00",
+        "current_assets": "Total current assets                                                                           5,040.03            4,250.61",
+        "current_liabilities": "Total current liabilities                                                                      3,879.61            3,831.93"
+      },
+      "mapping_confidence": {
+        "revenue": 0.82,
+        "ebitda": 0.5066666666666667,
+        "net_profit": 0.9066666666666666,
+        "total_assets": 0.7466666666666667,
+        "total_liabilities": 0.78,
+        "debt": 0.7333333333333333,
+        "finance_cost": 0.7533333333333333,
+        "cash_flow": 0.6,
+        "working_capital": 0.7666666666666667,
+        "current_assets": 0.5333333333333333,
+        "current_liabilities": 0.5666666666666667
+      },
+      "unit_confidence": 0.95,
+      "unit_uncertain": false
+    },
+    {
+      "year": "FY25",
+      "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/input/blue_star_ltd/annual_reports/FY25.pdf",
+      "source_rows": {
+        "revenue": "Revenue from operations                                                          11,967.65          9,685.36        11,325.75          8,998.88",
+        "ebitda": "OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES                                                            921.29                702.00",
+        "net_profit": "Profit after tax                                                                   591.28            414.31           484.90            367.50",
+        "total_assets": "7       Total assets                                121.99                  9.49                 21.80                    0.02",
+        "total_liabilities": "8       Total liabilities                           102.52                 10.91                  2.90                    1.26",
+        "debt": "Current maturity of long term borrowings                                               206.85        (206.85)               -",
+        "finance_cost": "Interest cost                                              3.99          3.63           0.04           0.04",
+        "cash_flow": "Cash generated from operations                                                                             869.65                 425.53",
+        "working_capital": "OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES                                                            921.29                702.00",
+        "current_assets": "Total current assets                                                                                            6,312.77                  5,040.03",
+        "current_liabilities": "Total current liabilities                                                                                       4,944.39                  3,878.11"
+      },
+      "mapping_confidence": {
+        "revenue": 0.82,
+        "ebitda": 0.5066666666666667,
+        "net_profit": 0.7733333333333333,
+        "total_assets": 0.7466666666666667,
+        "total_liabilities": 0.78,
+        "debt": 0.5333333333333333,
+        "finance_cost": 0.7533333333333333,
+        "cash_flow": 0.6,
+        "working_capital": 0.5,
+        "current_assets": 0.5333333333333333,
+        "current_liabilities": 0.5666666666666667
+      },
+      "unit_confidence": 0.95,
+      "unit_uncertain": false
+    }
+  ],
+  "normalized_financial_history": {
+    "years": [
+      "FY20",
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "yearly_data": [
+      {
+        "revenue": 5360.19,
+        "ebitda": 328.2,
+        "net_profit": -19.0,
+        "total_assets": 258.73,
+        "total_liabilities": 106.91,
+        "debt": 65.92,
+        "finance_cost": 2.77,
+        "cash_flow": 535.35,
+        "working_capital": 328.2,
+        "current_assets": 2651.21,
+        "current_liabilities": 2545.69,
+        "unit": "INR Crores",
+        "year": "FY20",
+        "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/input/blue_star_ltd/annual_reports/FY21.pdf",
+        "source_rows": {
+          "revenue": "Revenue from operations                                       4,263.59             5,360.19             3,842.33            4,786.49",
+          "ebitda": "OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES                                                 254.91                 328.20",
+          "net_profit": "2.*Revenue and PAT of 2018-19 have been restated for the impact of IND AS 115",
+          "total_assets": "7    Total assets                                  258.73              146.67              77.98                7.30              23.40",
+          "total_liabilities": "8    Total liabilities                             106.91               98.53              55.50              15.34                0.12",
+          "debt": "Proceeds from/(Repayment towards) short term borrowings                                           (298.89)                    65.92",
+          "finance_cost": "Interest cost                                                        2.82             2.77             0.03             0.03",
+          "cash_flow": "Cash generated from operations                                                                   360.03                 535.35",
+          "working_capital": "OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES                                                 254.91                 328.20",
+          "current_assets": "Total Current Assets                                                                             2,859.55             2,651.21",
+          "current_liabilities": "Total Current Liabilities                                                                    2,261.45             2,545.69"
+        },
+        "mapping_confidence": {
+          "revenue": 0.82,
+          "ebitda": 0.5066666666666667,
+          "net_profit": 0.5533333333333333,
+          "total_assets": 0.7466666666666667,
+          "total_liabilities": 0.78,
+          "debt": 0.54,
+          "finance_cost": 0.7533333333333333,
+          "cash_flow": 0.6,
+          "working_capital": 0.5,
+          "current_assets": 0.5333333333333333,
+          "current_liabilities": 0.5666666666666667
+        },
+        "unit_confidence": 0.95,
+        "unit_uncertain": false,
+        "unreliable_metrics": []
+      },
+      {
+        "revenue": 4263.59,
+        "net_profit": 2.0,
+        "debt": 298.89,
+        "finance_cost": 2.82,
+        "total_assets": 7.0,
+        "total_liabilities": 6.44,
+        "current_assets": 2859.55,
+        "current_liabilities": 2261.45,
+        "cash_flow": 360.03,
+        "ebitda": 254.91,
+        "working_capital": 254.91,
+        "auditor_remarks": [
+          "going concern"
+        ],
+        "unit": "INR Crores",
+        "year": "FY21",
+        "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/input/blue_star_ltd/annual_reports/FY21.pdf",
+        "source_rows": {
+          "revenue": "Revenue from operations                                       4,263.59             5,360.19             3,842.33            4,786.49",
+          "ebitda": "OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES                                                 254.91                 328.20",
+          "net_profit": "2.*Revenue and PAT of 2018-19 have been restated for the impact of IND AS 115",
+          "total_assets": "7    Total assets                                  258.73              146.67              77.98                7.30              23.40",
+          "total_liabilities": "8    Total liabilities                             106.91               98.53              55.50              15.34                0.12",
+          "debt": "Proceeds from/(Repayment towards) short term borrowings                                           (298.89)                    65.92",
+          "finance_cost": "Interest cost                                                        2.82             2.77             0.03             0.03",
+          "cash_flow": "Cash generated from operations                                                                   360.03                 535.35",
+          "working_capital": "OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES                                                 254.91                 328.20",
+          "current_assets": "Total Current Assets                                                                             2,859.55             2,651.21",
+          "current_liabilities": "Total Current Liabilities                                                                    2,261.45             2,545.69"
+        },
+        "mapping_confidence": {
+          "revenue": 0.82,
+          "ebitda": 0.5066666666666667,
+          "net_profit": 0.5533333333333333,
+          "total_assets": 0.7466666666666667,
+          "total_liabilities": 0.78,
+          "debt": 0.54,
+          "finance_cost": 0.7533333333333333,
+          "cash_flow": 0.6,
+          "working_capital": 0.5,
+          "current_assets": 0.5333333333333333,
+          "current_liabilities": 0.5666666666666667
+        },
+        "unit_confidence": 0.95,
+        "unit_uncertain": false,
+        "unreliable_metrics": [
+          "total_liabilities"
+        ]
+      },
+      {
+        "revenue": 6045.58,
+        "net_profit": 168.0,
+        "debt": 67.14,
+        "finance_cost": 2.49,
+        "total_assets": 4312.64,
+        "total_liabilities": 3292.1,
+        "current_assets": 3483.43,
+        "current_liabilities": 2969.2,
+        "cash_flow": 57.33,
+        "ebitda": 362.95,
+        "working_capital": 362.95,
+        "auditor_remarks": [
+          "material weakness",
+          "going concern"
+        ],
+        "unit": "INR Crores",
+        "year": "FY22",
+        "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/input/blue_star_ltd/annual_reports/FY22.pdf",
+        "source_rows": {
+          "revenue": "Revenue from operations                                  6,045.58               4,263.59            5,376.99               3,842.23",
+          "ebitda": "OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES                                                362.95                 254.91",
+          "net_profit": "Profit after tax                                           168.00                100.66               127.74                  65.93",
+          "total_assets": "Total Assets                                                                                         4,312.64              3,549.45",
+          "total_liabilities": "TOTAL LIABILITIES                                                                     3,292.10              2,661.59",
+          "debt": "Borrowings (Net) / (Net cash balance for 2021)                 \u201d                67.14          (151.45)            166.44            246.63             294.72",
+          "finance_cost": "Interest cost                                                       2.49             2.64             0.03             0.03",
+          "cash_flow": "Net cash flow from operating activities (A)                                                        57.33                 308.35",
+          "working_capital": "OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES                                                362.95                 254.91",
+          "current_assets": "Total current assets                                                                             3,483.43              2,859.55",
+          "current_liabilities": "Total current liabilities                                                                        2,969.20              2,261.45"
+        },
+        "mapping_confidence": {
+          "revenue": 0.82,
+          "ebitda": 0.5066666666666667,
+          "net_profit": 0.7733333333333333,
+          "total_assets": 0.48,
+          "total_liabilities": 0.5133333333333333,
+          "debt": 0.4666666666666667,
+          "finance_cost": 0.7533333333333333,
+          "cash_flow": 0.66,
+          "working_capital": 0.5,
+          "current_assets": 0.5333333333333333,
+          "current_liabilities": 0.5666666666666667
+        },
+        "unit_confidence": 0.95,
+        "unit_uncertain": false,
+        "unreliable_metrics": []
+      },
+      {
+        "revenue": 7977.32,
+        "net_profit": 400.69,
+        "debt": 8920.0,
+        "finance_cost": 2.86,
+        "total_assets": 5399.06,
+        "total_liabilities": 4065.22,
+        "current_assets": 4250.61,
+        "current_liabilities": 3783.75,
+        "cash_flow": 340.04,
+        "ebitda": 547.57,
+        "working_capital": 547.57,
+        "auditor_remarks": [
+          "material weakness",
+          "going concern"
+        ],
+        "unit": "INR Crores",
+        "year": "FY23",
+        "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/input/blue_star_ltd/annual_reports/FY23.pdf",
+        "source_rows": {
+          "revenue": "Revenue from operations                                  7,977.32              6,064.08            7,353.13               5,395.49",
+          "ebitda": "OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES\t\t                                                     547.57               362.95",
+          "net_profit": "Profit after tax                                          400.69                168.00               366.58                127.74",
+          "total_assets": "\u0007\u0007\u0007\u0007         Total Assets                                                                                 5,399.06            4,312.64",
+          "total_liabilities": "TOTAL LIABILITIES                                                                                   4,065.22              3,292.10",
+          "debt": "CIN: L28920MH1949PLC006870 (\u201chereinafter called the                             of Debt Securities) Regulations, 2008.",
+          "finance_cost": "Interest cost                                                      2.86           2.49                         0.03             0.03",
+          "cash_flow": "Cash generated from operations                                                                         340.04               126.39",
+          "working_capital": "OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES\t\t                                                     547.57               362.95",
+          "current_assets": "Total current assets                                                                         4,250.61            3,483.43",
+          "current_liabilities": "Total current liabilities                                                                    3,783.75            2,969.20"
+        },
+        "mapping_confidence": {
+          "revenue": 0.82,
+          "ebitda": 0.5066666666666667,
+          "net_profit": 0.7733333333333333,
+          "total_assets": 0.48,
+          "total_liabilities": 0.5133333333333333,
+          "debt": 0.7666666666666667,
+          "finance_cost": 0.7533333333333333,
+          "cash_flow": 0.6,
+          "working_capital": 0.5,
+          "current_assets": 0.5333333333333333,
+          "current_liabilities": 0.5666666666666667
+        },
+        "unit_confidence": 0.95,
+        "unit_uncertain": false,
+        "unreliable_metrics": []
+      },
+      {
+        "revenue": 9685.36,
+        "net_profit": 414.31,
+        "debt": 455.93,
+        "finance_cost": 3.63,
+        "total_assets": 7.0,
+        "total_liabilities": 6.44,
+        "current_assets": 5040.03,
+        "current_liabilities": 3879.61,
+        "cash_flow": 425.53,
+        "ebitda": 702.0,
+        "working_capital": 35.0,
+        "auditor_remarks": [
+          "material weakness",
+          "going concern"
+        ],
+        "unit": "INR Crores",
+        "year": "FY24",
+        "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/input/blue_star_ltd/annual_reports/FY24.pdf",
+        "source_rows": {
+          "revenue": "Revenue from operations 9,685.36 7,977.32 8,998.88 7,353.13               Your Company and its subsidiaries (Group) operate in three",
+          "ebitda": "OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES                                              702.00                548.26",
+          "net_profit": "Profit after tax           414.31 400.69       367.5 366.58",
+          "total_assets": "7 Total assets                                             26.03                     4.43                    8.78                         -",
+          "total_liabilities": "8 Total liabilities                                        22.15                     5.57                    1.70                         -",
+          "debt": "Net Borrowings / (Net cash balance)                          \"           (455.93)      208.41        71.41      (149.30)      166.44",
+          "finance_cost": "Interest cost                                                       3.63             3.07         0.04               0.03",
+          "cash_flow": "Cash generated from operations                                                               425.53                335.89",
+          "working_capital": "Loan to Blue Star Climatech Limited                For working capital                35.00              25.00          50.00           35.00",
+          "current_assets": "Total current assets                                                                           5,040.03            4,250.61",
+          "current_liabilities": "Total current liabilities                                                                      3,879.61            3,831.93"
+        },
+        "mapping_confidence": {
+          "revenue": 0.82,
+          "ebitda": 0.5066666666666667,
+          "net_profit": 0.9066666666666666,
+          "total_assets": 0.7466666666666667,
+          "total_liabilities": 0.78,
+          "debt": 0.7333333333333333,
+          "finance_cost": 0.7533333333333333,
+          "cash_flow": 0.6,
+          "working_capital": 0.7666666666666667,
+          "current_assets": 0.5333333333333333,
+          "current_liabilities": 0.5666666666666667
+        },
+        "unit_confidence": 0.95,
+        "unit_uncertain": false,
+        "unreliable_metrics": [
+          "total_liabilities"
+        ]
+      },
+      {
+        "revenue": 11967.65,
+        "net_profit": 591.28,
+        "debt": 206.85,
+        "finance_cost": 3.99,
+        "total_assets": 7.0,
+        "total_liabilities": 6.44,
+        "current_assets": 6312.77,
+        "current_liabilities": 4944.39,
+        "cash_flow": 869.65,
+        "ebitda": 921.29,
+        "working_capital": 921.29,
+        "auditor_remarks": [
+          "going concern"
+        ],
+        "unit": "INR Crores",
+        "year": "FY25",
+        "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/input/blue_star_ltd/annual_reports/FY25.pdf",
+        "source_rows": {
+          "revenue": "Revenue from operations                                                          11,967.65          9,685.36        11,325.75          8,998.88",
+          "ebitda": "OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES                                                            921.29                702.00",
+          "net_profit": "Profit after tax                                                                   591.28            414.31           484.90            367.50",
+          "total_assets": "7       Total assets                                121.99                  9.49                 21.80                    0.02",
+          "total_liabilities": "8       Total liabilities                           102.52                 10.91                  2.90                    1.26",
+          "debt": "Current maturity of long term borrowings                                               206.85        (206.85)               -",
+          "finance_cost": "Interest cost                                              3.99          3.63           0.04           0.04",
+          "cash_flow": "Cash generated from operations                                                                             869.65                 425.53",
+          "working_capital": "OPERATING PROFIT BEFORE WORKING CAPITAL CHANGES                                                            921.29                702.00",
+          "current_assets": "Total current assets                                                                                            6,312.77                  5,040.03",
+          "current_liabilities": "Total current liabilities                                                                                       4,944.39                  3,878.11"
+        },
+        "mapping_confidence": {
+          "revenue": 0.82,
+          "ebitda": 0.5066666666666667,
+          "net_profit": 0.7733333333333333,
+          "total_assets": 0.7466666666666667,
+          "total_liabilities": 0.78,
+          "debt": 0.5333333333333333,
+          "finance_cost": 0.7533333333333333,
+          "cash_flow": 0.6,
+          "working_capital": 0.5,
+          "current_assets": 0.5333333333333333,
+          "current_liabilities": 0.5666666666666667
+        },
+        "unit_confidence": 0.95,
+        "unit_uncertain": false,
+        "unreliable_metrics": [
+          "total_liabilities"
+        ]
+      }
+    ],
+    "revenue": [
+      5360.19,
+      4263.59,
+      6045.58,
+      7977.32,
+      9685.36,
+      11967.65
+    ],
+    "ebitda": [
+      328.2,
+      254.91,
+      362.95,
+      547.57,
+      702.0,
+      921.29
+    ],
+    "net_profit": [
+      -19.0,
+      2.0,
+      168.0,
+      400.69,
+      414.31,
+      591.28
+    ],
+    "total_assets": [
+      258.73,
+      7.0,
+      4312.64,
+      5399.06,
+      7.0,
+      7.0
+    ],
+    "total_liabilities": [
+      106.91,
+      6.44,
+      3292.1,
+      4065.22,
+      6.44,
+      6.44
+    ],
+    "debt": [
+      65.92,
+      298.89,
+      67.14,
+      8920.0,
+      455.93,
+      206.85
+    ],
+    "cash_flow": [
+      535.35,
+      360.03,
+      57.33,
+      340.04,
+      425.53,
+      869.65
+    ],
+    "working_capital": [
+      328.2,
+      254.91,
+      362.95,
+      547.57,
+      35.0,
+      921.29
+    ],
+    "data_quality_issues": []
+  },
+  "financial_trends": {
+    "revenue_cagr_5y": 0.174264,
+    "revenue_cagr_valid": true,
+    "revenue_cagr_reason": null,
+    "ebitda_cagr_5y": 0.229282,
+    "ebitda_cagr_valid": true,
+    "ebitda_cagr_reason": null,
+    "net_profit_cagr_5y": 0.0,
+    "net_profit_cagr_valid": false,
+    "net_profit_cagr_reason": "non_positive_base_or_terminal",
+    "debt_change_rate": 2.137894,
+    "debt_trend": "increasing",
+    "debt_start": 65.92,
+    "debt_end": 206.85,
+    "ebitda_margin_first": 0.061229,
+    "ebitda_margin_last": 0.076982,
+    "ebitda_margin_trend": "improving",
+    "interest_coverage_first": 55.319579,
+    "interest_coverage_last": 49.48782,
+    "interest_coverage_trend": "weakening"
+  },
+  "validated_financials": {
+    "normalized_unit": "INR Crores",
+    "years": [
+      "FY20",
+      "FY21",
+      "FY22",
+      "FY23",
+      "FY24",
+      "FY25"
+    ],
+    "yearly_validated": [
+      {
+        "year": "FY20",
+        "metrics": {
+          "revenue": 5360.19,
+          "ebitda": 328.2,
+          "net_profit": -19.0,
+          "debt": 65.92,
+          "finance_cost": 2.77,
+          "total_assets": 258.73,
+          "total_liabilities": 106.91
+        },
+        "ratios": {
+          "profit_margin": {
+            "value": -0.003544650469479627,
+            "reason": null
+          },
+          "ebitda_margin": {
+            "value": 0.06122917284648492,
+            "reason": null
+          },
+          "debt_to_equity": {
+            "value": 0.4341983928336187,
+            "reason": null
+          },
+          "current_ratio": {
+            "value": 1.0414504515475176,
+            "reason": null
+          },
+          "interest_coverage": {
+            "value": 118.48375451263537,
+            "reason": null
+          },
+          "debt_to_ebitda": {
+            "value": 0.20085313833028642,
+            "reason": null
+          }
+        },
+        "unreliable_metrics": []
+      },
+      {
+        "year": "FY21",
+        "metrics": {
+          "revenue": 4263.59,
+          "ebitda": 254.91,
+          "net_profit": 2.0,
+          "debt": 298.89,
+          "finance_cost": 2.82,
+          "total_assets": 7.0,
+          "total_liabilities": 6.44
+        },
+        "ratios": {
+          "profit_margin": {
+            "value": 0.0004690882566100399,
+            "reason": null
+          },
+          "ebitda_margin": {
+            "value": 0.05978764374623263,
+            "reason": null
+          },
+          "debt_to_equity": {
+            "value": null,
+            "reason": "suppressed: unreliable source metrics"
+          },
+          "current_ratio": {
+            "value": 1.264476331557187,
+            "reason": null
+          },
+          "interest_coverage": {
+            "value": 90.3936170212766,
+            "reason": null
+          },
+          "debt_to_ebitda": {
+            "value": 1.1725314816994232,
+            "reason": null
+          }
+        },
+        "unreliable_metrics": [
+          "total_liabilities"
+        ]
+      },
+      {
+        "year": "FY22",
+        "metrics": {
+          "revenue": 6045.58,
+          "ebitda": 362.95,
+          "net_profit": 168.0,
+          "debt": 67.14,
+          "finance_cost": 2.49,
+          "total_assets": 4312.64,
+          "total_liabilities": 3292.1
+        },
+        "ratios": {
+          "profit_margin": {
+            "value": 0.02778889701236275,
+            "reason": null
+          },
+          "ebitda_margin": {
+            "value": 0.060035596253792026,
+            "reason": null
+          },
+          "debt_to_equity": {
+            "value": 0.06578870009994706,
+            "reason": null
+          },
+          "current_ratio": {
+            "value": 1.1731880641250167,
+            "reason": null
+          },
+          "interest_coverage": {
+            "value": 145.76305220883532,
+            "reason": null
+          },
+          "debt_to_ebitda": {
+            "value": 0.18498415759746523,
+            "reason": null
+          }
+        },
+        "unreliable_metrics": []
+      },
+      {
+        "year": "FY23",
+        "metrics": {
+          "revenue": 7977.32,
+          "ebitda": 547.57,
+          "net_profit": 400.69,
+          "debt": 8920.0,
+          "finance_cost": 2.86,
+          "total_assets": 5399.06,
+          "total_liabilities": 4065.22
+        },
+        "ratios": {
+          "profit_margin": {
+            "value": 0.050228648217697174,
+            "reason": null
+          },
+          "ebitda_margin": {
+            "value": 0.06864084680067993,
+            "reason": null
+          },
+          "debt_to_equity": {
+            "value": 6.687458765669043,
+            "reason": null
+          },
+          "current_ratio": {
+            "value": 1.1233855302279483,
+            "reason": null
+          },
+          "interest_coverage": {
+            "value": 191.45804195804197,
+            "reason": null
+          },
+          "debt_to_ebitda": {
+            "value": 16.29015468341947,
+            "reason": null
+          }
+        },
+        "unreliable_metrics": []
+      },
+      {
+        "year": "FY24",
+        "metrics": {
+          "revenue": 9685.36,
+          "ebitda": 702.0,
+          "net_profit": 414.31,
+          "debt": 455.93,
+          "finance_cost": 3.63,
+          "total_assets": 7.0,
+          "total_liabilities": 6.44
+        },
+        "ratios": {
+          "profit_margin": {
+            "value": 0.04277693343355332,
+            "reason": null
+          },
+          "ebitda_margin": {
+            "value": 0.07248052731132348,
+            "reason": null
+          },
+          "debt_to_equity": {
+            "value": null,
+            "reason": "suppressed: unreliable source metrics"
+          },
+          "current_ratio": {
+            "value": 1.2991073845051435,
+            "reason": null
+          },
+          "interest_coverage": {
+            "value": 193.38842975206612,
+            "reason": null
+          },
+          "debt_to_ebitda": {
+            "value": 0.6494729344729345,
+            "reason": null
+          }
+        },
+        "unreliable_metrics": [
+          "total_liabilities"
+        ]
+      },
+      {
+        "year": "FY25",
+        "metrics": {
+          "revenue": 11967.65,
+          "ebitda": 921.29,
+          "net_profit": 591.28,
+          "debt": 206.85,
+          "finance_cost": 3.99,
+          "total_assets": 7.0,
+          "total_liabilities": 6.44
+        },
+        "ratios": {
+          "profit_margin": {
+            "value": 0.049406525090556624,
+            "reason": null
+          },
+          "ebitda_margin": {
+            "value": 0.07698169649012128,
+            "reason": null
+          },
+          "debt_to_equity": {
+            "value": null,
+            "reason": "suppressed: unreliable source metrics"
+          },
+          "current_ratio": {
+            "value": 1.2767540586401962,
+            "reason": null
+          },
+          "interest_coverage": {
+            "value": 230.89974937343356,
+            "reason": null
+          },
+          "debt_to_ebitda": {
+            "value": 0.2245221374377232,
+            "reason": null
+          }
+        },
+        "unreliable_metrics": [
+          "total_liabilities"
+        ]
+      }
+    ],
+    "latest_year": "FY25",
+    "latest_ratios": {
+      "profit_margin": {
+        "value": 0.049406525090556624,
+        "reason": null
+      },
+      "ebitda_margin": {
+        "value": 0.07698169649012128,
+        "reason": null
+      },
+      "debt_to_equity": {
+        "value": null,
+        "reason": "suppressed: unreliable source metrics"
+      },
+      "current_ratio": {
+        "value": 1.2767540586401962,
+        "reason": null
+      },
+      "interest_coverage": {
+        "value": 230.89974937343356,
+        "reason": null
+      },
+      "debt_to_ebitda": {
+        "value": 0.2245221374377232,
+        "reason": null
+      }
+    }
+  },
+  "anomalies": []
+}

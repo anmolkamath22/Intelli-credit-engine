@@ -1,0 +1,42 @@
+[
+  {
+    "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/input/blue_star_ltd/annual_reports/FY21.pdf",
+    "year": "FY21",
+    "unit": "crore",
+    "confidence": 0.95,
+    "evidence": "\u20b9 in crores",
+    "uncertain": false
+  },
+  {
+    "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/input/blue_star_ltd/annual_reports/FY22.pdf",
+    "year": "FY22",
+    "unit": "crore",
+    "confidence": 0.95,
+    "evidence": "\u20b9 crores",
+    "uncertain": false
+  },
+  {
+    "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/input/blue_star_ltd/annual_reports/FY23.pdf",
+    "year": "FY23",
+    "unit": "crore",
+    "confidence": 0.95,
+    "evidence": "\u20b9 in crores",
+    "uncertain": false
+  },
+  {
+    "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/input/blue_star_ltd/annual_reports/FY24.pdf",
+    "year": "FY24",
+    "unit": "crore",
+    "confidence": 0.95,
+    "evidence": "rs in crores",
+    "uncertain": false
+  },
+  {
+    "source": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/input/blue_star_ltd/annual_reports/FY25.pdf",
+    "year": "FY25",
+    "unit": "crore",
+    "confidence": 0.95,
+    "evidence": "\u20b9 in crores",
+    "uncertain": false
+  }
+]
