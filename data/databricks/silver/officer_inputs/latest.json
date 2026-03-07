@@ -1,0 +1,12 @@
+{
+  "company": "Blue Star Ltd",
+  "officer_inputs": {
+    "company": "Blue Star Ltd",
+    "factory_utilization": 0.7,
+    "management_credibility": 0.7,
+    "inventory_build_up": 0.3,
+    "supply_chain_risk": 0.3,
+    "collateral_notes": "",
+    "channel_checks": ""
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "company": "Blue Star Ltd",
+  "dataset_presence": {
+    "annual_reports": 1,
+    "financial_statements": 0,
+    "balance_sheets": 0,
+    "gst_returns": 0,
+    "bank_statements": 1,
+    "legal_documents": 1,
+    "news_documents": 1
+  }
+}

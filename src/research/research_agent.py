@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from src.research.board_of_directors_extractor import extract_board_of_directors
 from src.research.company_profile_builder import build_company_overview
 from src.research.litigation_lookup import lookup_litigation
 from src.research.news_crawler import analyze_news
@@ -39,12 +40,14 @@ def run_research_agent(
     company_dir: Path,
     retriever: VectorRetriever,
     output_path: Path,
+    evidence_output_path: Path | None = None,
     top_k: int = 5,
 ) -> dict:
     """Generate research summary using local signals + retrieved evidence."""
     profile = build_company_overview(financials, company_name)
-    legal = lookup_litigation(company_dir)
-    news = analyze_news(company_dir)
+    board = extract_board_of_directors(company_dir)
+    legal = lookup_litigation(company_dir, company_name=company_name, board_members=board)
+    news = analyze_news(company_dir, company_name=company_name, board_members=board)
     rating = _load_external_rating(company_dir)
 
     sector_risk = "moderate"
@@ -83,14 +86,19 @@ def run_research_agent(
         section_type="industry",
     )
     evidence = (financial_evidence + legal_evidence + sector_evidence)[: max(top_k, 8)]
+    structured_evidence = (news.get("evidence", []) + legal.get("evidence", []))[:60]
 
     summary = {
         "company_overview": profile,
+        "board_of_directors": board,
         "promoter_risk": round(float(promoter_risk), 2),
+        "board_risk": round(min(100.0, promoter_risk * 0.6 + legal["litigation_risk_score"] * 0.3), 2),
         "litigation_count": legal["litigation_count"],
         "litigation_risk_score": legal["litigation_risk_score"],
         "negative_news_count": news["negative_news_count"],
         "news_sentiment_score": news["news_sentiment_score"],
+        "reputation_risk": round(max(0.0, 100.0 - news["news_sentiment_score"]), 2),
+        "regulatory_risk": round(min(100.0, legal["litigation_risk_score"] * 0.7 + news["controversy_mentions"] * 12), 2),
         "sector_risk": sector_risk,
         "sector_headwinds": sector_headwinds,
         "case_summary": legal["case_summary"],
@@ -103,4 +111,7 @@ def run_research_agent(
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(summary, indent=2, ensure_ascii=True), encoding="utf-8")
+    if evidence_output_path:
+        evidence_output_path.parent.mkdir(parents=True, exist_ok=True)
+        evidence_output_path.write_text(json.dumps(structured_evidence, indent=2, ensure_ascii=True), encoding="utf-8")
     return summary

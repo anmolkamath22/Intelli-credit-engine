@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.7)  7 MAR 2026 06:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.3.7)  7 MAR 2026 22:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -308,7 +308,7 @@ File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count285
 \l__pdf_internal_box=\box58
 )
-No file CAM_report.aux.
+(./CAM_report.aux)
 \openout1 = `CAM_report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
@@ -329,6 +329,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 15.
 LaTeX Font Info:    ... okay on input line 15.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 15.
 LaTeX Font Info:    ... okay on input line 15.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -364,8 +365,10 @@ LaTeX Font Info:    ... okay on input line 15.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 Package hyperref Info: Link coloring OFF on input line 15.
+(./CAM_report.out) (./CAM_report.out)
 \@outlinefile=\write3
 \openout3 = `CAM_report.out'.
+
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -429,58 +432,114 @@ LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 6
  (/usr/share/texmf/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [2{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}]
-Underfull \hbox (badness 10000) in paragraph at lines 85--85
+Underfull \hbox (badness 10000) in paragraph at lines 85--86
+[]|\T1/lmr/m/n/10.95 57.63 /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 86--86
 []|\T1/lmr/m/n/10.95 Recommended
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 86--87
-[]|\T1/lmr/m/n/10.95 15.40%
+[]|\T1/lmr/m/n/10.95 INR
  []
 
 
-Overfull \hbox (14.71507pt too wide) in paragraph at lines 93--94
+Underfull \hbox (badness 10000) in paragraph at lines 86--87
+\T1/lmr/m/n/10.95 1436.12
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 87--88
+[]|\T1/lmr/m/n/10.95 12.51%
+ []
+
+
+Overfull \hbox (14.71507pt too wide) in paragraph at lines 94--95
 \T1/lmr/m/it/10.95 Excerpt: \T1/lmr/m/n/10.95 FY21 [ebitda] OP-ER-AT-ING PROFIT
  BE-FORE WORK-ING CAP-I-TAL CHANGES
  []
 
 [3]
-Overfull \hbox (14.71507pt too wide) in paragraph at lines 112--113
+Overfull \hbox (43.05493pt too wide) in paragraph at lines 103--104
+\T1/lmr/m/it/10.95 Excerpt: \T1/lmr/m/n/10.95 %pdf-1.6 % 7976 0 obj <</fil-ter/
+flatedecode/first 559/length 912/n 72/type/objstm>>stream
+ []
+
+
+Overfull \hbox (92.49742pt too wide) in paragraph at lines 103--104
+\T1/lmr/m/n/10.95 hw7 %qk.m"n1(nvhgchh[g!e%qsr1btj6*c!x:inat2w2mb/u885cr3#a"(vx
+\f v :j>e>ng > | z\tf%'%q@h=dge0tx... 
+ []
+
+
+Overfull \hbox (37.57994pt too wide) in paragraph at lines 104--105
+\T1/lmr/m/it/10.95 Excerpt: \T1/lmr/m/n/10.95 %pdf-1.6 % 11819 0 obj <</fil-ter
+/flatedecode/first 16/length 195/n 3/type/objstm>>stream
+ []
+
+
+Overfull \hbox (3.45158pt too wide) in paragraph at lines 104--105
+\T1/lmr/m/n/10.95 h| ee@g4je, yfj71wm .;!@@d%l6yacxr_kdf "bc{]d'1 1bl\/p}s;;@~ 
+.gwih =).t[v5o|zd( +yc/n?
+ []
+
+
+Overfull \hbox (14.71507pt too wide) in paragraph at lines 115--116
 \T1/lmr/m/it/10.95 Excerpt: \T1/lmr/m/n/10.95 FY21 [ebitda] OP-ER-AT-ING PROFIT
  BE-FORE WORK-ING CAP-I-TAL CHANGES
  []
 
-[4] [5] (./CAM_report.aux)
+[4]
+Overfull \hbox (43.05493pt too wide) in paragraph at lines 124--125
+\T1/lmr/m/it/10.95 Excerpt: \T1/lmr/m/n/10.95 %pdf-1.6 % 7976 0 obj <</fil-ter/
+flatedecode/first 559/length 912/n 72/type/objstm>>stream
+ []
+
+
+Overfull \hbox (92.49742pt too wide) in paragraph at lines 124--125
+\T1/lmr/m/n/10.95 hw7 %qk.m"n1(nvhgchh[g!e%qsr1btj6*c!x:inat2w2mb/u885cr3#a"(vx
+\f v :j>e>ng > | z\tf%'%q@h=dge0tx... 
+ []
+
+
+Overfull \hbox (37.57994pt too wide) in paragraph at lines 125--126
+\T1/lmr/m/it/10.95 Excerpt: \T1/lmr/m/n/10.95 %pdf-1.6 % 11819 0 obj <</fil-ter
+/flatedecode/first 16/length 195/n 3/type/objstm>>stream
+ []
+
+
+Overfull \hbox (3.45158pt too wide) in paragraph at lines 125--126
+\T1/lmr/m/n/10.95 h| ee@g4je, yfj71wm .;!@@d%l6yacxr_kdf "bc{]d'1 1bl\/p}s;;@~ 
+.gwih =).t[v5o|zd( +yc/n?
+ []
+
+[5] [6] (./CAM_report.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
-
-
-Package rerunfilecheck Warning: File `CAM_report.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `CAM_report.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.
+Package rerunfilecheck Info: File `CAM_report.out' has not changed.
+(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 9541 strings out of 476182
- 146662 string characters out of 5795596
+ 9550 strings out of 476182
+ 146812 string characters out of 5795596
  1946975 words of memory out of 5000000
- 31417 multiletter control sequences out of 15000+600000
+ 31419 multiletter control sequences out of 15000+600000
  598010 words of font info for 57 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,5n,79p,717b,508s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,5n,79p,717b,512s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></us
 r/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/pub
 lic/lm/lmri10.pfb>
-Output written on CAM_report.pdf (5 pages, 139742 bytes).
+Output written on CAM_report.pdf (6 pages, 143326 bytes).
 PDF statistics:
- 80 PDF objects out of 1000 (max. 8388607)
- 61 compressed objects within 1 object stream
- 23 named destinations out of 1000 (max. 500000)
+ 84 PDF objects out of 1000 (max. 8388607)
+ 64 compressed objects within 1 object stream
+ 24 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

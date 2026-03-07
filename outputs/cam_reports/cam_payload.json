@@ -2,7 +2,7 @@
   "title": "Credit Appraisal Memo",
   "company_name": "Blue Star Ltd",
   "reporting_note": "All financial values are reported in INR Crores unless otherwise stated.",
-  "executive_summary": "Final credit score is 1.89/100. Recommended loan limit is INR 56.48 Crores at 15.40% per annum. Assessment uses financial trends, legal/news signals, synthetic behavior signals (when required), and decision trace explainability.",
+  "executive_summary": "Final credit score is 57.63/100. Recommended loan limit is INR 1,436.12 Crores at 12.51% per annum. Assessment uses financial trends, legal/news signals, synthetic behavior signals (when required), and decision trace explainability.",
   "company_overview": "The evaluation covers available company datasets with primary evidence from: annual_reports. Document count processed: 5. External credit rating observed: A- (A+ -> A -> A-).",
   "financial_performance": {
     "narrative": "Years analyzed: FY20, FY21, FY22, FY23, FY24, FY25. Latest revenue: INR 11,967.65 Crores; latest EBITDA: INR 921.29 Crores. Revenue trend (FY20 to FY25): with revenue moving from INR 5,360.19 crore to INR 11,967.65 crore. Operating profitability trends: Revenue CAGR of 17.43%; EBITDA CAGR of 22.93%; net profit CAGR not meaningful due to non-positive base/terminal year values. Leverage trend: debt changed from INR 65.92 crore to INR 206.85 crore (increasing, change rate 213.79%). Margin behavior: EBITDA margin moved from 6.12% to 7.70%. Overall inference for Blue Star Ltd: financial trajectory should be assessed jointly with legal, sector, and cashflow-risk indicators.",
@@ -74,10 +74,14 @@
       ]
     }
   },
-  "promoter_analysis": "Promoter risk score: 24.30/100. Management risk score: 40.00/100. Rating rationale: Liquidity position, leverage, and execution profile considered.",
-  "industry_outlook": "Sector risk assessment is LOW. Headwinds observed: none.",
-  "litigation_profile": "Litigation count: 12. Litigation risk score: 48.00/100.",
+  "promoter_analysis": "Promoter risk score: 32.24/100. Management risk score: 30.00/100. Rating rationale: Liquidity position, leverage, and execution profile considered.",
+  "industry_outlook": "Sector risk assessment is MODERATE. Headwinds observed: Elevated legal disputes.",
+  "litigation_profile": "Litigation count: 14. Litigation risk score: 69.80/100.",
   "risk_flags": [
+    {
+      "flag": "High litigation exposure",
+      "explanation": "Flag raised from model risk logic and supporting evidence."
+    },
     {
       "flag": "High leverage",
       "explanation": "Flag raised from model risk logic and supporting evidence."
@@ -91,10 +95,10 @@
       "explanation": "Flag raised from model risk logic and supporting evidence."
     }
   ],
-  "decision_logic": "Credit score 1.89. Decision weighted by financial strength, legal/news risk, management quality, and circular-trading checks. Notably, circular trading risk flag is triggered, and revenue inflation flag is clear. The primary synthesis relies heavily on annual_reports.",
-  "final_credit_score": "1.89 / 100",
-  "recommended_loan_limit_crore": "56.48",
-  "interest_rate_percent": "15.40",
+  "decision_logic": "Credit score 57.63. Decision weighted by financial strength, legal/news risk, management quality, and circular-trading checks. Notably, circular trading risk flag is triggered, and revenue inflation flag is clear. The primary synthesis relies heavily on annual_reports.",
+  "final_credit_score": "57.63 / 100",
+  "recommended_loan_limit_crore": "1436.12",
+  "interest_rate_percent": "12.51",
   "supporting_evidence": [
     {
       "source": "annual_reports",
@@ -159,13 +163,25 @@
     {
       "source": "legal_documents",
       "reference": "case_summary_1",
-      "excerpt": "{'case_count': 6, 'case_type': 'Labor', 'case_status': 'Under Appeal', 'litigation_risk_score': 39.0}",
+      "excerpt": "%pdf-1.6 % 7976 0 obj <</filter/flatedecode/first 559/length 912/n 72/type/objstm>>stream h\u079cw\u06ce\u001b7 \u0015%q\b\bk.m\u0777\"\u000fn1(nv\u0017\u001b\u0017hgc\u009ehh[g!e%q\u0094sr1btj6*c!x:in\u0105t2\u0013w2mb/u885cr\u00133#\u0201\u0670\u0005\"(\u0638vx\u0015\\\u001af\u0016 v\u0007 :\u0001j\u0002>e\u0002>\u0003ng\u0006 >\u0007 \u0016| z\\t\u0012f%'%q@h=dge\u00140t\u0016x...",
       "section_type": "litigation"
     },
     {
       "source": "legal_documents",
       "reference": "case_summary_2",
-      "excerpt": "{'case_count': 6, 'case_type': 'Labor', 'case_status': 'Under Appeal', 'litigation_risk_score': 24.0}",
+      "excerpt": "%pdf-1.6 % 11819 0 obj <</filter/flatedecode/first 16/length 195/n 3/type/objstm>>stream h| \u0010e\u007fe@g4je,\u0012 yfj71\u0001wm \u0014.\u0004;!@\u0010@\u0002\u0003d%l6y\u0002acxr_kdf \"\ub8acbc\u0011{]\u0695d'1\u0016 1\u0005bl\u001a\\/\u028cp}s;;@~ .gw\u0014ih =).t[v5o|z\u0005\u0002\u0014d( +\u0019\u0786y\u010d/n?\u0002 \u0000\\ endstream endo...",
+      "section_type": "litigation"
+    },
+    {
+      "source": "legal_documents",
+      "reference": "case_summary_3",
+      "excerpt": "%pdf-1.6 % 36716 0 obj <</linearized 1/l 20178243/o 36718/e 60053/n 382/t 20170120/h [ 503 5911]>> endobj 36732 0 obj <</decodeparms<</columns 4/predictor 12>>/filter/flatedecode/id[<ac420bd53ae65144af1b9e25b164d766><...",
+      "section_type": "litigation"
+    },
+    {
+      "source": "legal_documents",
+      "reference": "case_summary_4",
+      "excerpt": "%pdf-1.7 % 74524 0 obj <</linearized 1/l 12674656/o 74526/e 298880/n 380/t 12664602/h [ 526 5044]>> endobj 74544 0 obj <</decodeparms<</columns 5/predictor 12>>/filter/flatedecode/id[<b92a79c6a28df84ab42272508b442941>...",
       "section_type": "litigation"
     },
     {
@@ -189,10 +205,10 @@
   ],
   "financial_trend_analysis": "The company\u2019s revenue has shown robust growth over the periods FY20 to FY25, posting a CAGR of 17.43%. Simultaneously, net profitability has shown volatility with a CAGR of 0.00%. Operating efficiency, as measured by EBITDA, recorded a CAGR of 22.93%. The EBITDA margin has moved from 6.12% in FY20 to 7.70% in FY25. Overall, the financial trajectory indicates a business model that is scaling well.",
   "liquidity_leverage_assessment": "Leverage remains high with a Debt/Equity ratio of Not available (insufficient reliable denominator/source).. The company's reliance on external borrowings is evident, but the sharp increasing in debt by 213.79% warrants monitoring. On the liquidity front, the current ratio stands at 1.28, suggesting adequate short-term payment capacity. The Debt/EBITDA ratio is 0.22, reflecting the company's capability to service its obligations from operating cash flows.",
-  "promoter_management_assessment": "Management quality and corporate governance show a composite risk score of 40.00/100, while promoter background checks indicate a risk layer of 24.30/100. There are no apparent severe governance red flags.",
-  "industry_sector_outlook": "The overarching sector risk profile is evaluated as LOW. The industry environment currently presents several challenges, including no major evident headwinds. Furthermore, broader market signals and news sentiment indicate a score of 83.00/100, implying a stable outlook from external observers.",
-  "litigation_assessment": "The current legal exposure appears moderate but requires tracking. We have identified 12 active or recent litigation events, yielding a composite litigation risk score of 48.00/100. Recurring labour or operational matters should be closely tracked.",
-  "final_recommendation": "Based on the holistic evaluation of Blue Star Ltd's financial stability, operating performance, and external risk factors, the final aggregated credit score is 1.89 out of 100. Consequently, the facility request is recommended to be rejected. We propose a maximum optimal loan limit of INR 56.48 Crores, priced at an interest rate of 15.40% per annum. The decision is structurally weighted by the core financial trajectory, current leverage profile, legal contingencies, and management governance metrics.",
+  "promoter_management_assessment": "Management quality and corporate governance show a composite risk score of 30.00/100, while promoter background checks indicate a risk layer of 32.24/100. There are no apparent severe governance red flags.",
+  "industry_sector_outlook": "The overarching sector risk profile is evaluated as MODERATE. The industry environment currently presents several challenges, including Elevated legal disputes. Furthermore, broader market signals and news sentiment indicate a score of 85.60/100, implying a stable outlook from external observers.",
+  "litigation_assessment": "The current legal exposure appears moderate but requires tracking. We have identified 14 active or recent litigation events, yielding a composite litigation risk score of 69.80/100. Recurring labour or operational matters should be closely tracked.",
+  "final_recommendation": "Based on the holistic evaluation of Blue Star Ltd's financial stability, operating performance, and external risk factors, the final aggregated credit score is 57.63 out of 100. Consequently, the facility request is recommended to be approved. We propose a maximum optimal loan limit of INR 1436.12 Crores, priced at an interest rate of 12.51% per annum. The decision is structurally weighted by the core financial trajectory, current leverage profile, legal contingencies, and management governance metrics.",
   "validated_financials": {
     "normalized_unit": "INR Crores",
     "years": [
@@ -483,8 +499,8 @@
       "balance_sheets": 0,
       "gst_returns": 0,
       "bank_statements": 1,
-      "legal_documents": 0,
-      "news_documents": 0
+      "legal_documents": 1,
+      "news_documents": 1
     },
     "loan_policy_caps": {
       "cap_25pct_revenue_crore": 2991.91,

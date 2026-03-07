@@ -1,9 +1,66 @@
 {
-  "credit_score": 1.89,
+  "credit_score": 57.63,
+  "score_band": "weak_elevated_risk",
   "loan_limit_cap_revenue_25pct": 2991.91,
   "loan_limit_cap_ebitda_4x": 3685.16,
-  "recommended_loan_limit": 56.48,
-  "risk_premium": 5.9,
+  "recommended_loan_limit": 1436.12,
+  "risk_premium": 3.01,
   "base_rate": 9.5,
-  "recommended_interest_rate": 15.4
+  "recommended_interest_rate": 12.51,
+  "score_audit": {
+    "raw_features": {
+      "debt_to_equity": 369.375,
+      "profit_margin": 0.0494,
+      "revenue_growth": 0.2356,
+      "revenue_cagr_5y": 0.174264,
+      "ebitda_cagr_5y": 0.229282,
+      "net_profit_cagr_5y": 0.0,
+      "debt_change_rate": 2.137894,
+      "debt_reduction_rate": -2.137894,
+      "cashflow_stability": 0.2047,
+      "litigation_risk_score": 69.8,
+      "news_sentiment_score": 85.6,
+      "management_risk_score": 30.0,
+      "sector_risk_score": 55.0,
+      "average_balance_ratio": 0.4141,
+      "interest_coverage": 49.4878,
+      "gst_compliance_score": 89.2,
+      "circular_trading_flag": 1,
+      "revenue_inflation_flag": 0
+    },
+    "normalized_positive_factors": {
+      "leverage": 20.0,
+      "profitability": 60.868,
+      "cash_stability": 20.47,
+      "growth": 77.8822,
+      "coverage": 100.0,
+      "governance": 70.0,
+      "sentiment": 85.6
+    },
+    "weighted_positive_contributions": {
+      "leverage": 4.0,
+      "profitability": 10.9562,
+      "cash_stability": 3.6846,
+      "growth": 10.9035,
+      "coverage": 12.0,
+      "governance": 7.0,
+      "sentiment": 6.848
+    },
+    "penalties_applied": {
+      "litigation_penalty": 11.168,
+      "sector_penalty": 4.95,
+      "circular_penalty": 6.0,
+      "penalty_total_capped": 22.118
+    },
+    "bonuses": {
+      "gst_bonus": 2.352
+    },
+    "score_assembly": {
+      "base_floor": 22.0,
+      "positive_score": 55.3924,
+      "pre_clip_score": 57.6264,
+      "final_credit_score": 57.6264
+    },
+    "reason_low_score": "Score calibrated within moderate/strong bands"
+  }
 }

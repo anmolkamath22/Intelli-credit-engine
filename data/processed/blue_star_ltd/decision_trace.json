@@ -4,14 +4,15 @@
     "profit_margin": 4.9399999999999995,
     "revenue_cagr_5y": 15.0,
     "cashflow_stability": 4.093999999999999,
-    "litigation_risk_score": -14.399999999999999,
-    "news_sentiment_score": 6.6000000000000005,
-    "management_risk_score": -8.0,
-    "sector_risk_score": -3.75,
+    "litigation_risk_score": -20.939999999999998,
+    "news_sentiment_score": 7.119999999999999,
+    "management_risk_score": -6.0,
+    "sector_risk_score": -8.25,
     "circular_trading_flag": -10.0,
     "revenue_inflation_flag": 0.0
   },
   "risk_flags": [
+    "High litigation exposure",
     "High leverage",
     "Unstable cash flow pattern",
     "Potential circular trading behavior"
@@ -52,8 +53,10 @@
     }
   ],
   "research_context": {
-    "promoter_risk": 24.3,
-    "sector_headwinds": []
+    "promoter_risk": 32.24,
+    "sector_headwinds": [
+      "Elevated legal disputes"
+    ]
   },
-  "reasoning_summary": "Credit score 1.89. Decision weighted by financial strength, legal/news risk, management quality, and circular-trading checks."
+  "reasoning_summary": "Credit score 57.63. Decision weighted by financial strength, legal/news risk, management quality, and circular-trading checks."
 }

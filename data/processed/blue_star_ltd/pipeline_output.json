@@ -7,8 +7,8 @@
     "balance_sheets": 0,
     "gst_returns": 0,
     "bank_statements": 1,
-    "legal_documents": 0,
-    "news_documents": 0
+    "legal_documents": 1,
+    "news_documents": 1
   },
   "financial_features": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/processed/blue_star_ltd/financial_features.json",
   "financial_history": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/processed/blue_star_ltd/financial_history.json",
@@ -17,6 +17,7 @@
   "synthetic_gst_features": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/processed/blue_star_ltd/synthetic_gst_features.json",
   "synthetic_bank_features": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/processed/blue_star_ltd/synthetic_bank_features.json",
   "research_summary": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/processed/blue_star_ltd/research_summary.json",
+  "research_evidence": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/processed/blue_star_ltd/research_evidence.json",
   "credit_features": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/processed/blue_star_ltd/credit_features.json",
   "decision_trace": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/processed/blue_star_ltd/decision_trace.json",
   "scoring_output": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/processed/blue_star_ltd/scoring_output.json",
@@ -33,5 +34,19 @@
   "cam_contract_tex": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/outputs/cam_reports/CAM_report.tex",
   "cam_contract_payload": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/outputs/cam_reports/cam_payload.json",
   "cam_contract_log": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/outputs/cam_reports/compile.log",
-  "financial_audit_report": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/outputs/debug/financial_audit_report.json"
+  "databricks_table_writes": {
+    "bronze.company_raw_files": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/databricks/bronze/company_raw_files/latest.json",
+    "bronze.research_raw": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/databricks/bronze/research_raw/latest.json",
+    "silver.financial_extraction": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/databricks/silver/financial_extraction/latest.json",
+    "silver.research_evidence": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/databricks/silver/research_evidence/latest.json",
+    "silver.officer_inputs": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/databricks/silver/officer_inputs/latest.json",
+    "gold.credit_features": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/databricks/gold/credit_features/latest.json",
+    "gold.credit_scores": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/databricks/gold/credit_scores/latest.json",
+    "gold.cam_payload": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/data/databricks/gold/cam_payload/latest.json"
+  },
+  "financial_audit_report": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/outputs/debug/financial_audit_report.json",
+  "score_audit_report": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/outputs/debug/score_audit_blue_star_ltd.json",
+  "debug_financial_dump": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/outputs/debug/financial_debug_blue_star_ltd.json",
+  "debug_unit_detection": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/outputs/debug/unit_detection_blue_star_ltd.json",
+  "debug_financial_anomalies": "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/outputs/debug/financial_anomalies_blue_star_ltd.json"
 }

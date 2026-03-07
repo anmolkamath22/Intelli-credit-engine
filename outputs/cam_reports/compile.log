@@ -51,9 +51,10 @@ Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
 (/usr/share/texmf/tex/latex/lm/t1lmr.fd))
 (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty)
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def)
-No file CAM_report.aux.
+(./CAM_report.aux)
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
+(./CAM_report.out) (./CAM_report.out)
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 ) (/usr/share/texmf/tex/latex/lm/ot1lmr.fd)
@@ -68,31 +69,66 @@ Overfull \hbox (29.37108pt too wide) in alignment at lines 40--48
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texmf/fonts/en
 c/dvips/lm/lm-ec.enc}] (/usr/share/texmf/tex/latex/lm/ts1lmr.fd) [2{/usr/share/
 texmf/fonts/enc/dvips/lm/lm-ts1.enc}]
-Underfull \hbox (badness 10000) in paragraph at lines 85--85
+Underfull \hbox (badness 10000) in paragraph at lines 85--86
+[]|\T1/lmr/m/n/10.95 57.63 /
+
+Underfull \hbox (badness 10000) in paragraph at lines 86--86
 []|\T1/lmr/m/n/10.95 Recommended
 
 Underfull \hbox (badness 10000) in paragraph at lines 86--87
-[]|\T1/lmr/m/n/10.95 15.40%
+[]|\T1/lmr/m/n/10.95 INR
 
-Overfull \hbox (14.71507pt too wide) in paragraph at lines 93--94
+Underfull \hbox (badness 10000) in paragraph at lines 86--87
+\T1/lmr/m/n/10.95 1436.12
+
+Underfull \hbox (badness 10000) in paragraph at lines 87--88
+[]|\T1/lmr/m/n/10.95 12.51%
+
+Overfull \hbox (14.71507pt too wide) in paragraph at lines 94--95
 \T1/lmr/m/it/10.95 Excerpt: \T1/lmr/m/n/10.95 FY21 [ebitda] OP-ER-AT-ING PROFIT
  BE-FORE WORK-ING CAP-I-TAL CHANGES
 [3]
-Overfull \hbox (14.71507pt too wide) in paragraph at lines 112--113
+Overfull \hbox (43.05493pt too wide) in paragraph at lines 103--104
+\T1/lmr/m/it/10.95 Excerpt: \T1/lmr/m/n/10.95 %pdf-1.6 % 7976 0 obj <</fil-ter/
+flatedecode/first 559/length 912/n 72/type/objstm>>stream
+
+Overfull \hbox (92.49742pt too wide) in paragraph at lines 103--104
+\T1/lmr/m/n/10.95 hw7 %qk.m"n1(nvhgchh[g!e%qsr1btj6*c!x:inat2w2mb/u885cr3#a"(vx
+\f v :j>e>ng > | z\tf%'%q@h=dge0tx... 
+
+Overfull \hbox (37.57994pt too wide) in paragraph at lines 104--105
+\T1/lmr/m/it/10.95 Excerpt: \T1/lmr/m/n/10.95 %pdf-1.6 % 11819 0 obj <</fil-ter
+/flatedecode/first 16/length 195/n 3/type/objstm>>stream
+
+Overfull \hbox (3.45158pt too wide) in paragraph at lines 104--105
+\T1/lmr/m/n/10.95 h| ee@g4je, yfj71wm .;!@@d%l6yacxr_kdf "bc{]d'1 1bl\/p}s;;@~ 
+.gwih =).t[v5o|zd( +yc/n?
+
+Overfull \hbox (14.71507pt too wide) in paragraph at lines 115--116
 \T1/lmr/m/it/10.95 Excerpt: \T1/lmr/m/n/10.95 FY21 [ebitda] OP-ER-AT-ING PROFIT
  BE-FORE WORK-ING CAP-I-TAL CHANGES
-[4] [5] (./CAM_report.aux)
+[4]
+Overfull \hbox (43.05493pt too wide) in paragraph at lines 124--125
+\T1/lmr/m/it/10.95 Excerpt: \T1/lmr/m/n/10.95 %pdf-1.6 % 7976 0 obj <</fil-ter/
+flatedecode/first 559/length 912/n 72/type/objstm>>stream
 
-Package rerunfilecheck Warning: File `CAM_report.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
+Overfull \hbox (92.49742pt too wide) in paragraph at lines 124--125
+\T1/lmr/m/n/10.95 hw7 %qk.m"n1(nvhgchh[g!e%qsr1btj6*c!x:inat2w2mb/u885cr3#a"(vx
+\f v :j>e>ng > | z\tf%'%q@h=dge0tx... 
 
- )
+Overfull \hbox (37.57994pt too wide) in paragraph at lines 125--126
+\T1/lmr/m/it/10.95 Excerpt: \T1/lmr/m/n/10.95 %pdf-1.6 % 11819 0 obj <</fil-ter
+/flatedecode/first 16/length 195/n 3/type/objstm>>stream
+
+Overfull \hbox (3.45158pt too wide) in paragraph at lines 125--126
+\T1/lmr/m/n/10.95 h| ee@g4je, yfj71wm .;!@@d%l6yacxr_kdf "bc{]d'1 1bl\/p}s;;@~ 
+.gwih =).t[v5o|zd( +yc/n?
+[5] [6] (./CAM_report.aux) )
 (see the transcript file for additional information)</usr/share/texmf/fonts/typ
 e1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></us
 r/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/pub
 lic/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb>
-Output written on CAM_report.pdf (5 pages, 139742 bytes).
+Output written on CAM_report.pdf (6 pages, 143326 bytes).
 Transcript written on CAM_report.log.
 
 

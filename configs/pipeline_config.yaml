@@ -12,3 +12,12 @@ scoring:
   loan_limit_multiplier: 0.25
   base_rate: 9.5
   max_risk_premium: 5.0
+databricks:
+  catalog: main
+  schema_bronze: bronze
+  schema_silver: silver
+  schema_gold: gold
+  dbfs_root: dbfs:/intelli_credit_engine
+api:
+  host: 0.0.0.0
+  port: 8000

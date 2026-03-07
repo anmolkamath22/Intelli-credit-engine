@@ -1,0 +1,201 @@
+[
+  {
+    "source": "local_news_docs",
+    "title": "court_cases.json",
+    "date": "",
+    "entity": "Blue Star Ltd",
+    "relevance_type": "news",
+    "summary": "{ \"case_count\": 6, \"case_type\": \"Labor\", \"case_status\": \"Under Appeal\", \"litigation_risk_score\": 39.0 }",
+    "risk_tag": "sector_headwind"
+  },
+  {
+    "source": "local_news_docs",
+    "title": "litigation_records.json",
+    "date": "",
+    "entity": "Blue Star Ltd",
+    "relevance_type": "news",
+    "summary": "{ \"case_count\": 6, \"case_type\": \"Labor\", \"case_status\": \"Under Appeal\", \"litigation_risk_score\": 24.0 }",
+    "risk_tag": "sector_headwind"
+  },
+  {
+    "source": "local_news_docs",
+    "title": "sentiment.json",
+    "date": "",
+    "entity": "Blue Star Ltd",
+    "relevance_type": "news",
+    "summary": "{ \"negative_news_count\": 18, \"sector_risk\": \"low\", \"management_controversy\": false, \"sentiment_score\": 49.6 }",
+    "risk_tag": "reputation_risk"
+  },
+  {
+    "source": "local_news_docs",
+    "title": "sentiment_signals.json",
+    "date": "",
+    "entity": "Blue Star Ltd",
+    "relevance_type": "news",
+    "summary": "{ \"negative_news_count\": 18, \"sector_risk\": \"low\", \"management_controversy\": false, \"sentiment_score\": 55.0 }",
+    "risk_tag": "reputation_risk"
+  },
+  {
+    "source": "google_news_rss",
+    "title": "Blue Star Ltd. Technical Momentum Shifts Amid Mixed Market Signals - Markets Mojo",
+    "date": "Fri, 06 Mar 2026 07:30:14 GMT",
+    "entity": "Blue Star Ltd",
+    "relevance_type": "news",
+    "summary": "Blue Star Ltd. Technical Momentum Shifts Amid Mixed Market Signals - Markets Mojo <a href=\"https://news.google.com/rss/articles/CBMiwAFBVV95cUxOcUtBRk5mVDF6b0F1c0kyUzhDR2I0RXM4NUlvUG5yYUZYWnhxR0JaaTJZZWgzc3FueUY4ZUswZFNLX1NFYV8zZmoxZWk3LVZwbVdIdXJUcnBveHM2UzNlc1pXejdFd2wyZjhVZ1ZaUEotUDFPclhEVlliZld4b1BDLURWZWNYdVhVc29ObFRwT3ZMTndwNmpUZUpEb3c4WmVKcG",
+    "risk_tag": "sector_headwind",
+    "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOcUtBRk5mVDF6b0F1c0kyUzhDR2I0RXM4NUlvUG5yYUZYWnhxR0JaaTJZZWgzc3FueUY4ZUswZFNLX1NFYV8zZmoxZWk3LVZwbVdIdXJUcnBveHM2UzNlc1pXejdFd2wyZjhVZ1ZaUEotUDFPclhEVlliZld4b1BDLURWZWNYdVhVc29ObFRwT3ZMTndwNmpUZUpEb3c4WmVKcGU2WDVHNnBvVVNzUUFNcWZqYmVyUDA5MUtXTk9Ya3I?oc=5"
+  },
+  {
+    "source": "google_news_rss",
+    "title": "Zaggle Lands Blue Star Deal Amid Stock Slump, Analyst Optimism - Whalesbook",
+    "date": "Fri, 06 Mar 2026 06:47:04 GMT",
+    "entity": "Blue Star Ltd",
+    "relevance_type": "news",
+    "summary": "Zaggle Lands Blue Star Deal Amid Stock Slump, Analyst Optimism - Whalesbook <a href=\"https://news.google.com/rss/articles/CBMiywFBVV95cUxONUVtWGsycHlPUHN4LWR2cWYwMHd1QTdQTF9HY20ybnVlNGJoTkxHZ3Z4SWdIM3ZNbzlnWWZMN0tfWV9zYWV4TnJCRndHN1RHMHU0M3BnT190ZHBNbnZhTEExVk1GQjlia3VfLXlNdEJmYzJsTXR6eEdKNHBMTzl6X3ZIbExxRVBVeFhUWnRLU2dxR3l5a3paRWhfb2RMUzJJcFE3VFhP",
+    "risk_tag": "sector_headwind",
+    "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxONUVtWGsycHlPUHN4LWR2cWYwMHd1QTdQTF9HY20ybnVlNGJoTkxHZ3Z4SWdIM3ZNbzlnWWZMN0tfWV9zYWV4TnJCRndHN1RHMHU0M3BnT190ZHBNbnZhTEExVk1GQjlia3VfLXlNdEJmYzJsTXR6eEdKNHBMTzl6X3ZIbExxRVBVeFhUWnRLU2dxR3l5a3paRWhfb2RMUzJJcFE3VFhPa1kwWW1Xd0lJazZIa0lmdkpGcy1JT3JLUGhyanBTQ0NqX3FFNA?oc=5"
+  },
+  {
+    "source": "google_news_rss",
+    "title": "Three-Year Vision: Fintech Company Secures Long-Term Contract with Blue Star Ltd - Dalal Street Investment Journal",
+    "date": "Fri, 06 Mar 2026 06:34:01 GMT",
+    "entity": "Blue Star Ltd",
+    "relevance_type": "news",
+    "summary": "Three-Year Vision: Fintech Company Secures Long-Term Contract with Blue Star Ltd - Dalal Street Investment Journal <a href=\"https://news.google.com/rss/articles/CBMizwFBVV95cUxQS1lkakpKRTV6bEFoMEhpYmEwcTZyMjJPQXUzQXl4ME12WTBEWDlYLVpfVl9XVnpTN2Q0S2djTDc4cEFkMlZ3UnBFeEJVUU82TGZkVnBXNno1ZXp0V3RPOTFNUUpqLWc5LWs3WEJpVkRVZGIzeER3QlltSUdXTVdzZjFRcEtzUWw3b",
+    "risk_tag": "sector_headwind",
+    "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxQS1lkakpKRTV6bEFoMEhpYmEwcTZyMjJPQXUzQXl4ME12WTBEWDlYLVpfVl9XVnpTN2Q0S2djTDc4cEFkMlZ3UnBFeEJVUU82TGZkVnBXNno1ZXp0V3RPOTFNUUpqLWc5LWs3WEJpVkRVZGIzeER3QlltSUdXTVdzZjFRcEtzUWw3bW5icjFOTjNpdUJhaGg1Q014MzNXRE9RZ29QVm9OSWJyMzhPNkRPblJ2WW02Y3FyeVNNUzEwN2FPY3QyNmc0Q2lIVXB6dFk?oc=5"
+  },
+  {
+    "source": "google_news_rss",
+    "title": "Zaggle Prepaid Signs 3-Year Blue Star Deal; Stock Up 4% - Equitypandit",
+    "date": "Fri, 06 Mar 2026 07:46:44 GMT",
+    "entity": "Blue Star Ltd",
+    "relevance_type": "news",
+    "summary": "Zaggle Prepaid Signs 3-Year Blue Star Deal; Stock Up 4% - Equitypandit <a href=\"https://news.google.com/rss/articles/CBMiiwFBVV95cUxOdXJNdF80SXpQdmdhQm8wXzFxc1B6N2JCaWJUN3RFV3E2dHJTcm1DdlZJUGRqYWItcG1IY2M0S0hndTBHalZiejlWV2o2MWNqc0dGekdadnVVNlgxTkkwZTZqVkRmbGZEYlBqZ1FNblBucW9NaElHYkJTd1NiWk5yWGo2VTFMQ1pFRU1N?oc=5\" target=\"_blank\">Zaggle Prepaid Sig",
+    "risk_tag": "sector_headwind",
+    "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOdXJNdF80SXpQdmdhQm8wXzFxc1B6N2JCaWJUN3RFV3E2dHJTcm1DdlZJUGRqYWItcG1IY2M0S0hndTBHalZiejlWV2o2MWNqc0dGekdadnVVNlgxTkkwZTZqVkRmbGZEYlBqZ1FNblBucW9NaElHYkJTd1NiWk5yWGo2VTFMQ1pFRU1N?oc=5"
+  },
+  {
+    "source": "google_news_rss",
+    "title": "Blue Star Ltd. Hits Intraday High with 5.24% Surge on 5 Mar 2026 - Markets Mojo",
+    "date": "Thu, 05 Mar 2026 08:05:45 GMT",
+    "entity": "Blue Star Ltd",
+    "relevance_type": "news",
+    "summary": "Blue Star Ltd. Hits Intraday High with 5.24% Surge on 5 Mar 2026 - Markets Mojo <a href=\"https://news.google.com/rss/articles/CBMiuwFBVV95cUxPREdOdlJrLVI5bUp6ZXAyWjhKRnJPS2NPMXZXc2tWYW1FOVpjXzlSSjdiYzh0cGI2S1RXMVZxSWFtWkNTMGdYTHVWWG5sOFZUaHhITkFvZmdtMkU5dnB0Y1JmVkJkdUx0NUt6NmloTUh1aTNIMWtfRktOQm9ENXlrV0dHVktYX2pHN2FUbFBWVFlCNmtfMHRNOUV4TkM3b3RoSUNn",
+    "risk_tag": "sector_headwind",
+    "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPREdOdlJrLVI5bUp6ZXAyWjhKRnJPS2NPMXZXc2tWYW1FOVpjXzlSSjdiYzh0cGI2S1RXMVZxSWFtWkNTMGdYTHVWWG5sOFZUaHhITkFvZmdtMkU5dnB0Y1JmVkJkdUx0NUt6NmloTUh1aTNIMWtfRktOQm9ENXlrV0dHVktYX2pHN2FUbFBWVFlCNmtfMHRNOUV4TkM3b3RoSUNnU2JLUy1QTlBfNkhGS3hEWWx5MjB5SHh3?oc=5"
+  },
+  {
+    "source": "google_news_rss",
+    "title": "AI at the core: How Blue Star is reimagining cooling through tech-led innovation - Express Computer",
+    "date": "Wed, 04 Feb 2026 02:35:19 GMT",
+    "entity": "Blue Star Ltd",
+    "relevance_type": "news",
+    "summary": "AI at the core: How Blue Star is reimagining cooling through tech-led innovation - Express Computer <a href=\"https://news.google.com/rss/articles/CBMiyAFBVV95cUxPRXVaN2s0LXNLNzZRNDVtcmlLMWNKNXdnSmZXV01kRG9jTlRUYS1BTF8wN0xJR1h6NlI3cVZvYnc5dXRpNW9jQVZGSDgwR0E2UVQxUjNuUWhaZGNIRmdRQlpwZkItV3dPSi1DV0l6OHlteHNZcW1yeDhpaGxvdk82ZUhIbUxSdWc0WmNKaUNjWHY3d1A4",
+    "risk_tag": "sector_headwind",
+    "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPRXVaN2s0LXNLNzZRNDVtcmlLMWNKNXdnSmZXV01kRG9jTlRUYS1BTF8wN0xJR1h6NlI3cVZvYnc5dXRpNW9jQVZGSDgwR0E2UVQxUjNuUWhaZGNIRmdRQlpwZkItV3dPSi1DV0l6OHlteHNZcW1yeDhpaGxvdk82ZUhIbUxSdWc0WmNKaUNjWHY3d1A4dS12Z3FuTTd4WlhOMk1HZnBIcU1SZ1dZUmNQbmJ1eFhlSHQ3VHpXWFJlVFpYM3h5SldzYdIBzgFBVV95cUxOSkluUmFhc0ROVEI3cVItcVlQV2lJTmF4STBLTUE1cFJNQ1pPdnBKQmNhSloxZVNmQWZhVGNpeEE0UE9mcXJJemJxeHZjdm5IcWxid01MSzdEZDljTjhpd0k0X1hrLV85SzhubEhVZklHQ0hLVGZCQTR5YThtc3gtZHNsVEtwbXJPR2xQRzZIb1FJWG5fSDZVRl9VNWd3LUxKSmNteHJVSk9UalhTS1B2TmlTQ3JMYWwxcHg0UzJSWUZTR3VicG5PVVJJZmwxQQ?oc=5"
+  },
+  {
+    "source": "google_news_rss",
+    "title": "IT Stock Signs Agreement with Blue Star for Employee Expense Management Services - Trade Brains",
+    "date": "Fri, 06 Mar 2026 10:21:00 GMT",
+    "entity": "Blue Star Ltd",
+    "relevance_type": "news",
+    "summary": "IT Stock Signs Agreement with Blue Star for Employee Expense Management Services - Trade Brains <a href=\"https://news.google.com/rss/articles/CBMipwFBVV95cUxNdHMyWmJQSUxRWU1Ea25tcjJkQ2xobFdCT0EzNG1SN1JnZlRIZjhXLUFQNU9RMUxJR1dkSDBhYjdDbTlVTFpBNFdCVm9MaUU1d0JidlFCYXV5Uy1GUHlCdXVRVjFTSm1TZE12Ym5sRWI3LVQ4RVRSdHNSYWpqOHE1LWNnU3N1VUJHbmYzUkxLbDNnYnZXN2x1",
+    "risk_tag": "sector_headwind",
+    "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxNdHMyWmJQSUxRWU1Ea25tcjJkQ2xobFdCT0EzNG1SN1JnZlRIZjhXLUFQNU9RMUxJR1dkSDBhYjdDbTlVTFpBNFdCVm9MaUU1d0JidlFCYXV5Uy1GUHlCdXVRVjFTSm1TZE12Ym5sRWI3LVQ4RVRSdHNSYWpqOHE1LWNnU3N1VUJHbmYzUkxLbDNnYnZXN2x1R1NPNTNXSFQ3TXBjNmJXcw?oc=5"
+  },
+  {
+    "source": "google_news_rss",
+    "title": "Zaggle Prepaid Ocean Services Execution of Agreement with Blue Star Limited for Expense Management Services - InvestyWise",
+    "date": "Thu, 05 Mar 2026 12:48:50 GMT",
+    "entity": "Blue Star Ltd",
+    "relevance_type": "news",
+    "summary": "Zaggle Prepaid Ocean Services Execution of Agreement with Blue Star Limited for Expense Management Services - InvestyWise <a href=\"https://news.google.com/rss/articles/CBMimwFBVV95cUxNUThkM3lFSy1iS2dJRWVOZ05tRXl3dnJPMjVBTVhJeGVYLW54LUpORGoyZFA1Z3FsY0NpdGFVNldtRHIxMThJbVhwUXVGS3psU3YtN2k0a0QzYXN2Z0w4T3N4b1g5TDFQOVM5Z014Vm5wZ0tfa0FIWUNLeVRFMkVfQlpkWk",
+    "risk_tag": "sector_headwind",
+    "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNUThkM3lFSy1iS2dJRWVOZ05tRXl3dnJPMjVBTVhJeGVYLW54LUpORGoyZFA1Z3FsY0NpdGFVNldtRHIxMThJbVhwUXVGS3psU3YtN2k0a0QzYXN2Z0w4T3N4b1g5TDFQOVM5Z014Vm5wZ0tfa0FIWUNLeVRFMkVfQlpkWkFET2M5TE8zZ0w2a193c3VGTUs1cHRCOA?oc=5"
+  },
+  {
+    "source": "google_news_rss",
+    "title": "Even as Museum Piece, Confederate Flag Is in Dispute (Published 2015) - The New York Times",
+    "date": "Mon, 06 Jul 2015 07:00:00 GMT",
+    "entity": "Mr Vir",
+    "relevance_type": "news",
+    "summary": "Even as Museum Piece, Confederate Flag Is in Dispute (Published 2015) - The New York Times <a href=\"https://news.google.com/rss/articles/CBMiqwFBVV95cUxPZUxZdTZ4bXFTTHh0UnR2NHhKR1BPVkdCTVdPSm9CdFh6dHFjTkxkQWJVY0JGQlUtYk8zZ01xOFZWMUx6UUNCV19xLVFacXRzM3dUT3NkSWRqWUY4TkRqN3RNYmN5b2NEQ0RWWXdncURCaFpxUGduMTZ5TGgwaDZIUi1LMjI1dHZDSVVqMFRpOGhFVFF5RWY3bGtyT",
+    "risk_tag": "sector_headwind",
+    "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPZUxZdTZ4bXFTTHh0UnR2NHhKR1BPVkdCTVdPSm9CdFh6dHFjTkxkQWJVY0JGQlUtYk8zZ01xOFZWMUx6UUNCV19xLVFacXRzM3dUT3NkSWRqWUY4TkRqN3RNYmN5b2NEQ0RWWXdncURCaFpxUGduMTZ5TGgwaDZIUi1LMjI1dHZDSVVqMFRpOGhFVFF5RWY3bGtyTUc3cVByXzdHRDBFN1FKZzQ?oc=5"
+  },
+  {
+    "source": "google_news_rss",
+    "title": "More trouble for Advani's yatra in Punjab - The Hindu",
+    "date": "Mon, 14 Nov 2011 08:00:00 GMT",
+    "entity": "Mr Advani",
+    "relevance_type": "news",
+    "summary": "More trouble for Advani's yatra in Punjab - The Hindu <a href=\"https://news.google.com/rss/articles/CBMinwFBVV95cUxNbURrNVg0dWFWaEJwcHczLWFaUE1CbkwwaUZUQnhxMS1reHM4OHFnNUZGblF0TnZFNlBpVVBwb3cyWmlPOTJmMnFfTWV6eDV2UUJYLS03dUF6NHlTRWwtYWw3dFhZVlVqcnJZZ3duWWE1dkNYYkNBcGVrenk5RzRFSTRuMHlDeWhfUVc4Nk5xbTNkLUhqQS1kQjJZU2hjUFnSAaYBQVVfeXFMTU1qNFpvb3ZLRlhNLX",
+    "risk_tag": "sector_headwind",
+    "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxNbURrNVg0dWFWaEJwcHczLWFaUE1CbkwwaUZUQnhxMS1reHM4OHFnNUZGblF0TnZFNlBpVVBwb3cyWmlPOTJmMnFfTWV6eDV2UUJYLS03dUF6NHlTRWwtYWw3dFhZVlVqcnJZZ3duWWE1dkNYYkNBcGVrenk5RzRFSTRuMHlDeWhfUVc4Nk5xbTNkLUhqQS1kQjJZU2hjUFnSAaYBQVVfeXFMTU1qNFpvb3ZLRlhNLXM1VFRoSFozbWJzdllyTjJSLTMwV1hHUm42ZDRiNjV6R2pyT0dYajdpZDF0NFB0LWFzMi1DS3BWSWFjLVY5RU1sMEpZODA1bWxmRF9jMDlKR1Z4ZG9hOWlnQlRubVhRVy1iS3lTLXR4Vm96dzlMWnpmbi16WE51RjJjMmlqYzB5T1dhdHVFTFc2c0dWeFBieDZQZw?oc=5"
+  },
+  {
+    "source": "local_legal_docs",
+    "title": "FY21.pdf",
+    "date": "",
+    "entity": "Blue Star Ltd",
+    "relevance_type": "litigation",
+    "summary": "%pdf-1.6 % 7976 0 obj <</filter/flatedecode/first 559/length 912/n 72/type/objstm>>stream h\u079cw\u06ce\u001b7 \u0015%q\b\bk.m\u0777\"\u000fn1(nv\u0017\u001b\u0017hgc\u009ehh[g!e%q\u0094sr1btj6*c!x:in\u0105t2\u0013w2mb/u885cr\u00133#\u0201\u0670\u0005\"(\u0638vx\u0015\\\u001af\u0016 v\u0007 :\u0001j\u0002>e\u0002>\u0003ng\u0006 >\u0007 \u0016| z\\t\u0012f%'%q@h=dge\u00140t\u0016x!b\u0010j '\u0007!\u0016e>\u0006>e>\b\u0018\u001a\u03d1\u03db!y\u0003_k1u\u00f6b} 2\u0017\u0019\u0016\u000e\u0001$h\u028cd{j.\u0010q$io okos7\u0019l\u000059\u0005iapwv? }{\u007fxd!\u0004\u07fd \u000fh\u0006\u076fx4mo\u0006= u \u0384uiws|\u0019\u007fx8~ a7(3}oh\u0018 sz0-\"555\u000fw\u000fw\u000f\u0007opo)l\u000esd",
+    "risk_tag": "litigation_risk"
+  },
+  {
+    "source": "local_legal_docs",
+    "title": "FY22.pdf",
+    "date": "",
+    "entity": "Blue Star Ltd",
+    "relevance_type": "litigation",
+    "summary": "%pdf-1.6 % 11819 0 obj <</filter/flatedecode/first 16/length 195/n 3/type/objstm>>stream h| \u0010e\u007fe@g4je,\u0012 yfj71\u0001wm \u0014.\u0004;!@\u0010@\u0002\u0003d%l6y\u0002acxr_kdf \"\ub8acbc\u0011{]\u0695d'1\u0016 1\u0005bl\u001a\\/\u028cp}s;;@~ .gw\u0014ih =).t[v5o|z\u0005\u0002\u0014d( +\u0019\u0786y\u010d/n?\u0002 \u0000\\ endstream endobj 11820 0 obj <</filter/flatedecode/first 2065/length 2452/n 199/type/objstm>>stream h\u07b4\u036e _o\u0011e \bhe\".\"h.l2en\u0002osdsw>l \u0017od,\u04d1\u000e\u0019h f \u0239\u360f\"<& ",
+    "risk_tag": "litigation_risk"
+  },
+  {
+    "source": "local_legal_docs",
+    "title": "FY23.pdf",
+    "date": "",
+    "entity": "Blue Star Ltd",
+    "relevance_type": "litigation",
+    "summary": "%pdf-1.6 % 36716 0 obj <</linearized 1/l 20178243/o 36718/e 60053/n 382/t 20170120/h [ 503 5911]>> endobj 36732 0 obj <</decodeparms<</columns 4/predictor 12>>/filter/flatedecode/id[<ac420bd53ae65144af1b9e25b164d766><0b8b7e2593783040aac2b85f277c0974>]/index[36716 32]/info 36715 0 r/length 84/prev 20170121/root 36717 0 r/size 36748/type/xref/w[1 2 1",
+    "risk_tag": "litigation_risk"
+  },
+  {
+    "source": "local_legal_docs",
+    "title": "FY24.pdf",
+    "date": "",
+    "entity": "Blue Star Ltd",
+    "relevance_type": "litigation",
+    "summary": "%pdf-1.7 % 74524 0 obj <</linearized 1/l 12674656/o 74526/e 298880/n 380/t 12664602/h [ 526 5044]>> endobj 74544 0 obj <</decodeparms<</columns 5/predictor 12>>/filter/flatedecode/id[<b92a79c6a28df84ab42272508b442941><83096a2371437c4985847c39787806a6>]/index[74524 42]/info 74523 0 r/length 105/prev 12664603/root 74525 0 r/size 74566/type/xref/w[1 3",
+    "risk_tag": "litigation_risk"
+  },
+  {
+    "source": "local_legal_docs",
+    "title": "FY25.pdf",
+    "date": "",
+    "entity": "Blue Star Ltd",
+    "relevance_type": "litigation",
+    "summary": "%pdf-1.7 % 3923 0 obj <</linearized 1/l 10148522/o 3925/e 130027/n 427/t 10144217/h [ 504 4699]>> endobj 3941 0 obj <</decodeparms<</columns 5/predictor 12>>/filter/flatedecode/id[<07124e7d2b437ce3c72d711fd639ce87><b49027609c778b4496f5e1c6c4b2524d>]/index[3923 44]/info 3922 0 r/length 98/prev 10144218/root 3924 0 r/size 3967/type/xref/w[1 3 1]>>str",
+    "risk_tag": "litigation_risk"
+  },
+  {
+    "source": "local_legal_docs",
+    "title": "court_cases.json",
+    "date": "",
+    "entity": "Blue Star Ltd",
+    "relevance_type": "litigation",
+    "summary": "{\"case_count\": 6, \"case_type\": \"Labor\", \"case_status\": \"Under Appeal\", \"litigation_risk_score\": 39.0}",
+    "risk_tag": "litigation_risk"
+  },
+  {
+    "source": "local_legal_docs",
+    "title": "litigation_records.json",
+    "date": "",
+    "entity": "Blue Star Ltd",
+    "relevance_type": "litigation",
+    "summary": "{\"case_count\": 6, \"case_type\": \"Labor\", \"case_status\": \"Under Appeal\", \"litigation_risk_score\": 24.0}",
+    "risk_tag": "litigation_risk"
+  }
+]

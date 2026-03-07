@@ -1,0 +1,24 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+.env
+.env.*
+.DS_Store
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Outputs and runtime artifacts
+outputs/cam_reports/**/*.aux
+outputs/cam_reports/**/*.log
+outputs/cam_reports/**/*.out
+outputs/cam_reports/**/*.toc
+
+# Databricks / Spark temp
+.metastore_db/
+derby.log
+spark-warehouse/

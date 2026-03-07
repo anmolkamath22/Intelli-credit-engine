@@ -17,6 +17,7 @@ from src.credit_model.feature_engineering import build_credit_features
 from src.credit_model.financial_ratios import build_validated_financials
 from src.credit_model.financial_trend_analysis import compute_financial_trends
 from src.credit_model.scoring_model import score_credit
+from src.databricks.pipeline import write_databricks_tables
 from src.ingestion.data_ingestor import DataIngestor
 from src.officer_portal.credit_officer_inputs import load_officer_inputs
 from src.research.research_agent import run_research_agent
@@ -198,12 +199,14 @@ def run(company: str, debug_financials: bool = False) -> dict:
                 )
 
     research_out = proc_dir / "research_summary.json"
+    research_evidence_out = proc_dir / "research_evidence.json"
     research = run_research_agent(
         company_name=company,
         financials=ing["financials"],
         company_dir=ing["company_dir"],
         retriever=retriever,
         output_path=research_out,
+        evidence_output_path=research_evidence_out,
         top_k=int(cfg.get("retrieval", {}).get("top_k", 5)),
     )
 
@@ -233,6 +236,12 @@ def run(company: str, debug_financials: bool = False) -> dict:
 
     scoring = score_credit(features, ing["financials"], cfg.get("scoring", {}), research=research)
     trace = build_decision_trace(features, scoring, research.get("supporting_evidence", []), research=research)
+    debug_dir = root / "outputs" / "debug"
+    debug_dir.mkdir(parents=True, exist_ok=True)
+    score_audit_path = debug_dir / f"score_audit_{slug}.json"
+    score_audit_path.write_text(
+        json.dumps(scoring.get("score_audit", {}), indent=2, ensure_ascii=True), encoding="utf-8"
+    )
 
     (proc_dir / "credit_features.json").write_text(json.dumps(features, indent=2, ensure_ascii=True), encoding="utf-8")
     (proc_dir / "decision_trace.json").write_text(json.dumps(trace, indent=2, ensure_ascii=True), encoding="utf-8")
@@ -241,6 +250,7 @@ def run(company: str, debug_financials: bool = False) -> dict:
     # Expand vector store with research + scoring artifacts before CAM generation.
     for f in [
         proc_dir / "research_summary.json",
+        proc_dir / "research_evidence.json",
         proc_dir / "financial_trends.json",
         proc_dir / "validated_financials.json",
         proc_dir / "credit_features.json",
@@ -370,6 +380,7 @@ def run(company: str, debug_financials: bool = False) -> dict:
         "synthetic_gst_features": str(proc_dir / "synthetic_gst_features.json"),
         "synthetic_bank_features": str(proc_dir / "synthetic_bank_features.json"),
         "research_summary": str(research_out),
+        "research_evidence": str(research_evidence_out),
         "credit_features": str(proc_dir / "credit_features.json"),
         "decision_trace": str(proc_dir / "decision_trace.json"),
         "scoring_output": str(proc_dir / "scoring_output.json"),
@@ -387,6 +398,30 @@ def run(company: str, debug_financials: bool = False) -> dict:
         "cam_contract_payload": str(cam_contract_payload),
         "cam_contract_log": str(cam_contract_log),
     }
+
+    # Databricks-compatible Bronze/Silver/Gold persistence (Spark if available, else local fallback).
+    spark = None
+    try:
+        from pyspark.sql import SparkSession  # type: ignore
+
+        spark = SparkSession.getActiveSession()
+    except Exception:
+        spark = None
+    table_writes = write_databricks_tables(
+        payloads={
+            "bronze.company_raw_files": {"company": company, "dataset_presence": ing["dataset_presence"]},
+            "bronze.research_raw": {"company": company, "research_summary_path": str(research_out)},
+            "silver.financial_extraction": {"company": company, "financial_history_path": str(proc_dir / "financial_history.json")},
+            "silver.research_evidence": {"company": company, "research_evidence_path": str(research_evidence_out)},
+            "silver.officer_inputs": {"company": company, "officer_inputs": officer_inputs},
+            "gold.credit_features": {"company": company, "credit_features_path": str(proc_dir / "credit_features.json")},
+            "gold.credit_scores": {"company": company, "scoring_output_path": str(proc_dir / "scoring_output.json")},
+            "gold.cam_payload": {"company": company, "cam_payload_path": cam_result["cam_payload"]},
+        },
+        spark=spark,
+        local_base_dir=root / "data" / "databricks",
+    )
+    final["databricks_table_writes"] = table_writes
     audit_path = _write_financial_audit(
         root,
         company,
@@ -395,9 +430,8 @@ def run(company: str, debug_financials: bool = False) -> dict:
         ing.get("anomalies", []),
     )
     final["financial_audit_report"] = audit_path
+    final["score_audit_report"] = str(score_audit_path)
     if debug_financials:
-        debug_dir = root / "outputs" / "debug"
-        debug_dir.mkdir(parents=True, exist_ok=True)
         debug_financial_path = debug_dir / f"financial_debug_{slug}.json"
         debug_payload = {
             "company": company,

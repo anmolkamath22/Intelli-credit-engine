@@ -22,7 +22,13 @@ class LatexSanitizerTests(unittest.TestCase):
         self.assertIn(r"\{", escaped)
         self.assertIn(r"\}", escaped)
 
+    def test_escape_unicode_and_controls(self) -> None:
+        text = "Amount ₹1000 \x00\x01 misc ޜ bytes"
+        escaped = escape_latex(text)
+        self.assertIn("INR", escaped)
+        self.assertNotIn("\x00", escaped)
+        self.assertNotIn("ޜ", escaped)
+
 
 if __name__ == "__main__":
     unittest.main()
-

@@ -1,182 +1,275 @@
-# Intelli-Credit-Engine
+# Intelli Credit Engine
 
-Production-style hackathon project for automated **corporate credit appraisal**.
+Intelli Credit Engine is a hackathon-ready AI credit appraisal platform that ingests multi-source company data, computes risk features, produces calibrated credit decisions, and generates a professional CAM report (`.tex` + `.pdf`).
 
-The engine ingests multi-source company data (financial + legal + behavioral), builds risk signals, computes an explainable credit score, and generates a professional **Credit Appraisal Memo (CAM)**.
+---
 
-## Project Objective
-- Handle incomplete real-world datasets.
-- Perform 5-year financial analysis from annual reports.
-- Generate synthetic fallback signals when datasets are missing.
-- Produce an explainable credit decision with evidence-backed CAM output.
+## 1) What This Project Does
 
-## What This Project Consumes
-This project is not limited to annual reports. It can consume:
-- GST returns and compliance inputs
-- Annual reports (5-year preferred)
-- Financial statements
-- Balance sheets
-- Bank statements
-- Litigation and legal documents
-- News/risk intelligence documents
-- Qualitative or analyst-provided notes (if available)
+- Ingests company data from local folder inputs.
+- Extracts and validates 5-year financial history from annual reports.
+- Normalizes units to INR Crores.
+- Generates synthetic GST and bank signals when data is missing.
+- Runs research intelligence (news, litigation, board/director context).
+- Builds explainable credit score + decision trace.
+- Generates CAM using deterministic flow: `JSON -> LaTeX -> PDF`.
+- Exposes backend APIs and a frontend dashboard for uploads, execution, and downloads.
+- Supports Databricks-compatible Bronze/Silver/Gold persistence.
 
-If users provide only a subset of these files, the pipeline still runs end-to-end and fills missing parts using synthetic GST/bank behavior models.
+---
 
-## Approach
-1. Data ingestion and detection
-- Reads company datasets from `data/input/<company_slug>/`.
-- Detects available sources (annual reports, GST, balance sheets, financial statements, bank statements, legal/litigation docs, news/risk docs).
+## 2) Repository Structure
 
-2. Financial extraction (5-year)
-- Parses annual reports year-wise.
-- Normalizes values to **INR Crores**.
-- Runs sanity checks and auto-correction for unrealistic values.
-- Builds `financial_history.json` and `financial_trends.json`.
-
-3. Risk intelligence
-- Research agent derives promoter/legal/news/sector signals.
-- Circular-trading detector checks GST vs bank inflow mismatch and flow loops.
-- Synthetic GST/bank signals are generated when raw files are missing.
-
-### Why this is robust for hackathons
-- Real-world datasets are often incomplete.
-- This engine supports partial uploads and still generates complete appraisal outputs.
-- Missing data does not break the pipeline; it triggers controlled synthetic fallback generation.
-
-4. Scoring and recommendation
-- Consolidates features into `credit_features.json`.
-- Computes credit score, loan recommendation, and interest rate.
-- Decision trace captures risk flags and feature contributions.
-
-5. CAM generation
-- Produces CAM using a deterministic path: **JSON -> LaTeX -> local compilation -> PDF**.
-- Includes source attribution by dataset type (not hardcoded absolute machine paths).
-
-## Tech Stack
-- Python 3.10+
-- Pandas / NumPy
-- YAML (`PyYAML`)
-- PDF tools (`pdftotext`, `pdfinfo`)
-- `python-docx` (DOCX export fallback)
-- Lightweight in-repo vector retrieval (RAG-style chunk retrieval)
-
-## Repository Structure
 ```text
 intelli-credit-engine/
   configs/
   data/
     input/
     processed/
+    databricks/
+  docs/
+  frontend/
+  notebooks/databricks/
   outputs/
     cam_reports/
+    debug/
   scripts/
   src/
+    api/
     ingestion/
-    validation/
-    synthetic/
     research/
     credit_model/
     cam/
-    assistant/
-    vector_store/
+    databricks/
+    validation/
+    synthetic/
   run_pipeline.py
-  ask_cam.py
+  run_api.py
+  requirements.txt
 ```
 
-## Input Data Contract
-Place files under:
+---
+
+## 3) Input Data Contract
+
+Place company files in:
 
 `data/input/<company_slug>/`
-- `annual_reports/` (prefer 5 years: FY20..FY24/FY25 PDFs)
+
+Supported folders:
+- `annual_reports/`
 - `financial_statements/`
 - `balance_sheets/`
 - `gst_returns/`
 - `bank_statements/`
 - `legal_documents/`
 - `news_documents/`
+- `qualitative/` (optional officer input JSON)
 
-If a dataset is missing, synthetic fallback is used where supported (especially GST and bank behavior), so CAM generation can still complete.
+### File Format Guidance
+- `annual_reports`: PDF preferred (best supported)
+- `financial_statements` / `balance_sheets`: PDF / JSON / CSV supported
+- `gst_returns`: JSON/CSV preferred
+- `bank_statements`: CSV preferred
+- `legal_documents` / `news_documents`: TXT/JSON/PDF accepted (text quality depends on source)
 
-## Setup
+If private data is missing, synthetic fallback is used for GST/bank signals.
+
+---
+
+## 4) Scoring Bands
+
+- `75-100`: Strong Credit
+- `60-74`: Acceptable / Moderate Risk
+- `45-59`: Weak / Elevated Risk
+- `<45`: High Risk
+
+Loan recommendation and interest are calibrated from score + risk features.
+
+---
+
+## 5) CAM Generation
+
+CAM pipeline is deterministic and safe:
+
+1. Build structured `cam_payload.json`
+2. Render LaTeX via fixed template
+3. Compile with local compiler (`tectonic` -> `xelatex` -> `pdflatex`)
+
+Outputs:
+- `CAM_report.pdf`
+- `CAM_report.tex`
+- `cam_payload.json`
+- `compile.log`
+
+---
+
+## 6) Databricks Compatibility
+
+### Bronze
+- `bronze.company_raw_files`
+- `bronze.research_raw`
+
+### Silver
+- `silver.financial_extraction`
+- `silver.research_evidence`
+- `silver.officer_inputs`
+
+### Gold
+- `gold.credit_features`
+- `gold.credit_scores`
+- `gold.cam_payload`
+- `gold.dashboard_credit_view`
+
+Notebooks available in `notebooks/databricks/`:
+1. `00_setup_environment.py`
+2. `01_bronze_ingestion.py`
+3. `02_silver_extraction.py`
+4. `03_research_enrichment.py`
+5. `04_gold_scoring.py`
+6. `05_cam_generation.py`
+7. `06_dashboard_tables.py`
+
+---
+
+## 7) Full Local Setup (Start to End)
+
+## 7.1 Python environment
+
 ```bash
-cd "intelli-credit-engine"
+cd "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine"
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-System dependencies for PDF extraction and LaTeX CAM compilation:
+## 7.2 System dependencies
+
 ```bash
 sudo apt-get update
-sudo apt-get install -y poppler-utils texlive-latex-base texlive-latex-recommended texlive-fonts-recommended
-```
-Preferred compiler detection order: `tectonic` -> `xelatex` -> `pdflatex`.
-
-## Run Commands
-Run full pipeline:
-```bash
-python run_pipeline.py --company "Blue Star Ltd"
+sudo apt-get install -y poppler-utils texlive-latex-base texlive-latex-recommended texlive-fonts-recommended nodejs npm
 ```
 
-Run with financial audit/debug artifacts:
+## 7.3 Run pipeline once (CLI)
+
 ```bash
 python run_pipeline.py --company "Blue Star Ltd" --debug-financials
 ```
 
-Ask CAM explainer questions:
+## 7.4 Run backend API (Terminal 1)
+
 ```bash
-python ask_cam.py --company "Blue Star Ltd"
+cd "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine"
+source .venv/bin/activate
+python run_api.py --host 0.0.0.0 --port 8001 --reload
 ```
 
-Sync input links from precursor dataset repo:
+## 7.5 Run frontend (Terminal 2)
+
 ```bash
-./scripts/sync_input_links.sh
+cd "/home/anmol_kamath/Credit Evaluator Hackathon/intelli-credit-engine/frontend"
+VITE_API_BASE=http://localhost:8001 npm install
+VITE_API_BASE=http://localhost:8001 npm run dev
 ```
 
-## Outputs
-Per company in `data/processed/<company_slug>/`:
-- `financial_features.json`
+## 7.6 Open in browser
+
+- Frontend: `http://localhost:5173`
+- API docs: `http://localhost:8001/docs`
+
+---
+
+## 8) Frontend Flow
+
+1. Enter company name.
+2. Upload files by dataset type.
+3. Save officer inputs.
+4. Click **Run Full Credit Evaluation**.
+5. Review score, trends, risk breakdown, board/litigation/news findings.
+6. Download CAM artifacts.
+
+---
+
+## 9) API Endpoints
+
+- `GET /api/v1/health`
+- `GET /api/v1/companies`
+- `POST /api/v1/company/upload`
+- `POST /api/v1/company/officer-inputs`
+- `POST /api/v1/pipeline/run`
+- `GET /api/v1/jobs/{job_id}`
+- `GET /api/v1/financials/{company}`
+- `GET /api/v1/research/{company}`
+- `GET /api/v1/scores/{company}`
+- `GET /api/v1/dashboard/{company}`
+- `GET /api/v1/download/{company}/{artifact}`
+
+Download artifacts:
+- `cam_pdf`
+- `cam_tex`
+- `cam_payload`
+- `decision_trace`
+- `score_audit`
+
+---
+
+## 10) Key Outputs
+
+Per company (`data/processed/<company_slug>/`):
 - `financial_history.json`
 - `financial_trends.json`
-- `synthetic_gst_features.json`
-- `synthetic_bank_features.json`
-- `research_summary.json`
+- `validated_financials.json`
+- `financial_features.json`
 - `credit_features.json`
-- `decision_trace.json`
+- `research_summary.json`
+- `research_evidence.json`
 - `scoring_output.json`
+- `decision_trace.json`
+- `pipeline_output.json`
 
-CAM reports:
-- `outputs/cam_reports/<company_slug>/CAM_report.pdf`
-- `outputs/cam_reports/<company_slug>/CAM_report.tex`
-- `outputs/cam_reports/<company_slug>/cam_payload.json`
-- `outputs/cam_reports/<company_slug>/compile.log`
+CAM outputs (`outputs/cam_reports/<company_slug>/`):
+- `CAM_report.pdf`
+- `CAM_report.tex`
+- `cam_payload.json`
+- `compile.log`
 
-Run-level aliases (latest run):
-- `outputs/cam_reports/CAM_report.pdf`
-- `outputs/cam_reports/CAM_report.tex`
-- `outputs/cam_reports/cam_payload.json`
-- `outputs/cam_reports/compile.log`
+Debug outputs (`outputs/debug/`):
+- `financial_audit_report.json`
+- `score_audit_<company>.json`
+- `unit_detection_<company>.json`
+- `financial_anomalies_<company>.json`
 
-Debug outputs:
-- `outputs/debug/financial_audit_report.json`
-- `outputs/debug/unit_detection_<company_slug>.json`
-- `outputs/debug/financial_anomalies_<company_slug>.json`
-- `outputs/debug/financial_debug_<company_slug>.json`
+---
 
-## CAM Contents
-- Executive Summary
-- Company Overview
-- 5-Year Financial Performance
-- Financial Ratio Table (INR Crores)
-- Financial Trend Analysis
-- Promoter & Management Assessment
-- Industry Outlook
-- Litigation Profile
-- Risk Flags + Decision Logic
-- Final Credit Score
-- Recommended Loan Limit
-- Interest Rate Recommendation
-- Supporting Evidence + Source Attribution
+## 11) Troubleshooting
 
+### PDF download says artifact not found
+- Re-run evaluation once.
+- Ensure `cam_compile_success` is true in `pipeline_output.json`.
+
+### Port already in use
+- Change backend port:
+```bash
+python run_api.py --host 0.0.0.0 --port 8002 --reload
+```
+- Start frontend with matching API base:
+```bash
+VITE_API_BASE=http://localhost:8002 npm run dev
+```
+
+### Frontend still shows old values
+- Hard refresh browser (`Ctrl+Shift+R`).
+- Click `Refresh Results`.
+
+---
+
+## 12) Hackathon Positioning
+
+This project is designed as a production-style prototype:
+- deterministic ingestion first
+- synthetic completion for missing private data
+- explainable scoring and decision trace
+- evidence-backed CAM outputs
+- Databricks-compatible architecture
+- deployable API + dashboard demo
 
