@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-03-08",
+  "scope": "frontend-backend connectivity audit",
+  "failing_routes_observed": [
+    "/api/v1/pipeline/run",
+    "/api/v1/jobs/{job_id}",
+    "/api/v1/dashboard/{company}",
+    "/api/v1/download/{company}/{artifact}"
+  ],
+  "root_causes": [
+    "Frontend API base URL had localhost/port assumptions, breaking cross-machine execution.",
+    "Backend responses were inconsistent (mixed plain dicts, no success/error envelope), causing fragile frontend parsing.",
+    "Job lifecycle lacked explicit status/result endpoints and progress fields.",
+    "Frontend polling could hang without timeout/error state, leaving UI in stuck states.",
+    "CORS policy was wildcard-only and not environment-driven for multi-origin setup.",
+    "Machine-specific path exposure in responses made debugging and deployment harder.",
+    "No structured backend request logging for route/job tracing."
+  ],
+  "fixes_applied": [
+    "Added environment-driven API base handling in frontend with runtime fallback and clear backend-offline indicators.",
+    "Introduced structured success/error JSON response patterns.",
+    "Added robust job lifecycle endpoints: /jobs/{job_id}/status and /jobs/{job_id}/result.",
+    "Added polling timeout and failure handling in frontend state management.",
+    "Implemented constrained CORS with configurable CORS_ORIGINS.",
+    "Added request middleware logging with request_id and duration to logs/backend.log.",
+    "Added /health and /api/v1/debug/config endpoints for diagnostics.",
+    "Added Docker + docker-compose for reproducible multi-machine setup."
+  ],
+  "remaining_considerations": [
+    "For production, move long-running jobs to task queue (Celery/RQ) and persist job state in Redis/DB.",
+    "For deployed frontend, inject FRONTEND_API_BASE_URL at build/runtime using platform env vars."
+  ]
+}

@@ -11,12 +11,14 @@ venv/
 # Frontend
 frontend/node_modules/
 frontend/dist/
+frontend/.env
 
 # Outputs and runtime artifacts
 outputs/cam_reports/**/*.aux
 outputs/cam_reports/**/*.log
 outputs/cam_reports/**/*.out
 outputs/cam_reports/**/*.toc
+logs/backend.log
 
 # Databricks / Spark temp
 .metastore_db/

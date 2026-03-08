@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid, BarChart, Bar } from 'recharts'
+import { API_BASE, API_PREFIX } from './config'
 
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:8000'
 const DATA_TYPES = [
   'annual_reports',
   'financial_statements',
@@ -14,11 +14,12 @@ const DATA_TYPES = [
 
 async function api(path, options = {}) {
   const res = await fetch(`${API_BASE}${path}`, options)
-  if (!res.ok) {
-    const txt = await res.text()
-    throw new Error(txt || `API ${path} failed`)
+  const payload = await res.json().catch(() => ({}))
+  if (!res.ok || payload.success === false) {
+    const msg = payload.message || payload.detail || `API ${path} failed`
+    throw new Error(msg)
   }
-  return res.json()
+  return payload
 }
 
 function scoreBand(score) {
@@ -43,6 +44,10 @@ export default function App() {
   const [jobId, setJobId] = useState('')
   const [dashboard, setDashboard] = useState(null)
   const [running, setRunning] = useState(false)
+  const [error, setError] = useState('')
+  const [offline, setOffline] = useState(false)
+  const pollRef = useRef(null)
+
   const [officer, setOfficer] = useState({
     factory_utilization: 0.7,
     management_credibility: 0.7,
@@ -71,20 +76,49 @@ export default function App() {
     ]
   }, [dashboard])
 
+  useEffect(() => {
+    return () => {
+      if (pollRef.current) clearInterval(pollRef.current)
+    }
+  }, [])
+
+  async function checkHealth() {
+    try {
+      const h = await api(`${API_PREFIX}/health`)
+      setOffline(!(h?.data?.status === 'ok'))
+    } catch (e) {
+      setOffline(true)
+      setError(`Backend unreachable at ${API_BASE}`)
+    }
+  }
+
+  useEffect(() => {
+    checkHealth()
+  }, [])
+
   async function uploadFiles() {
-    if (!company || files.length === 0) return
+    if (!company || files.length === 0) {
+      setError('Select company and at least one file')
+      return
+    }
+    setError('')
     const form = new FormData()
     form.append('company', company)
     form.append('data_type', dataType)
     Array.from(files).forEach(f => form.append('files', f))
     setStatus('Uploading files...')
-    await fetch(`${API_BASE}/api/v1/company/upload`, { method: 'POST', body: form })
-    setStatus('Files uploaded')
+    const res = await fetch(`${API_BASE}${API_PREFIX}/company/upload`, { method: 'POST', body: form })
+    const payload = await res.json().catch(() => ({}))
+    if (!res.ok || payload.success === false) {
+      throw new Error(payload.message || 'Upload failed')
+    }
+    setStatus(`Files uploaded (${(payload.saved_files || []).length})`)
   }
 
   async function saveOfficerInputs() {
+    setError('')
     setStatus('Saving officer inputs...')
-    await api('/api/v1/company/officer-inputs', {
+    await api(`${API_PREFIX}/company/officer-inputs`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ company, ...officer })
@@ -94,32 +128,57 @@ export default function App() {
 
   async function runPipeline() {
     setRunning(true)
+    setError('')
     setStatus('Queueing pipeline...')
-    const queued = await api('/api/v1/pipeline/run', {
+
+    const queued = await api(`${API_PREFIX}/pipeline/run`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ company, debug_financials: true })
     })
-    setJobId(queued.job_id)
+    const id = queued.job_id
+    setJobId(id)
 
-    let complete = false
-    while (!complete) {
-      await new Promise(r => setTimeout(r, 2500))
-      const job = await api(`/api/v1/jobs/${queued.job_id}`)
-      setStatus(`Pipeline: ${job.status}`)
-      if (job.status === 'completed') complete = true
-      if (job.status === 'failed') throw new Error(job.error || 'Pipeline failed')
-    }
+    const startedAt = Date.now()
+    const timeoutMs = 15 * 60 * 1000
 
-    const d = await api(`/api/v1/dashboard/${encodeURIComponent(company)}`)
-    setDashboard(d)
-    setStatus('Pipeline completed')
-    setRunning(false)
+    if (pollRef.current) clearInterval(pollRef.current)
+    pollRef.current = setInterval(async () => {
+      try {
+        const job = await api(`${API_PREFIX}/jobs/${id}/status`)
+        setStatus(`Pipeline: ${job.status} (${job.progress || 0}%)`)
+
+        if (job.status === 'completed') {
+          clearInterval(pollRef.current)
+          const result = await api(`${API_PREFIX}/jobs/${id}/result`)
+          const d = await api(`${API_PREFIX}/dashboard/${encodeURIComponent(company)}`)
+          setDashboard(d.data)
+          setStatus(result.message || 'Pipeline completed')
+          setRunning(false)
+        } else if (job.status === 'failed') {
+          clearInterval(pollRef.current)
+          setError(job.error || 'Pipeline failed')
+          setStatus('Pipeline failed')
+          setRunning(false)
+        } else if (Date.now() - startedAt > timeoutMs) {
+          clearInterval(pollRef.current)
+          setError('Pipeline timeout. Please retry and check backend logs.')
+          setStatus('Pipeline timeout')
+          setRunning(false)
+        }
+      } catch (e) {
+        clearInterval(pollRef.current)
+        setError(e.message || 'Polling failed')
+        setStatus('Polling failed')
+        setRunning(false)
+      }
+    }, 2500)
   }
 
   async function refreshDashboard() {
-    const d = await api(`/api/v1/dashboard/${encodeURIComponent(company)}`)
-    setDashboard(d)
+    setError('')
+    const d = await api(`${API_PREFIX}/dashboard/${encodeURIComponent(company)}`)
+    setDashboard(d.data)
     setStatus('Dashboard refreshed')
   }
 
@@ -142,15 +201,28 @@ export default function App() {
     0
   )
 
+  const onAction = async (fn) => {
+    try {
+      await fn()
+    } catch (e) {
+      setError(e.message || 'Unexpected error')
+      setStatus('Error')
+      setRunning(false)
+    }
+  }
+
   return (
     <div className="page">
       <header className="hero">
         <div>
           <h1>Intelli-Credit Engine</h1>
-          <p>AI-powered Credit Appraisal Platform for Hackathon Demo</p>
+          <p>API: {API_BASE}</p>
         </div>
         <div className="status">{status}</div>
       </header>
+
+      {offline && <div className="errorBox">Backend is offline. Check API URL and backend process.</div>}
+      {error && <div className="errorBox">{error}</div>}
 
       <section className="grid two">
         <article className="card">
@@ -162,7 +234,7 @@ export default function App() {
             {DATA_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
           </select>
           <input type="file" multiple onChange={e => setFiles(e.target.files)} />
-          <button onClick={uploadFiles}>Upload Files</button>
+          <button onClick={() => onAction(uploadFiles)}>Upload Files</button>
         </article>
 
         <article className="card">
@@ -184,7 +256,7 @@ export default function App() {
           <textarea value={officer.collateral_notes} onChange={e => setOfficer(v => ({ ...v, collateral_notes: e.target.value }))} />
           <label>Channel Checks</label>
           <textarea value={officer.channel_checks} onChange={e => setOfficer(v => ({ ...v, channel_checks: e.target.value }))} />
-          <button onClick={saveOfficerInputs}>Save Officer Inputs</button>
+          <button onClick={() => onAction(saveOfficerInputs)}>Save Officer Inputs</button>
         </article>
       </section>
 
@@ -207,8 +279,8 @@ export default function App() {
       </section>
 
       <section className="card actions">
-        <button disabled={running} onClick={runPipeline}>{running ? 'Running...' : 'Run Full Credit Evaluation'}</button>
-        <button onClick={refreshDashboard}>Refresh Results</button>
+        <button disabled={running} onClick={() => onAction(runPipeline)}>{running ? 'Running...' : 'Run Full Credit Evaluation'}</button>
+        <button onClick={() => onAction(refreshDashboard)}>Refresh Results</button>
         {jobId && <span className="job">Job: {jobId}</span>}
       </section>
 
@@ -265,21 +337,12 @@ export default function App() {
       </section>
 
       <section className="card">
-        <h2>Decision Trace & Risk Flags</h2>
-        <ul>
-          {(dashboard?.decision_trace?.risk_flags || []).map((f, i) => (
-            <li key={i}><strong>{f.flag || f}:</strong> {f.explanation || ''}</li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="card">
         <h2>Downloads</h2>
         <div className="downloadRow">
-          <a href={`${API_BASE}/api/v1/download/${encodeURIComponent(company)}/cam_pdf`} target="_blank">CAM PDF</a>
-          <a href={`${API_BASE}/api/v1/download/${encodeURIComponent(company)}/cam_tex`} target="_blank">CAM TEX</a>
-          <a href={`${API_BASE}/api/v1/download/${encodeURIComponent(company)}/cam_payload`} target="_blank">CAM Payload</a>
-          <a href={`${API_BASE}/api/v1/download/${encodeURIComponent(company)}/decision_trace`} target="_blank">Decision Trace</a>
+          <a href={`${API_BASE}${API_PREFIX}/download/${encodeURIComponent(company)}/cam_pdf`} target="_blank">CAM PDF</a>
+          <a href={`${API_BASE}${API_PREFIX}/download/${encodeURIComponent(company)}/cam_tex`} target="_blank">CAM TEX</a>
+          <a href={`${API_BASE}${API_PREFIX}/download/${encodeURIComponent(company)}/cam_payload`} target="_blank">CAM Payload</a>
+          <a href={`${API_BASE}${API_PREFIX}/download/${encodeURIComponent(company)}/decision_trace`} target="_blank">Decision Trace</a>
         </div>
       </section>
     </div>

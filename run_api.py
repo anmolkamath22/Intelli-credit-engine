@@ -1,4 +1,4 @@
-"""Top-level API runner."""
+"""Convenience runner for the backend."""
 
 from __future__ import annotations
 

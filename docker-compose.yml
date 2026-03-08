@@ -1,0 +1,31 @@
+version: '3.9'
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: intelli-credit-backend
+    environment:
+      BACKEND_HOST: 0.0.0.0
+      BACKEND_PORT: 8001
+      API_PREFIX: /api/v1
+      ENGINE_STORAGE_ROOT: /app/data
+      CORS_ORIGINS: http://localhost:5173,http://frontend
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./data:/app/data
+      - ./outputs:/app/outputs
+      - ./logs:/app/logs
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        VITE_FRONTEND_API_BASE_URL: http://localhost:8001
+    container_name: intelli-credit-frontend
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
