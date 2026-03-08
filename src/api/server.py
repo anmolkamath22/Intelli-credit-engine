@@ -16,6 +16,7 @@ from typing import Any
 from fastapi import BackgroundTasks, FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from scripts.run_pipeline import run as run_pipeline
@@ -28,6 +29,7 @@ PROCESSED_ROOT = STORAGE_ROOT / "processed"
 CAM_ROOT = ROOT / "outputs" / "cam_reports"
 LOGS_ROOT = ROOT / "logs"
 API_PREFIX = os.getenv("API_PREFIX", "/api/v1")
+FRONTEND_DIST = ROOT / "frontend" / "dist"
 
 DATASET_FOLDERS = {
     "annual_reports": "annual_reports",
@@ -108,6 +110,7 @@ def _allowed_origins() -> list[str]:
 app.add_middleware(
     CORSMiddleware,
     allow_origins=_allowed_origins(),
+    allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1|0\.0\.0\.0|10\.\d+\.\d+\.\d+|192\.168\.\d+\.\d+|172\.(1[6-9]|2\d|3[0-1])\.\d+\.\d+)(:\d+)?$",
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
@@ -541,3 +544,8 @@ def download_artifact(company: str, artifact: str) -> FileResponse:
     if not path.exists():
         raise ApiError("artifact_not_found", f"Artifact not found: {path}", status_code=404)
     return FileResponse(path=str(path), filename=path.name)
+
+
+# Serve built frontend in single-container mode.
+if FRONTEND_DIST.exists():
+    app.mount("/", StaticFiles(directory=str(FRONTEND_DIST), html=True), name="frontend")
