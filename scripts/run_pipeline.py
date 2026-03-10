@@ -4,12 +4,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 from typing import Any
 
 import yaml
 
 from scripts.run_cam_generation import run_cam
+from src.analysis.triangulation_engine import build_swot_analysis, build_triangulated_insights
 from src.analysis.financial_narrative_generator import generate_financial_narrative
 from src.credit_model.circular_trading_detector import detect_circular_trading
 from src.credit_model.decision_trace import build_decision_trace
@@ -31,8 +33,26 @@ def _load_cfg(root: Path) -> dict:
     return yaml.safe_load((root / "configs" / "pipeline_config.yaml").read_text(encoding="utf-8"))
 
 
+def _read_json(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        return {}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        return data if isinstance(data, dict) else {}
+    except Exception:
+        return {}
+
+
 def _source_type(path_or_source: str) -> str:
     s = path_or_source.lower()
+    if "alm" in s:
+        return "alm"
+    if "shareholding_pattern" in s:
+        return "shareholding_pattern"
+    if "borrowing_profile" in s:
+        return "borrowing_profile"
+    if "portfolio_cuts" in s:
+        return "portfolio_cuts"
     if "annual_reports" in s:
         return "annual_reports"
     if "financial_statements" in s:
@@ -55,7 +75,7 @@ def _source_type(path_or_source: str) -> str:
 
 
 def _section_type_from_source(source_type: str) -> str:
-    if source_type in {"annual_reports", "financial_statements", "balance_sheets", "feature_summary"}:
+    if source_type in {"annual_reports", "financial_statements", "balance_sheets", "feature_summary", "alm", "shareholding_pattern", "borrowing_profile", "portfolio_cuts"}:
         return "financial"
     if source_type in {"legal_documents"}:
         return "litigation"
@@ -144,8 +164,15 @@ def run(company: str, debug_financials: bool = False) -> dict:
     cfg = _load_cfg(root)
     logger = get_logger(log_file=str(root / "docs" / "pipeline.log"))
 
-    input_root = root / cfg.get("input_root", "data/input")
-    processed_root = root / cfg.get("processed_root", "data/processed")
+    # Hosted runtimes (HF/containers) may set a storage root for uploads + processed artifacts.
+    storage_root_raw = os.getenv("ENGINE_STORAGE_ROOT", "").strip()
+    if storage_root_raw:
+        storage_root = Path(storage_root_raw)
+        input_root = storage_root / "input"
+        processed_root = storage_root / "processed"
+    else:
+        input_root = root / cfg.get("input_root", "data/input")
+        processed_root = root / cfg.get("processed_root", "data/processed")
     output_root = root / cfg.get("output_root", "outputs/cam_reports")
     legacy_root = (root / cfg.get("legacy_dataset_root", "../credit-dataset-builder/datasets")).resolve()
 
@@ -211,6 +238,10 @@ def run(company: str, debug_financials: bool = False) -> dict:
     )
 
     officer_inputs = load_officer_inputs(ing["company_dir"] / "qualitative" / "officer_inputs.json")
+    entity_profile = _read_json(proc_dir / "entity_profile.json")
+    file_classification = _read_json(proc_dir / "file_classification.json")
+    schema_mapping = _read_json(proc_dir / "schema_mapping.json")
+    extracted_structured_data = _read_json(proc_dir / "extracted_structured_data.json")
 
     gst_sales = float(ing["gst_signals"].get("gst_sales_estimate") or ing["financials"].get("revenue") or 0.0)
     circular_flags = detect_circular_trading(gst_sales=gst_sales, bank_df=ing["bank_df"])
@@ -234,8 +265,28 @@ def run(company: str, debug_financials: bool = False) -> dict:
         circular_flags=circular_flags,
     )
 
-    scoring = score_credit(features, ing["financials"], cfg.get("scoring", {}), research=research)
-    trace = build_decision_trace(features, scoring, research.get("supporting_evidence", []), research=research)
+    scoring = score_credit(features, ing["financials"], cfg.get("scoring", {}), research=research, entity_profile=entity_profile)
+    trace = build_decision_trace(
+        features,
+        scoring,
+        research.get("supporting_evidence", []),
+        research=research,
+        entity_profile=entity_profile,
+    )
+    triangulated_insights = build_triangulated_insights(
+        financials=ing["financials"],
+        features=features,
+        research=research,
+        extracted_structured_data=extracted_structured_data,
+        officer_inputs=officer_inputs,
+    )
+    swot_analysis = build_swot_analysis(
+        financials=ing["financials"],
+        features=features,
+        research=research,
+        triangulated=triangulated_insights,
+        officer_inputs=officer_inputs,
+    )
     debug_dir = root / "outputs" / "debug"
     debug_dir.mkdir(parents=True, exist_ok=True)
     score_audit_path = debug_dir / f"score_audit_{slug}.json"
@@ -246,16 +297,27 @@ def run(company: str, debug_financials: bool = False) -> dict:
     (proc_dir / "credit_features.json").write_text(json.dumps(features, indent=2, ensure_ascii=True), encoding="utf-8")
     (proc_dir / "decision_trace.json").write_text(json.dumps(trace, indent=2, ensure_ascii=True), encoding="utf-8")
     (proc_dir / "scoring_output.json").write_text(json.dumps(scoring, indent=2, ensure_ascii=True), encoding="utf-8")
+    (proc_dir / "triangulated_insights.json").write_text(
+        json.dumps(triangulated_insights, indent=2, ensure_ascii=True), encoding="utf-8"
+    )
+    (proc_dir / "swot_analysis.json").write_text(json.dumps(swot_analysis, indent=2, ensure_ascii=True), encoding="utf-8")
+    (proc_dir / "officer_inputs.json").write_text(json.dumps(officer_inputs, indent=2, ensure_ascii=True), encoding="utf-8")
 
     # Expand vector store with research + scoring artifacts before CAM generation.
     for f in [
         proc_dir / "research_summary.json",
         proc_dir / "research_evidence.json",
+        proc_dir / "litigation_summary.json",
+        proc_dir / "litigation_evidence.json",
+        proc_dir / "board_risk_summary.json",
+        proc_dir / "company_profile.json",
         proc_dir / "financial_trends.json",
         proc_dir / "validated_financials.json",
         proc_dir / "credit_features.json",
         proc_dir / "decision_trace.json",
         proc_dir / "scoring_output.json",
+        proc_dir / "triangulated_insights.json",
+        proc_dir / "swot_analysis.json",
     ]:
         if f.exists():
             st = _source_type(str(f))
@@ -269,14 +331,42 @@ def run(company: str, debug_financials: bool = False) -> dict:
                 )
 
     fin_candidates = retriever.query(
-            "audited financial statement revenue ebitda debt finance cost operating cash flow",
+            "audited financial statement revenue ebitda debt finance cost operating cash flow alm maturity gap shareholding borrowing profile portfolio performance npa collection efficiency",
             top_k=20,
-            source_types=["annual_reports", "financial_statements", "balance_sheets", "feature_summary"],
+            source_types=[
+                "annual_reports",
+                "financial_statements",
+                "balance_sheets",
+                "feature_summary",
+                "alm",
+                "shareholding_pattern",
+                "borrowing_profile",
+                "portfolio_cuts",
+            ],
             section_type="financial",
         )
     fin_evidence = _filter_evidence_by_keywords(
         fin_candidates,
-        ["revenue", "ebitda", "profit", "borrowings", "debt", "assets", "liabilities", "cash flow", "finance cost"],
+        [
+            "revenue",
+            "ebitda",
+            "profit",
+            "borrowings",
+            "debt",
+            "assets",
+            "liabilities",
+            "cash flow",
+            "finance cost",
+            "maturity",
+            "gap",
+            "shareholding",
+            "promoter holding",
+            "lender",
+            "outstanding",
+            "portfolio",
+            "npa",
+            "collection efficiency",
+        ],
         6,
         min_hits=2,
         require_number=True,
@@ -316,7 +406,7 @@ def run(company: str, debug_financials: bool = False) -> dict:
     decision_candidates = retriever.query(
             "decision rationale recommendation risk premium loan limit",
             top_k=15,
-            source_types=["feature_summary", "annual_reports"],
+            source_types=["feature_summary", "annual_reports", "alm", "shareholding_pattern", "borrowing_profile", "portfolio_cuts"],
             section_type="decision",
         )
     decision_evidence = _filter_evidence_by_keywords(
@@ -341,6 +431,12 @@ def run(company: str, debug_financials: bool = False) -> dict:
             "validated_financials": validated_financials,
             "dataset_presence": ing.get("dataset_presence", {}),
             "cam_evidence": cam_evidence,
+            "entity_profile": entity_profile,
+            "file_classification": file_classification,
+            "schema_mapping": schema_mapping,
+            "extracted_structured_data": extracted_structured_data,
+            "triangulated_insights": triangulated_insights,
+            "swot_analysis": swot_analysis,
             "research": research,
             "features": features,
             "scoring": scoring,
@@ -381,9 +477,20 @@ def run(company: str, debug_financials: bool = False) -> dict:
         "synthetic_bank_features": str(proc_dir / "synthetic_bank_features.json"),
         "research_summary": str(research_out),
         "research_evidence": str(research_evidence_out),
+        "litigation_summary": str(proc_dir / "litigation_summary.json"),
+        "litigation_evidence": str(proc_dir / "litigation_evidence.json"),
+        "board_risk_summary": str(proc_dir / "board_risk_summary.json"),
+        "company_profile": str(proc_dir / "company_profile.json"),
         "credit_features": str(proc_dir / "credit_features.json"),
         "decision_trace": str(proc_dir / "decision_trace.json"),
         "scoring_output": str(proc_dir / "scoring_output.json"),
+        "entity_profile": str(proc_dir / "entity_profile.json"),
+        "file_classification": str(proc_dir / "file_classification.json"),
+        "schema_mapping": str(proc_dir / "schema_mapping.json"),
+        "extracted_structured_data": str(proc_dir / "extracted_structured_data.json"),
+        "triangulated_insights": str(proc_dir / "triangulated_insights.json"),
+        "swot_analysis": str(proc_dir / "swot_analysis.json"),
+        "officer_inputs": str(proc_dir / "officer_inputs.json"),
         "cam_payload": cam_result["cam_payload"],
         "cam_tex": cam_result["cam_tex"],
         "cam_pdf": cam_result["cam_pdf"],

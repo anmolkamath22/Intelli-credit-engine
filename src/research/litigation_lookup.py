@@ -57,10 +57,15 @@ def lookup_litigation(company_dir: Path, company_name: str, board_members: list[
                         "source": "local_legal_docs",
                         "title": f.name,
                         "date": "",
-                        "entity": company_name,
+                        "entity_type": "company",
+                        "entity_name": company_name,
+                        "case_type": "unknown",
+                        "case_status": "unknown",
                         "relevance_type": "litigation",
                         "summary": json.dumps(payload)[:350],
                         "risk_tag": "litigation_risk",
+                        "risk_weight": min(10, cc + 1),
+                        "confidence": "medium",
                     }
                 )
         else:
@@ -76,10 +81,15 @@ def lookup_litigation(company_dir: Path, company_name: str, board_members: list[
                     "source": "local_legal_docs",
                     "title": f.name,
                     "date": "",
-                    "entity": company_name,
+                    "entity_type": "company",
+                    "entity_name": company_name,
+                    "case_type": "operational_dispute",
+                    "case_status": "unknown",
                     "relevance_type": "litigation",
                     "summary": txt[:350],
                     "risk_tag": "litigation_risk",
+                    "risk_weight": min(10, cc + 1),
+                    "confidence": "medium",
                 }
             )
 
@@ -93,16 +103,42 @@ def lookup_litigation(company_dir: Path, company_name: str, board_members: list[
                 "source": x.get("source", "indiankanoon"),
                 "title": x.get("title", ""),
                 "date": "",
-                "entity": x.get("entity", company_name),
+                "entity_type": "director" if x.get("entity", company_name) != company_name else "company",
+                "entity_name": x.get("entity", company_name),
+                "case_type": "public_case_reference",
+                "case_status": "unknown",
                 "relevance_type": "litigation",
                 "summary": x.get("link", ""),
                 "risk_tag": "litigation_risk",
                 "url": x.get("link", ""),
+                "risk_weight": 3,
+                "confidence": "low",
             }
         )
 
-    risk = min(100.0, case_count * 3.2 + insolvency_flag * 25)
+    # De-duplicate repeated case references.
+    deduped = {}
+    for ev in evidence:
+        key = (ev.get("source", ""), ev.get("title", ""), ev.get("entity_name", ""), ev.get("url", ""))
+        deduped[key] = ev
+    evidence = list(deduped.values())[:60]
+    case_count = max(case_count, len(evidence))
+
+    evidence_found = len(evidence) > 0
+    if evidence_found:
+        risk = min(100.0, case_count * 3.2 + insolvency_flag * 25)
+        litigation_confidence = "high" if len(evidence) >= 8 else "medium"
+        litigation_risk_status = "elevated" if risk >= 55 else ("moderate" if risk >= 30 else "contained")
+    else:
+        # Missing evidence must not be interpreted as clean legal profile.
+        risk = 50.0
+        litigation_confidence = "low"
+        litigation_risk_status = "unknown_insufficient_public_evidence"
+
     return {
+        "litigation_evidence_found": evidence_found,
+        "litigation_confidence": litigation_confidence,
+        "litigation_risk_status": litigation_risk_status,
         "litigation_count": int(case_count),
         "litigation_risk_score": round(float(risk), 2),
         "insolvency_flag": int(insolvency_flag),

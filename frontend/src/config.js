@@ -4,18 +4,15 @@ export function resolveApiBaseUrl() {
 
   let apiBase = envBase || runtimeBase
   if (!apiBase) {
-    // If frontend is served by Vite dev server (5173/3000), target backend on same host:8001.
-    // Otherwise use same-origin (single-container / reverse proxy deployments).
-    if (typeof window !== 'undefined') {
-      const host = window.location.hostname
-      const port = window.location.port
-      if (port === '5173' || port === '3000') {
-        apiBase = `http://${host}:8001`
-      } else {
-        apiBase = window.location.origin
-      }
+    const host = window.location.hostname
+    const port = window.location.port
+    // In local Vite dev, frontend runs on 5173/3000 and backend is expected on 8001.
+    if (port === '5173' || port === '3000') {
+      const resolvedHost = host === '0.0.0.0' ? '127.0.0.1' : host
+      apiBase = `http://${resolvedHost}:8001`
     } else {
-      apiBase = 'http://localhost:8001'
+      // Same-origin for single-container deploys (HF/docker unified app).
+      apiBase = ''
     }
   }
   return apiBase.replace(/\/$/, '')

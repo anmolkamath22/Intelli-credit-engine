@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import re
 import threading
 import time
 import traceback
@@ -23,7 +24,8 @@ from scripts.run_pipeline import run as run_pipeline
 from src.utils.text_processing import slugify
 
 ROOT = Path(__file__).resolve().parents[2]
-STORAGE_ROOT = Path(os.getenv("ENGINE_STORAGE_ROOT", str(ROOT / "data")))
+_storage_root_raw = os.getenv("ENGINE_STORAGE_ROOT", str(ROOT / "data"))
+STORAGE_ROOT = Path(_storage_root_raw.strip())
 INPUT_ROOT = STORAGE_ROOT / "input"
 PROCESSED_ROOT = STORAGE_ROOT / "processed"
 CAM_ROOT = ROOT / "outputs" / "cam_reports"
@@ -32,6 +34,10 @@ API_PREFIX = os.getenv("API_PREFIX", "/api/v1")
 FRONTEND_DIST = ROOT / "frontend" / "dist"
 
 DATASET_FOLDERS = {
+    "alm": "alm",
+    "shareholding_pattern": "shareholding_pattern",
+    "borrowing_profile": "borrowing_profile",
+    "portfolio_cuts": "portfolio_cuts",
     "annual_reports": "annual_reports",
     "financial_statements": "financial_statements",
     "balance_sheets": "balance_sheets",
@@ -39,6 +45,18 @@ DATASET_FOLDERS = {
     "bank_statements": "bank_statements",
     "legal_documents": "legal_documents",
     "news_documents": "news_documents",
+}
+
+ALLOWED_FILE_EXTS = {".pdf", ".csv", ".json", ".xlsx", ".xls", ".png", ".jpg", ".jpeg", ".txt"}
+MAX_UPLOAD_MB = int(os.getenv("MAX_UPLOAD_MB", "25"))
+MAX_UPLOAD_BYTES = MAX_UPLOAD_MB * 1024 * 1024
+
+DEFAULT_SCHEMA_BY_TYPE: dict[str, list[str]] = {
+    "alm": ["maturity_bucket", "assets_amount", "liabilities_amount", "gap", "remarks"],
+    "shareholding_pattern": ["holder_category", "holder_name", "share_percent", "pledged_percent", "remarks"],
+    "borrowing_profile": ["lender", "instrument", "outstanding_amount", "maturity_date", "interest_rate"],
+    "annual_reports": ["fiscal_year", "revenue", "ebitda", "net_profit", "debt", "cash_flow"],
+    "portfolio_cuts": ["segment", "portfolio_size", "npa_percent", "collection_efficiency", "vintage_bucket"],
 }
 
 ARTIFACTS = {
@@ -63,6 +81,31 @@ class OfficerInputPayload(BaseModel):
 class RunRequest(BaseModel):
     company: str
     debug_financials: bool = False
+
+
+class EntityProfilePayload(BaseModel):
+    company: str
+    cin: str = ""
+    pan: str = ""
+    sector: str = ""
+    subsector: str = ""
+    turnover: float = 0.0
+    loan_type: str = ""
+    loan_amount: float = 0.0
+    loan_tenure_months: int = 0
+    interest_rate: float = 0.0
+
+
+class ClassificationReviewPayload(BaseModel):
+    company: str
+    file_name: str
+    approved: bool = True
+    final_category: str
+
+
+class SchemaMappingPayload(BaseModel):
+    company: str
+    mappings: dict[str, list[str]]
 
 
 class ApiError(Exception):
@@ -139,6 +182,48 @@ def _company_dirs(company: str) -> tuple[str, Path, Path, Path]:
     return slug, in_dir, proc, cam
 
 
+def _sanitize_filename(name: str) -> str:
+    cleaned = Path(name).name
+    cleaned = re.sub(r"[^A-Za-z0-9._-]+", "_", cleaned)
+    return cleaned[:180] or "uploaded.bin"
+
+
+def _classify_file(file_name: str, source_dir: str = "") -> tuple[str, float]:
+    n = f"{source_dir} {file_name}".lower()
+    rules = [
+        ("alm", ["alm", "asset liability", "maturity profile"]),
+        ("shareholding_pattern", ["shareholding", "share pattern", "promoter holding"]),
+        ("borrowing_profile", ["borrowing", "debt profile", "loan profile", "facilities"]),
+        ("portfolio_cuts", ["portfolio", "npa", "performance", "vintage", "cut"]),
+        ("annual_reports", ["annual report", "fy20", "fy21", "fy22", "fy23", "fy24", "fy25"]),
+    ]
+    for cat, kws in rules:
+        if any(k in n for k in kws):
+            return cat, 0.88
+    if source_dir in DATASET_FOLDERS:
+        return source_dir, 0.72
+    return "annual_reports", 0.51
+
+
+def _extract_structured_preview(company_input_dir: Path, schema_map: dict[str, list[str]]) -> dict[str, Any]:
+    out: dict[str, Any] = {}
+    for cat, folder in DATASET_FOLDERS.items():
+        fields = schema_map.get(cat) or DEFAULT_SCHEMA_BY_TYPE.get(cat) or ["field_1", "field_2"]
+        files = sorted((company_input_dir / folder).glob("*")) if (company_input_dir / folder).exists() else []
+        rows: list[dict[str, Any]] = []
+        for f in files[:20]:
+            row = {"source_file": f.name}
+            for fld in fields:
+                row[fld] = ""
+            rows.append(row)
+        out[cat] = {
+            "schema_fields": fields,
+            "record_count": len(rows),
+            "records_preview": rows[:10],
+        }
+    return out
+
+
 def _read_json(path: Path) -> dict[str, Any]:
     if not path.exists():
         return {}
@@ -147,6 +232,17 @@ def _read_json(path: Path) -> dict[str, Any]:
         return data if isinstance(data, dict) else {}
     except Exception:
         return {}
+
+
+def _display_path(path: Path) -> str:
+    """Return a path string without assuming it is under ROOT."""
+    p = path.resolve()
+    for base in (STORAGE_ROOT.resolve(), ROOT.resolve()):
+        try:
+            return str(p.relative_to(base))
+        except ValueError:
+            continue
+    return str(p)
 
 
 def _set_job(job_id: str, payload: dict[str, Any]) -> None:
@@ -341,6 +437,22 @@ def list_companies() -> dict[str, Any]:
     return _ok(data={"companies": companies})
 
 
+@app.post(f"{API_PREFIX}/entity/onboard")
+def save_entity_profile(payload: EntityProfilePayload) -> dict[str, Any]:
+    slug, _, proc_dir, _ = _company_dirs(payload.company)
+    out = proc_dir / "entity_profile.json"
+    data = payload.model_dump()
+    data["company_slug"] = slug
+    out.write_text(json.dumps(data, indent=2, ensure_ascii=True), encoding="utf-8")
+    return _ok(message="Entity profile saved", data={"company": payload.company, "slug": slug, "saved_to": _display_path(out)})
+
+
+@app.get(f"{API_PREFIX}/entity/profile/{{company}}")
+def get_entity_profile(company: str) -> dict[str, Any]:
+    _, _, proc_dir, _ = _company_dirs(company)
+    return _ok(data=_read_json(proc_dir / "entity_profile.json"))
+
+
 @app.post(f"{API_PREFIX}/company/upload")
 async def upload_files(
     company: str = Form(...),
@@ -357,11 +469,24 @@ async def upload_files(
 
     saved: list[str] = []
     for upload in files:
-        name = Path(upload.filename or "uploaded.bin").name
+        name = _sanitize_filename(upload.filename or "uploaded.bin")
+        ext = Path(name).suffix.lower()
+        if ext not in ALLOWED_FILE_EXTS:
+            raise ApiError(
+                "invalid_file_type",
+                f"Unsupported file type: {ext or 'unknown'}. Allowed: {', '.join(sorted(ALLOWED_FILE_EXTS))}",
+                status_code=400,
+            )
         dest = target_dir / name
         content = await upload.read()
+        if len(content) > MAX_UPLOAD_BYTES:
+            raise ApiError(
+                "file_too_large",
+                f"File {name} exceeds {MAX_UPLOAD_MB}MB upload limit.",
+                status_code=400,
+            )
         dest.write_bytes(content)
-        saved.append(str(dest.relative_to(ROOT)))
+        saved.append(_display_path(dest))
 
     logger.info(
         "route=upload stage=completed job_id=%s company=%s data_type=%s files=%s",
@@ -381,14 +506,107 @@ async def upload_files(
     }
 
 
+@app.post(f"{API_PREFIX}/classification/auto")
+def classify_files(company: str = Form(...)) -> dict[str, Any]:
+    slug, company_input_dir, proc_dir, _ = _company_dirs(company)
+    rows: list[dict[str, Any]] = []
+    for dt, folder in DATASET_FOLDERS.items():
+        for f in sorted((company_input_dir / folder).glob("*")) if (company_input_dir / folder).exists() else []:
+            if not f.is_file():
+                continue
+            pred, conf = _classify_file(f.name, dt)
+            rows.append(
+                {
+                    "file_name": f.name,
+                    "path": _display_path(f),
+                    "uploaded_category": dt,
+                    "predicted_category": pred,
+                    "confidence": round(conf, 2),
+                    "approved": pred == dt,
+                    "final_category": dt if pred == dt else pred,
+                }
+            )
+    out = {"company": company, "slug": slug, "files": rows, "generated_at": datetime.now(timezone.utc).isoformat()}
+    p = proc_dir / "file_classification.json"
+    p.write_text(json.dumps(out, indent=2, ensure_ascii=True), encoding="utf-8")
+    return _ok(message="Classification generated", data=out)
+
+
+@app.post(f"{API_PREFIX}/classification/review")
+def review_classification(payload: ClassificationReviewPayload) -> dict[str, Any]:
+    _, _, proc_dir, _ = _company_dirs(payload.company)
+    p = proc_dir / "file_classification.json"
+    data = _read_json(p) or {"files": []}
+    files = data.get("files", [])
+    for row in files:
+        if row.get("file_name") == payload.file_name:
+            row["approved"] = payload.approved
+            row["final_category"] = payload.final_category
+            break
+    data["files"] = files
+    p.write_text(json.dumps(data, indent=2, ensure_ascii=True), encoding="utf-8")
+    return _ok(message="Classification review saved", data={"file_name": payload.file_name, "final_category": payload.final_category})
+
+
+@app.get(f"{API_PREFIX}/classification/{{company}}")
+def get_classification(company: str) -> dict[str, Any]:
+    _, _, proc_dir, _ = _company_dirs(company)
+    return _ok(data=_read_json(proc_dir / "file_classification.json"))
+
+
+@app.get(f"{API_PREFIX}/schema-mapping/{{company}}")
+def get_schema_mapping(company: str) -> dict[str, Any]:
+    _, _, proc_dir, _ = _company_dirs(company)
+    payload = _read_json(proc_dir / "schema_mapping.json")
+    if not payload:
+        payload = {
+            "company": company,
+            "mappings": DEFAULT_SCHEMA_BY_TYPE,
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+        }
+    return _ok(data=payload)
+
+
+@app.post(f"{API_PREFIX}/schema-mapping")
+def save_schema_mapping(payload: SchemaMappingPayload) -> dict[str, Any]:
+    _, _, proc_dir, _ = _company_dirs(payload.company)
+    out = {
+        "company": payload.company,
+        "mappings": payload.mappings,
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+    }
+    p = proc_dir / "schema_mapping.json"
+    p.write_text(json.dumps(out, indent=2, ensure_ascii=True), encoding="utf-8")
+    return _ok(message="Schema mapping saved", data=out)
+
+
+@app.post(f"{API_PREFIX}/extraction/preview")
+def build_extraction_preview(company: str = Form(...)) -> dict[str, Any]:
+    _, company_input_dir, proc_dir, _ = _company_dirs(company)
+    schema = _read_json(proc_dir / "schema_mapping.json")
+    schema_map = (schema.get("mappings") if isinstance(schema, dict) else {}) or DEFAULT_SCHEMA_BY_TYPE
+    extracted = _extract_structured_preview(company_input_dir, schema_map)
+    out = {
+        "company": company,
+        "schema_used": schema_map,
+        "extracted_structured_data": extracted,
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+    }
+    p = proc_dir / "extracted_structured_data.json"
+    p.write_text(json.dumps(out, indent=2, ensure_ascii=True), encoding="utf-8")
+    return _ok(message="Structured extraction preview generated", data=out)
+
+
 @app.post(f"{API_PREFIX}/company/officer-inputs")
 def save_officer_inputs(payload: OfficerInputPayload) -> dict[str, Any]:
-    slug, company_input_dir, _, _ = _company_dirs(payload.company)
+    slug, company_input_dir, proc_dir, _ = _company_dirs(payload.company)
     qual_dir = company_input_dir / "qualitative"
     qual_dir.mkdir(parents=True, exist_ok=True)
     out = qual_dir / "officer_inputs.json"
-    out.write_text(payload.model_dump_json(indent=2), encoding="utf-8")
-    return _ok(message="Officer inputs saved", data={"company": payload.company, "slug": slug, "saved_to": str(out.relative_to(ROOT))})
+    serialized = payload.model_dump_json(indent=2)
+    out.write_text(serialized, encoding="utf-8")
+    (proc_dir / "officer_inputs.json").write_text(serialized, encoding="utf-8")
+    return _ok(message="Officer inputs saved", data={"company": payload.company, "slug": slug, "saved_to": _display_path(out)})
 
 
 @app.post(f"{API_PREFIX}/pipeline/run")
@@ -518,10 +736,21 @@ def get_dashboard(company: str) -> dict[str, Any]:
         "decision_trace": _read_json(proc_dir / "decision_trace.json"),
         "research_summary": _read_json(proc_dir / "research_summary.json"),
         "research_evidence": _read_json(proc_dir / "research_evidence.json"),
+        "litigation_summary": _read_json(proc_dir / "litigation_summary.json"),
+        "litigation_evidence": _read_json(proc_dir / "litigation_evidence.json"),
+        "board_risk_summary": _read_json(proc_dir / "board_risk_summary.json"),
+        "company_profile": _read_json(proc_dir / "company_profile.json"),
+        "entity_profile": _read_json(proc_dir / "entity_profile.json"),
+        "file_classification": _read_json(proc_dir / "file_classification.json"),
+        "schema_mapping": _read_json(proc_dir / "schema_mapping.json"),
+        "extracted_structured_data": _read_json(proc_dir / "extracted_structured_data.json"),
+        "triangulated_insights": _read_json(proc_dir / "triangulated_insights.json"),
+        "swot_analysis": _read_json(proc_dir / "swot_analysis.json"),
+        "officer_inputs": _read_json(proc_dir / "officer_inputs.json"),
         "financial_history": _read_json(proc_dir / "financial_history.json"),
         "financial_trends": _read_json(proc_dir / "financial_trends.json"),
         "cam_available": (cam_dir / "CAM_report.pdf").exists(),
-        "cam_dir": str(cam_dir.relative_to(ROOT)),
+        "cam_dir": _display_path(cam_dir),
     }
     return _ok(data=out)
 

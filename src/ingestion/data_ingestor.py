@@ -55,6 +55,10 @@ class DataIngestor:
         out_dir.mkdir(parents=True, exist_ok=True)
 
         subdirs = {
+            "alm": cdir / "alm",
+            "shareholding_pattern": cdir / "shareholding_pattern",
+            "borrowing_profile": cdir / "borrowing_profile",
+            "portfolio_cuts": cdir / "portfolio_cuts",
             "annual_reports": cdir / "annual_reports",
             "financial_statements": cdir / "financial_statements",
             "balance_sheets": cdir / "balance_sheets",
@@ -163,6 +167,24 @@ class DataIngestor:
                             "working_capital": row.get("working_capital"),
                             "auditor_remarks": [],
                         })
+                except Exception:
+                    continue
+
+        # Ingest additional required document categories into document corpus for triangulation/RAG.
+        for key in ["alm", "shareholding_pattern", "borrowing_profile", "portfolio_cuts"]:
+            d = subdirs[key]
+            for pdf in list_files(d, exts={".pdf"}):
+                text = extract_pdf_text(pdf)
+                if text:
+                    doc_texts.append({"source": str(pdf), "text": clean_text(text)})
+            for jf in list_files(d, exts={".json"}):
+                payload = read_json(jf)
+                if payload:
+                    doc_texts.append({"source": str(jf), "text": clean_text(json.dumps(payload))})
+            for cf in list_files(d, exts={".csv"}):
+                try:
+                    df = read_csv(cf)
+                    doc_texts.append({"source": str(cf), "text": clean_text(df.head(500).to_csv(index=False))})
                 except Exception:
                     continue
 

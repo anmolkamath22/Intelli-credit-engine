@@ -89,10 +89,14 @@ def analyze_news(company_dir: Path, company_name: str, board_members: list[str] 
                 "source": "local_news_docs",
                 "title": f.name,
                 "date": "",
-                "entity": company_name,
+                "entity_type": "company",
+                "entity_name": company_name,
                 "relevance_type": "news",
                 "summary": txt[:350],
                 "risk_tag": _risk_tag(txt),
+                "sentiment": "negative" if _risk_tag(txt) != "sector_headwind" else "neutral",
+                "confidence": "medium",
+                "url": "",
             }
         )
 
@@ -104,35 +108,59 @@ def analyze_news(company_dir: Path, company_name: str, board_members: list[str] 
     for a in external_articles[:15]:
         content = f"{a.get('title', '')} {a.get('summary', '')}"
         entity = company_name
+        entity_type = "company"
         q = str(a.get("query", ""))
         for member in board_members[:8]:
             if member.lower() in q.lower():
                 entity = member
+                entity_type = "director"
                 break
         external_evidence.append(
             {
                 "source": a.get("source", "google_news_rss"),
                 "title": a.get("title", ""),
                 "date": a.get("date", ""),
-                "entity": entity,
+                "entity_type": entity_type,
+                "entity_name": entity,
                 "relevance_type": "news",
                 "summary": content[:350],
                 "risk_tag": _risk_tag(content),
                 "url": a.get("link", ""),
+                "sentiment": "negative" if _risk_tag(content) != "sector_headwind" else "neutral",
+                "confidence": "medium",
             }
         )
         text_blob += " " + content
+
+    # De-duplicate by source-title-url triad.
+    deduped = {}
+    for ev in (local_evidence + external_evidence):
+        key = (ev.get("source", ""), ev.get("title", ""), ev.get("url", ""))
+        deduped[key] = ev
+    evidence = list(deduped.values())[:40]
 
     joined = text_blob.lower()
     neg_count = sum(joined.count(term) for term in NEGATIVE_TERMS)
     controversy = int(bool(re.search(r"controversy|allegation|probe", joined)))
     distress = int(bool(re.search(r"default|insolvency|distress|shutdown", joined)))
-    sentiment_score = max(0.0, 100.0 - (neg_count * 2.2 + controversy * 10 + distress * 14))
+    evidence_found = len(evidence) > 0
+    if evidence_found:
+        sentiment_score = max(0.0, 100.0 - (neg_count * 2.2 + controversy * 10 + distress * 14))
+        risk_assessment = "elevated" if sentiment_score < 45 else ("moderate" if sentiment_score < 65 else "contained")
+        confidence = "high" if len(evidence) >= 8 else "medium"
+    else:
+        # Missing evidence must not be interpreted as clean.
+        sentiment_score = 50.0
+        risk_assessment = "unknown_insufficient_data"
+        confidence = "low"
 
     return {
+        "evidence_found": evidence_found,
+        "confidence": confidence,
+        "risk_assessment": risk_assessment,
         "negative_news_count": int(neg_count),
         "controversy_mentions": int(controversy),
         "operational_distress": int(distress),
         "news_sentiment_score": round(float(sentiment_score), 2),
-        "evidence": (local_evidence + external_evidence)[:30],
+        "evidence": evidence[:30],
     }

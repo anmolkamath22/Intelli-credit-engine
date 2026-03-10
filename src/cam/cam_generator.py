@@ -15,8 +15,28 @@ def _to_float(x: object, default: float = 0.0) -> float:
         return default
 
 
+def _pretty_enum(x: str) -> str:
+    m = {
+        "approve": "Approve",
+        "approve_with_conditions": "Approve With Conditions",
+        "reject": "Reject",
+        "accept_requested_rate": "Accept Requested Rate",
+        "increase_rate": "Increase Rate",
+        "negotiate_rate": "Negotiate/Reprice",
+    }
+    return m.get(str(x), str(x).replace("_", " ").title())
+
+
 def _source_type(src: str) -> str:
     s = src.lower()
+    if "alm" in s:
+        return "alm"
+    if "shareholding_pattern" in s:
+        return "shareholding_pattern"
+    if "borrowing_profile" in s:
+        return "borrowing_profile"
+    if "portfolio_cuts" in s:
+        return "portfolio_cuts"
     if "annual_reports" in s:
         return "annual_reports"
     if "gst_returns" in s or "synthetic_gst_features" in s:
@@ -42,6 +62,10 @@ def _reference_hint(src: str) -> str:
     p = Path(src)
     parts = p.parts
     for folder in [
+        "alm",
+        "shareholding_pattern",
+        "borrowing_profile",
+        "portfolio_cuts",
         "annual_reports",
         "financial_statements",
         "balance_sheets",
@@ -119,6 +143,12 @@ def build_cam_payload(
     dataset_presence: dict[str, Any] | None = None,
     validated_financials: dict[str, Any] | None = None,
     cam_evidence: list[dict[str, Any]] | None = None,
+    entity_profile: dict[str, Any] | None = None,
+    file_classification: dict[str, Any] | None = None,
+    schema_mapping: dict[str, Any] | None = None,
+    extracted_structured_data: dict[str, Any] | None = None,
+    triangulated_insights: dict[str, Any] | None = None,
+    swot_analysis: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Build structured CAM payload for deterministic rendering."""
     financial_history = financial_history or {}
@@ -127,9 +157,19 @@ def build_cam_payload(
     dataset_presence = dataset_presence or {}
     validated_financials = validated_financials or {}
     cam_evidence = cam_evidence or []
+    entity_profile = entity_profile or {}
+    file_classification = file_classification or {}
+    schema_mapping = schema_mapping or {}
+    extracted_structured_data = extracted_structured_data or {}
+    triangulated_insights = triangulated_insights or {}
+    swot_analysis = swot_analysis or {}
 
     credit_score = _to_float(scoring.get("credit_score"), 0.0)
-    loan_limit = _to_float(scoring.get("recommended_loan_limit"), 0.0)
+    requested_amount = _to_float(scoring.get("requested_loan_amount"), 0.0)
+    supportability_cap = _to_float(scoring.get("supportability_cap"), 0.0)
+    decision_status = str(scoring.get("decision_status", "unknown"))
+    interest_decision = str(scoring.get("interest_decision", "unknown"))
+    requested_rate = _to_float(scoring.get("requested_interest_rate"), 0.0)
     rate = _to_float(scoring.get("recommended_interest_rate"), _to_float(scoring.get("base_rate"), 9.5))
 
     years = financial_history.get("years", [])
@@ -260,8 +300,12 @@ def build_cam_payload(
         "reporting_note": "All financial values are reported in INR Crores unless otherwise stated.",
         "executive_summary": (
             f"Final credit score is {credit_score:.2f}/100. "
-            f"Recommended loan limit is INR {loan_limit:,.2f} Crores at {rate:.2f}% per annum. "
-            f"Assessment uses financial trends, legal/news signals, synthetic behavior signals (when required), and decision trace explainability."
+            f"Decision status: {_pretty_enum(decision_status)}. "
+            f"The requested amount of INR {requested_amount:,.2f} Crores is evaluated against an affordability cap of INR {supportability_cap:,.2f} Crores "
+            f"with supportability classified as '{scoring.get('requested_amount_supportability', 'unknown')}'. "
+            f"Requested pricing of {requested_rate:.2f}% is assessed through risk-adjusted pricing and the interest decision is "
+            f"'{_pretty_enum(interest_decision)}', resulting in a final rate of {rate:.2f}% per annum. "
+            f"This recommendation triangulates financial quality, legal/news confidence, governance checks, and officer inputs."
         ),
         "company_overview": (
             f"The evaluation covers available company datasets with primary evidence from: "
@@ -296,11 +340,14 @@ def build_cam_payload(
             f"{trace.get('reasoning_summary') or 'The credit decision is weighted primarily by the company’s core financial trajectory, risk indicators, and cashflow consistency.'} "
             f"Notably, circular trading risk flag is {'triggered' if int(_to_float(features.get('circular_trading_flag'), 0)) else 'clear'}, "
             f"and revenue inflation flag is {'triggered' if int(_to_float(features.get('revenue_inflation_flag'), 0)) else 'clear'}. "
+            f"Requested amount supportability is '{scoring.get('requested_amount_supportability', 'unknown')}'. "
+            f"Interest decision is '{_pretty_enum(interest_decision)}'. "
             f"The primary synthesis relies heavily on {', '.join(source_types) if source_types else 'the available verified documents'}."
         ),
         "final_credit_score": f"{credit_score:.2f} / 100",
-        "recommended_loan_limit_crore": f"{loan_limit:.2f}",
+        "recommended_loan_limit_crore": f"{requested_amount:.2f}",
         "interest_rate_percent": f"{rate:.2f}",
+        "key_conditions": scoring.get("key_conditions", []) or [],
         "supporting_evidence": evidence,
         "financial_trend_analysis": narrative.get("financial_trend_analysis", ""),
         "liquidity_leverage_assessment": narrative.get("liquidity_leverage_assessment", ""),
@@ -308,10 +355,17 @@ def build_cam_payload(
         "industry_sector_outlook": narrative.get("industry_sector_outlook", ""),
         "litigation_assessment": narrative.get("litigation_assessment", ""),
         "final_recommendation": narrative.get("final_recommendation", ""),
+        "conditions_and_covenants": narrative.get("conditions_and_covenants", ""),
         "validated_financials": validated_financials,
         "metadata": {
             "source_types_used": source_types,
             "dataset_presence": dataset_presence,
+            "entity_profile": entity_profile,
+            "classification_summary": file_classification,
+            "schema_mapping": schema_mapping,
+            "extracted_structured_data": extracted_structured_data,
+            "triangulated_insights": triangulated_insights,
+            "swot_analysis": swot_analysis,
             "loan_policy_caps": {
                 "cap_25pct_revenue_crore": round(_to_float(scoring.get("loan_limit_cap_revenue_25pct"), 0.0), 2),
                 "cap_4x_ebitda_crore": round(_to_float(scoring.get("loan_limit_cap_ebitda_4x"), 0.0), 2),
